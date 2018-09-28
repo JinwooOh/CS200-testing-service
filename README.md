@@ -1,4 +1,7 @@
 # Usage
+Install Node packages
+` npm install `
+
 For node server on http://localhost:5000/,
 type ` npm run server `
 
