@@ -1,8 +1,14 @@
 const express = require("express");
+const bodyParser = require('body-parser');
 const app = express()
 
-app.get('/', (req, res) => {
-  res.send("Hellow World from server");
+app.use(express.json()); // application / json
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/test', (req, res) => {
+  res.json({data: 'Hello World from server'});
 });
 
 const port = process.env.PORT || 5000;
