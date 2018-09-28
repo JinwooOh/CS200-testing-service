@@ -20,7 +20,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h3>Hellow from React</h3>
+        <h3>Hello world from React</h3>
         <p>{this.state.result}</p>
       </div>
     );
