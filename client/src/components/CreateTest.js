@@ -7,6 +7,7 @@ export default class CreateTest extends Component {
       <div>
         <Nav />
         <p>CreateTest Component</p>
+        <button>Create Test</button>
       </div>
     );
   }

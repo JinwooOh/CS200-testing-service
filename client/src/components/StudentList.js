@@ -7,6 +7,10 @@ export default class StudentList extends Component {
       <div>
         <Nav />
         <p>StudentList Component</p>
+        <ul>
+          <li>Student 1</li>
+          <li>Student 2</li>
+        </ul>
       </div>
     );
   }

@@ -7,6 +7,7 @@ export default class ImportQ extends Component {
       <div>
         <Nav />
         <p>ImportQ Component</p>
+        <button>Import from CSV</button>
       </div>
     );
   }
