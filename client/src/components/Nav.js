@@ -6,8 +6,12 @@ class Nav extends Component {
     return (
       <div>
         <h3>Nav Bar</h3>
-        <Link to="/studentlist">Student List</Link>
-        <Link to="/testresult">Test Result</Link>
+        <div className="nav">
+          <Link to="/studentlist">Student List</Link>
+          <Link to="/testresult">Test Result</Link>
+          <Link to="/createtest">Create Test</Link>
+          <Link to="/importquestion">Import Question</Link>
+        </div>
       </div>
     );
   }
