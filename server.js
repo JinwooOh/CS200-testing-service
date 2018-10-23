@@ -1,15 +1,18 @@
 const express = require("express");
-const bodyParser = require('body-parser');
 const app = express()
+var mongoose = require('mongoose');
 
-app.use(express.json()); // application / json
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/test', (req, res) => {
-  res.json({data: 'Hello World from server'});
-});
+// var mongoDB = 'mongodb:127.0.0.1:27017/Testing_service.Question';
+var mongoDB = 'mongodb://127.0.0.1:27017/Testing_service';
+mongoose.connect(mongoDB,  {useNewUrlParser: true });
+mongoose.Promise = global.Promise; // Get Mongoose to use the global promise library
 
-const port = process.env.PORT || 5000;
-app.listen(port, ()=> console.log(`Server is running on port ${port}`));
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+
