@@ -1,18 +1,16 @@
-
 import React, { Component } from "react";
 import Nav from "./Nav";
 import ImportQ_CSV from "./ImportQ_CSV";
 import ImportQ_AddQuestion from "./ImportQ_AddQuestion";
-import Files from 'react-files';
-
+import Files from "react-files";
 
 export default class ImportQ extends Component {
   constructor(props) {
     super(props);
     this.state = {
       questions: "",
-      anwers: []
-      jsonFile: {},
+      anwers: [],
+      jsonFile: {}
     };
     this.fileReader = new FileReader();
     this.fileReader.onload = event => {
@@ -48,7 +46,7 @@ export default class ImportQ extends Component {
             this.fileReader.readAsText(file[0]);
           }}
           onError={err => console.log(err)}
-          accepts={['.json']}
+          accepts={[".json"]}
           multiple
           maxFiles={3}
           maxFileSize={10000000}
