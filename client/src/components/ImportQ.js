@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
-import Nav from './Nav';
+import React, { Component } from "react";
+import Nav from "./Nav";
+import ImportQ_CSV from "./ImportQ_CSV";
+import ImportQ_AddQuestion from "./ImportQ_AddQuestion";
 
 export default class ImportQ extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: '',
-      anwers: [],
+      questions: "",
+      anwers: []
     };
   }
 
@@ -15,13 +17,8 @@ export default class ImportQ extends Component {
       <div>
         <Nav />
         <p>ImportQ Component</p>
-        <button
-          onClick={() => {
-            console.log('Heeoe');
-          }}
-        >
-          Import from CSV
-        </button>
+        <ImportQ_CSV />
+        <ImportQ_AddQuestion />
       </div>
     );
   }
