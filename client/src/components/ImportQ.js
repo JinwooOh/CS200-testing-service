@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import Nav from "./Nav";
-import ImportQ_CSV from "./ImportQ_CSV";
-import ImportQ_AddQuestion from "./ImportQ_AddQuestion";
-import Files from "react-files";
+import React, { Component } from 'react';
+import Files from 'react-files';
+import Nav from './Nav';
+import ImportQCSV from './ImportQCSV';
+import ImportQAddQuestion from './ImportQ_AddQuestion';
 
 export default class ImportQ extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      questions: "",
+      questions: '',
       anwers: [],
-      jsonFile: {}
+      jsonFile: {},
     };
     this.fileReader = new FileReader();
     this.fileReader.onload = event => {
@@ -30,31 +30,20 @@ export default class ImportQ extends Component {
     fileReader.readAsText(file[0]);
   };
 
+  updateJson = e => {
+    this.setState(e);
+  };
+
   render() {
     return (
       <div>
         <Nav />
         <p>ImportQ Component</p>
-        <ImportQ_CSV />
-        <ImportQ_AddQuestion />
+        <ImportQCSV updateJson={this.updateJson} />
+        <ImportQAddQuestion />
         <h3>ImportQ Component</h3>
 
         <p>Import JSON file</p>
-        <Files
-          className="files-dropzone"
-          onChange={file => {
-            this.fileReader.readAsText(file[0]);
-          }}
-          onError={err => console.log(err)}
-          accepts={[".json"]}
-          multiple
-          maxFiles={3}
-          maxFileSize={10000000}
-          minFileSize={0}
-          clickable
-        >
-          Click here to upload JSON file
-        </Files>
       </div>
     );
   }
