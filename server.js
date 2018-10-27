@@ -19,34 +19,34 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 var Schema = mongoose.Schema;
   
 
-var Users_schema = new Schema ({
-  Login_type : String,
-  Name:        String,
-  ID:          String,
-  password:    String,
-});
-
-
-
-// var SomeModelSchema = new Schema({
-//   Question: [{Question: String, RealAnswer: String, RealAnswer: String}],
-//   Exam: [{TimeLimit: Number, Course: String, DateCreated: Date, NumQuestions: Number}],
-//   Student: [{idNumber: Number, Section: Number, Semester: String, Professor: String}]
-
+// var Users_schema = new Schema ({
+//   Login_type : String,
+//   Name:        String,
+//   ID:          String,
+//   password:    String,
 // });
 
 
-// Compile model from schema
-var Users = mongoose.model('Users', Users_schema );
 
-// create an instance of model Users
+// // var SomeModelSchema = new Schema({
+// //   Question: [{Question: String, RealAnswer: String, RealAnswer: String}],
+// //   Exam: [{TimeLimit: Number, Course: String, DateCreated: Date, NumQuestions: Number}],
+// //   Student: [{idNumber: Number, Section: Number, Semester: String, Professor: String}]
 
-var user_2 = new Users({
-    Login_type: "instructor",
-    Name:        "Bucky",
-    ID:          "123456789",
-    password:    "98741"
-});
+// // });
+
+
+// // Compile model from schema
+// var Users = mongoose.model('Login', Users_schema );
+
+// // create an instance of model Users
+
+// var user_2 = new Users({
+//     Login_type: "instructor",
+//     Name:        "Bucky",
+//     ID:          "123456789",
+//     password:    "98741"
+// });
 
 
 // Create an instance of model SomeModel
@@ -71,10 +71,39 @@ var user_2 = new Users({
 
 
 // Save the new model instance, passing a callback
-user_2.save(function (err) {
-  if (err) return handleError(err);
-  // saved!
+// user_2.save(function (err) {
+//   if (err) return handleError(err);
+//   // saved!
+// });
+
+
+//const ObjectId = mongoose.Types.ObjectId;
+var Question_schema = new Schema ({
+  id:             ObjectId(),
+  Question_name:  String,
+  Real_answer:    String,
+  Fake_answer1:    String,
+  Fake_answer2:    String,
+  Fake_answer3:    String,
+  Fake_answer4:    String
 });
 
 
+// Compile model from schema
+var question_bank = mongoose.model('Question_Bank', Question_schema );
 
+
+var question_1 = new question_bank({
+  id:             ObjectId("123123"),
+  Question_name:  "What is 1 + 1",
+  Real_answer:    "2",
+  Fake_answer1:    "3",
+  Fake_answer2:    "4",
+  Fake_answer3:    "5",
+  Fake_answer4:    "6"
+});
+
+ question_1.save(function (err) {
+  if (err) return handleError(err);
+   // saved!
+ });
