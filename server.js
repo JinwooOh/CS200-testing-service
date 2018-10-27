@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express()
 var mongoose = require('mongoose');
+// require("mongoose-double")(mongoose);
 
 
 // var mongoDB = 'mongodb:127.0.0.1:27017/Testing_service.Question';
@@ -41,12 +42,12 @@ var Schema = mongoose.Schema;
 
 // // create an instance of model Users
 
-// var user_2 = new Users({
-//     Login_type: "instructor",
-//     Name:        "Bucky",
-//     ID:          "123456789",
-//     password:    "98741"
-// });
+var user_2 = new Users({
+    Login_type: "instructor",
+    Name:        "Bucky",
+    ID:          "123456789",
+    password:    "98741"
+});
 
 
 // Create an instance of model SomeModel
@@ -79,7 +80,7 @@ var Schema = mongoose.Schema;
 
 //const ObjectId = mongoose.Types.ObjectId;
 var Question_schema = new Schema ({
-  id:             ObjectId(),
+  // id:             ObjectId(),
   Question_name:  String,
   Real_answer:    String,
   Fake_answer1:    String,
@@ -94,7 +95,7 @@ var question_bank = mongoose.model('Question_Bank', Question_schema );
 
 
 var question_1 = new question_bank({
-  id:             ObjectId("123123"),
+  // id:             ObjectId("123123"),
   Question_name:  "What is 1 + 1",
   Real_answer:    "2",
   Fake_answer1:    "3",
@@ -104,6 +105,46 @@ var question_1 = new question_bank({
 });
 
  question_1.save(function (err) {
+  if (err) return handleError(err);
+   // saved!
+ });
+
+
+ var Exam_schema = new Schema ({
+    TimeLimit: Number,
+    Course: String,
+    CourseNumber: Number,
+    DateCreated: Date,
+    Updated:     Date,
+    NumQuestions: Number,
+    AvgScore: Number,
+    MedianScore: Number,
+    HighestScore  :Number,
+    LowestScore   :Number,
+    Questions:    [mongoose.Schema.Types.ObjectId]
+ });
+
+
+// define schema for exam
+var exam_bank = mongoose.model("Exam Bank", Exam_schema);
+
+
+var SchemaTypes = mongoose.Schema.Types;
+var exam_1 = new exam_bank({
+    TimeLimit: 60,
+    Course: "Software Enginnering",
+    CourseNumber: 506,
+    DateCreated: Date.now(),
+    Updated:    Date.now(),
+    NumQuestions: 2,
+    AvgScore: 80,
+    MedianScore: 75,
+    HighestScore  :95,
+    LowestScore   :60,
+    Questions: ["5bd33dc083b6cf02c6db0642", "5bd33dc083b6cf02c6db0643"]
+});
+
+exam_1.save(function (err) {
   if (err) return handleError(err);
    // saved!
  });
