@@ -79,7 +79,6 @@ var Schema = mongoose.Schema;
 
 //const ObjectId = mongoose.Types.ObjectId;
 var Question_schema = new Schema ({
-  id:             ObjectId(),
   Question_name:  String,
   Real_answer:    String,
   Fake_answer1:    String,
@@ -94,8 +93,7 @@ var question_bank = mongoose.model('Question_Bank', Question_schema );
 
 
 var question_1 = new question_bank({
-  id:             ObjectId("123123"),
-  Question_name:  "What is 1 + 1",
+  Question_name:  "What is 1 + 2",
   Real_answer:    "2",
   Fake_answer1:    "3",
   Fake_answer2:    "4",
