@@ -1,38 +1,42 @@
-var User = new Schema ({
+var userSchema = new Schema ({
    loginType : String,
    name:        String,
    userId:          String,
+   updated:     Date,
    exams:    [mongoose.Schema.Types.ObjectId],
    studentList: [mongoose.Schema.Types.ObjectId]
  });
 
- var Exam = new Schema ({
-    TimeLimit: Number,
-    Course: String,
-    CourseNumber: Number,
-    DateCreated: Date,
-    Updated:     Date,
-    AvgScore: Number,
-    MedianScore: Number,
-    HighestScore  :Number,
-    LowestScore   :Number,
+ var examSchema = new Schema ({
+    timeLimit: Number,
+    courseName: String,
+    courseNumber: Number,
+    dateCreated: Date,
+    updated:     Date,
+    avgScore: Number,
+    medianScore: Number,
+    highestScore  :Number,
+    lowestScore   :Number,
     createdBy: mongoose.Schema.Types.ObjectId,
-    Questions:    [mongoose.Schema.Types.ObjectId]
+    questions:    [mongoose.Schema.Types.ObjectId]
  });
 
- var Score = new Schema ({
+ var scoreSchema = new Schema ({
     examId:  mongoose.Schema.Types.ObjectId,
     dateTaken:  Date,
     userId:    mongoose.Schema.Types.ObjectId,
     userAnswers:    [mongoose.Schema.Types.ObjectId],
   });
 
- var Question = new Schema ({
+ var questionSchema = new Schema ({
+    _id: new mongoose.Types.ObjectId(),
+    updated:     Date,
     question:  String,
     correctAnswer:    mongoose.Schema.Types.ObjectId,
     answers:    [mongoose.Schema.Types.ObjectId],
   });
 
-  var Answer = new Schema ({
+  var answerSchema = new Schema ({
+    updated:     Date,
     answer:  String
   });

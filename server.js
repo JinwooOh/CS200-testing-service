@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express()
 var mongoose = require('mongoose');
-// require("mongoose-double")(mongoose);
-
+//https://mongoosejs.com/docs/populate.html
 
 // var mongoDB = 'mongodb:127.0.0.1:27017/Testing_service.Question';
 var mongoDB = 'mongodb://admin:admin123@ds153239.mlab.com:53239/cs_200_testing_service';
@@ -18,133 +17,52 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //Define a schema
 var Schema = mongoose.Schema;
-  
 
-// var Users_schema = new Schema ({
-//   Login_type : String,
-//   Name:        String,
-//   ID:          String,
-//   password:    String,
-// });
-
-
-
-// // var SomeModelSchema = new Schema({
-// //   Question: [{Question: String, RealAnswer: String, RealAnswer: String}],
-// //   Exam: [{TimeLimit: Number, Course: String, DateCreated: Date, NumQuestions: Number}],
-// //   Student: [{idNumber: Number, Section: Number, Semester: String, Professor: String}]
-
-// // });
-
-
-// // Compile model from schema
-// var Users = mongoose.model('Login', Users_schema );
-
-// // create an instance of model Users
-
-var user_2 = new Users({
-    Login_type: "instructor",
-    Name:        "Bucky",
-    ID:          "123456789",
-    password:    "98741"
+var questionSchema = new Schema ({
+  updated:     Date,
+  question:  String,
+  correctAnswer:     Schema.Types.ObjectId,
+  answers:    [Schema.Types.ObjectId]
 });
 
-
-// Create an instance of model SomeModel
-// var awesome_instance = new SomeModel( {Question: [{
-//                                         Question: "What is 1 + 1", 
-//                                         RealAnswer: "2",
-//                                         FakeAnswer: "1"}],
-//                                        Exam: [{
-//                                         TimeLimit: 60, 
-//                                         Course: "CS 506", 
-//                                         NumQuestions: 60
-//                                         }],
-//                                         Student: [{
-//                                             idNumber: 113,
-//                                             Section: 506,
-//                                             Semester: "Fall 2018",
-//                                             Professor: "Tracy"
-//                                         }]
-//                                       }
-//                                     );
-
-
-
-// Save the new model instance, passing a callback
-// user_2.save(function (err) {
-//   if (err) return handleError(err);
-//   // saved!
-// });
-
-
-//const ObjectId = mongoose.Types.ObjectId;
-var Question_schema = new Schema ({
-  // id:             ObjectId(),
-  Question_name:  String,
-  Real_answer:    String,
-  Fake_answer1:    String,
-  Fake_answer2:    String,
-  Fake_answer3:    String,
-  Fake_answer4:    String
+var answerSchema = new Schema ({
+  updated:     Date,
+  answer:  String
 });
-
 
 // Compile model from schema
-var question_bank = mongoose.model('Question_Bank', Question_schema );
+var Question = mongoose.model('Question', questionSchema);
+var Answer = mongoose.model('Answer', answerSchema );
+
+// // create instances of the models
 
 
-var question_1 = new question_bank({
-  // id:             ObjectId("123123"),
-  Question_name:  "What is 1 + 1",
-  Real_answer:    "2",
-  Fake_answer1:    "3",
-  Fake_answer2:    "4",
-  Fake_answer3:    "5",
-  Fake_answer4:    "6"
+var answer_1 = new Answer({
+  updated:     Date.now(),
+  answer:  "Right Answer"
 });
+var answer_2 = new Answer({
+  updated:     Date.now(),
+  answer:  "Wrong Answer"
+});
+var question_1 = new Question({
+  updated:     Date.now(),
+  question:  "What will the following code print out when it is run?",
+  correctAnswer:    answer_1._id,
+});
+question_1.answers.push(answer_1._id);
+question_1.answers.push(answer_2._id);
 
- question_1.save(function (err) {
+ answer_1.save(function (err) {
   if (err) return handleError(err);
    // saved!
  });
-
-
- var Exam_schema = new Schema ({
-    TimeLimit: Number,
-    Course: String,
-    CourseNumber: Number,
-    DateCreated: Date,
-    Updated:     Date,
-    NumQuestions: Number,
-    AvgScore: Number,
-    MedianScore: Number,
-    HighestScore  :Number,
-    LowestScore   :Number,
-    Questions:    [mongoose.Schema.Types.ObjectId]
+ answer_2.save(function (err) {
+  if (err) return handleError(err);
+   // saved!
  });
-
-
-// define schema for exam
-var exam_bank = mongoose.model("Exam Bank", Exam_schema);
-
-
-var SchemaTypes = mongoose.Schema.Types;
-var exam_1 = new exam_bank({
-    TimeLimit: 60,
-    Course: "Software Enginnering",
-    CourseNumber: 506,
-    DateCreated: Date.now(),
-    Updated:    Date.now(),
-    NumQuestions: 2,
-    AvgScore: 80,
-    MedianScore: 75,
-    HighestScore  :95,
-    LowestScore   :60,
-    Questions: ["5bd33dc083b6cf02c6db0642", "5bd33dc083b6cf02c6db0643"]
-});
-
-exam_1.save(function (err) {
+ // Save the data
+question_1.save(function (err) {
   if (err) return handleError(err);
    // saved!
  });
