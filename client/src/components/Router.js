@@ -6,6 +6,7 @@ import StudentList from './StudentList';
 import TestResult from './TestResult';
 import CreateTest from './CreateTest';
 import ImportQ from './ImportQ';
+import PullQuestion from './PullQuestion';
 
 const baseUrl = process.env.PUBLIC_URL;
 const Router = () => (
@@ -16,6 +17,7 @@ const Router = () => (
       <Route path={`${baseUrl}/testresult`} component={TestResult} />
       <Route path={`${baseUrl}/createtest`} component={CreateTest} />
       <Route path={`${baseUrl}/importquestion`} component={ImportQ} />
+      <Route path={`${baseUrl}/PullQuestion`} component={PullQuestion} />
     </Switch>
   </BrowserRouter>
 );

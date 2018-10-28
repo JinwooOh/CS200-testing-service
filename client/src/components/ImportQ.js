@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Files from 'react-files';
 import Nav from './Nav';
 import ImportQCSV from './ImportQCSV';
 import ImportQAddQuestion from './ImportQ_AddQuestion';

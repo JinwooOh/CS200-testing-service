@@ -1,8 +1,10 @@
-import React, { Component } from "react";
-import DatePicker from "react-datepicker";
-import moment from "moment";
-import Nav from "./Nav";
-import "react-datepicker/dist/react-datepicker.css";
+import React, { Component } from 'react';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+import Nav from './Nav';
+import 'react-datepicker/dist/react-datepicker.css';
+
 export default class CreateTest extends Component {
   constructor(props) {
     super(props);
@@ -10,16 +12,19 @@ export default class CreateTest extends Component {
       startDate: moment(),
       startTime: moment(),
       endTime: moment(),
-      name: "",
-      difficulty: "",
-      number: 0,
-      multiplechoice: ""
+      name: '', // test name
+      difficulty: '',
+      number: 0, // number of questions
+      multiplechoice: '',
+      valid: true, // check whether input fields is valid
     };
   }
+
   handleChangeDate = date => {
     console.log(date);
     this.setState({ startDate: date });
   };
+
   handleChangeStartTime = date => {
     this.setState({ startTime: date });
   };
@@ -32,15 +37,19 @@ export default class CreateTest extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  pullQuestion = () => {
+    console.log('test');
+  };
+
   reset = () => {
     this.setState({
       startDate: moment(),
       startTime: moment(),
       endTime: moment(),
-      name: "",
-      difficulty: "",
+      name: '',
+      difficulty: '',
       number: 0,
-      multiplechoice: ""
+      multiplechoice: '',
     });
   };
 
@@ -49,13 +58,9 @@ export default class CreateTest extends Component {
       <div>
         <Nav />
         <p>CreateTest Component</p>
-        <label for="date"> Date </label>
-        <DatePicker
-          id="date"
-          selected={this.state.startDate}
-          onChange={this.handleChangeDate}
-        />
-        <label for="name"> Test Name </label>
+        <label htmlFor="date"> Date </label>
+        <DatePicker id="date" selected={this.state.startDate} onChange={this.handleChangeDate} />
+        <label htmlFor="name"> Test Name </label>
         <input
           type="text"
           id="name"
@@ -64,7 +69,7 @@ export default class CreateTest extends Component {
           onChange={this.handleChange}
         />
         <br />
-        <label for="startTime"> Start Time </label>
+        <label htmlFor="startTime"> Start Time </label>
         <DatePicker
           id="startTime"
           selected={this.state.startTime}
@@ -75,7 +80,7 @@ export default class CreateTest extends Component {
           dateFormat="LT"
           timeCaption="Time"
         />
-        <label for="endTime"> End Time </label>
+        <label htmlFor="endTime"> End Time </label>
         <DatePicker
           id="endTime"
           selected={this.state.endTime}
@@ -86,7 +91,7 @@ export default class CreateTest extends Component {
           dateFormat="LT"
           timeCaption="Time"
         />
-        <label for="number"> Question Number </label>
+        <label htmlFor="number"> Question Number </label>
         <input
           value={this.state.number}
           name="number"
@@ -96,17 +101,13 @@ export default class CreateTest extends Component {
           onChange={this.handleChange}
         />
 
-        <select
-          value={this.state.difficulty}
-          name="difficulty"
-          onChange={this.handleChange}
-        >
+        <select value={this.state.difficulty} name="difficulty" onChange={this.handleChange}>
           <option value="easy">easy</option>
           <option value="medium">medium</option>
           <option value="hard">hard</option>
         </select>
         <br />
-        <label for="multiplechoice"> Multiplechoice </label>
+        <label htmlFor="multiplechoice"> Multiplechoice </label>
         <form onSubmit>
           <input
             type="radio"
@@ -124,7 +125,12 @@ export default class CreateTest extends Component {
           />
         </form>
         <button onClick={() => this.reset()}>Reset</button>
-        <button>Pull Questions</button>
+        <button onClick={() => this.pullQuestion()}>Pull Question</button>
+        {this.state.valid ? (
+          <Link to="/PullQuestion">Pull Question</Link>
+        ) : (
+          <Link to="/createtest">Pull Question</Link>
+        )}
       </div>
     );
   }
