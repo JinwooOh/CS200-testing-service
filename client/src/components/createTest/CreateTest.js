@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-import Nav from './Nav';
+// import { Link } from 'react-router-dom';
+import Nav from '../Nav';
 import 'react-datepicker/dist/react-datepicker.css';
 
 export default class CreateTest extends Component {
@@ -38,7 +39,7 @@ export default class CreateTest extends Component {
   };
 
   pullQuestion = () => {
-    console.log('test');
+    return this.state.valid ? this.props.history.push('/pull_question') : ' ';
   };
 
   reset = () => {
@@ -108,7 +109,7 @@ export default class CreateTest extends Component {
         </select>
         <br />
         <label htmlFor="multiplechoice"> Multiplechoice </label>
-        <form onSubmit>
+        <form>
           <input
             type="radio"
             name="multiplechoice"
@@ -126,12 +127,11 @@ export default class CreateTest extends Component {
         </form>
         <button onClick={() => this.reset()}>Reset</button>
         <button onClick={() => this.pullQuestion()}>Pull Question</button>
-        {this.state.valid ? (
-          <Link to="/PullQuestion">Pull Question</Link>
-        ) : (
-          <Link to="/createtest">Pull Question</Link>
-        )}
       </div>
     );
   }
 }
+
+CreateTest.propTypes = {
+  history: PropTypes.object.isRequired,
+};

@@ -1,0 +1,8 @@
+.question-list{
+  background-color: $color-gray;
+  border: 1px solid $color-primary;
+  & span {
+    display: block;
+    margin: 0 auto;
+  }
+}

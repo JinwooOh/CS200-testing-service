@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// pull question navigation bar
 export default class PullingOptions extends Component {
   render() {
     return (

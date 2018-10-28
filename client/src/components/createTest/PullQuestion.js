@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import PullingOptions from './PullingOptions';
-import Nav from './Nav';
-import QuestionList from './QuestionList';
-import dummy from './dummy.json';
+import Nav from '../Nav';
+import QuestionList from '../QuestionList';
+import dummy from '../dummy.json';
 
+// pull question page from CreateTest component
 export default class PullQuestion extends Component {
   constructor(props) {
     super(props);

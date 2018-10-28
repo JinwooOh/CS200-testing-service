@@ -4,9 +4,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
 import StudentList from './StudentList';
 import TestResult from './TestResult';
-import CreateTest from './CreateTest';
+import CreateTest from './createTest/CreateTest';
 import ImportQ from './ImportQ';
-import PullQuestion from './PullQuestion';
+import PullQuestion from './createTest/PullQuestion';
 
 const baseUrl = process.env.PUBLIC_URL;
 const Router = () => (
@@ -17,7 +17,7 @@ const Router = () => (
       <Route path={`${baseUrl}/testresult`} component={TestResult} />
       <Route path={`${baseUrl}/createtest`} component={CreateTest} />
       <Route path={`${baseUrl}/importquestion`} component={ImportQ} />
-      <Route path={`${baseUrl}/PullQuestion`} component={PullQuestion} />
+      <Route path={`${baseUrl}/pull_question`} component={PullQuestion} />
     </Switch>
   </BrowserRouter>
 );

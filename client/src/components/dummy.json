@@ -1,67 +1,24 @@
 {
   "q1": {
-    "id": "abc",
-    "desc": "this is dummy question",
-    "quastion": "1+1?",
-    "options": [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5"
+    "answers": [
+      3,
+      2,
+      1
     ],
-    "answers": "3"
+    "updated": "01/01/2018",
+    "questions": "1+2?",
+    "correctAnswer": "3"
   },
   "q2": {
-    "id": "abc",
-    "desc": "this is dummy question",
-    "quastion": "1+1?",
-    "options": [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5"
+    "answers": [
+      5,
+      4,
+      3,
+      1,
+      0
     ],
-    "answers": "3"
-  },
-  "q3": {
-    "id": "abc",
-    "desc": "this is dummy question",
-    "quastion": "1+1?",
-    "options": [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5"
-    ],
-    "answers": "3"
-  },
-  "q4": {
-    "id": "abc",
-    "desc": "this is dummy question",
-    "quastion": "1+1?",
-    "options": [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5"
-    ],
-    "answers": "3"
-  },
-  "q5": {
-    "id": "abc",
-    "desc": "this is dummy question",
-    "quastion": "1+1?",
-    "options": [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5"
-    ],
-    "answers": "3"
+    "updated": "12/31/2018",
+    "questions": "0+0?",
+    "correctAnswer": "0"
   }
 }
