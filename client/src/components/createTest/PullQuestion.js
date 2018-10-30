@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PullingOptions from './PullingOptions';
 import Nav from '../Nav';
-import QuestionList from '../QuestionList';
+import QuestionList from './QuestionList';
 import dummy from '../dummy.json';
 
 // pull question page from CreateTest component

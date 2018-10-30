@@ -39,6 +39,20 @@ export default class CreateTest extends Component {
   };
 
   pullQuestion = () => {
+    const data = this.state;
+    // fetch start here
+    fetch('/api/pullquestion', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => console.error('fetch error at pull question', error)); // error
+    // fetch end
     return this.state.valid ? this.props.history.push('/pull_question') : ' ';
   };
 

@@ -11,5 +11,9 @@ app.get('/test', (req, res) => {
   res.json({data: 'Hello World from server'});
 });
 
+app.post('/api/pullquestion', (req, res) => {
+  console.log(req.body);
+});
+
 const port = process.env.PORT || 5000;
 app.listen(port, ()=> console.log(`Server is running on port ${port}`));
