@@ -20,9 +20,9 @@ When creating a branch to fix a bug, following this naming convention bug/<featu
 # Finishing a Feature
 Once you feel you've completed a feature, find it in Trello and add the related card to the *Code Review* list. 
 
-Then go to GitHub and submit a pull request (PR) for the branch. Assignment the whole team to review the code, then submit.
+Then go to GitHub and submit a pull request (PR) for the branch. Add comments of the changes you made, and things that you your reviewer should focus on testing while looking through your feature. Assign members (the whole team) to review the code, then submit your PR.
 If there are merge requests, you will need to resolve those before merging into the desired branch (usually ` develop ` or, if a bug fix, your feature branch).
 
-Merges into master should be RARE to maintain a stable version of the app.
+Merges into master should be RARE to maintain a stable version of the app. 
 
 # Testing
