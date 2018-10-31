@@ -72,75 +72,96 @@ export default class CreateTest extends Component {
     return (
       <div>
         <Nav />
-        <p>CreateTest Component</p>
-        <label htmlFor="date"> Date </label>
-        <DatePicker id="date" selected={this.state.startDate} onChange={this.handleChangeDate} />
-        <label htmlFor="name"> Test Name </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-        />
-        <br />
-        <label htmlFor="startTime"> Start Time </label>
-        <DatePicker
-          id="startTime"
-          selected={this.state.startTime}
-          onChange={this.handleChangeStartTime}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={15}
-          dateFormat="LT"
-          timeCaption="Time"
-        />
-        <label htmlFor="endTime"> End Time </label>
-        <DatePicker
-          id="endTime"
-          selected={this.state.endTime}
-          onChange={this.handleChangeEndTime}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={15}
-          dateFormat="LT"
-          timeCaption="Time"
-        />
-        <label htmlFor="number"> Question Number </label>
-        <input
-          value={this.state.number}
-          name="number"
-          id="number"
-          type="number"
-          min="1"
-          onChange={this.handleChange}
-        />
+        <div className="createTest">
+          <h3 className="createTest--title">Create Test</h3>
 
-        <select value={this.state.difficulty} name="difficulty" onChange={this.handleChange}>
-          <option value="easy">easy</option>
-          <option value="medium">medium</option>
-          <option value="hard">hard</option>
-        </select>
-        <br />
-        <label htmlFor="multiplechoice"> Multiplechoice </label>
-        <form>
+          <label htmlFor="date"> Date </label>
+          <div className="datePicker">
+            <DatePicker
+              id="date"
+              selected={this.state.startDate}
+              onChange={this.handleChangeDate}
+            />
+          </div>
+          <label htmlFor="name"> Test Name </label>
           <input
-            type="radio"
-            name="multiplechoice"
-            id="multiplechoice"
-            value="true"
+            type="text"
+            id="name"
+            name="name"
+            value={this.state.name}
             onChange={this.handleChange}
           />
+
+          <br />
+
+          <label htmlFor="startTime"> Start Time </label>
+          <div className="datePicker">
+            <DatePicker
+              id="startTime"
+              selected={this.state.startTime}
+              onChange={this.handleChangeStartTime}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              dateFormat="LT"
+              timeCaption="Time"
+            />
+          </div>
+          <label htmlFor="endTime"> End Time </label>
+          <div className="datePicker">
+            <DatePicker
+              id="endTime"
+              selected={this.state.endTime}
+              onChange={this.handleChangeEndTime}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              dateFormat="LT"
+              timeCaption="Time"
+            />
+          </div>
+          <label htmlFor="number"> Question Number </label>
           <input
-            type="radio"
-            name="multiplechoice"
-            id="multiplechoice"
-            value="false"
+            value={this.state.number}
+            name="number"
+            id="number"
+            type="number"
+            min="1"
             onChange={this.handleChange}
           />
-        </form>
-        <button onClick={() => this.reset()}>Reset</button>
-        <button onClick={() => this.pullQuestion()}>Pull Question</button>
+          <label htmlFor="difficulty">Difficulty</label>
+          <select value={this.state.difficulty} name="difficulty" onChange={this.handleChange}>
+            <option value="easy">easy</option>
+            <option value="medium">medium</option>
+            <option value="hard">hard</option>
+          </select>
+          <br />
+          <label htmlFor="multiplechoice"> Multiplechoice </label>
+          <form>
+            <input
+              type="radio"
+              name="multiplechoice"
+              id="multiplechoice"
+              value="true"
+              onChange={this.handleChange}
+            />
+            <input
+              type="radio"
+              name="multiplechoice"
+              id="multiplechoice"
+              value="false"
+              onChange={this.handleChange}
+            />
+          </form>
+          <div className="createTest--btn">
+            <button className="btn btn__createTest" onClick={() => this.reset()}>
+              Reset
+            </button>
+            <button className="btn btn__createTest" onClick={() => this.pullQuestion()}>
+              Pull Question
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
