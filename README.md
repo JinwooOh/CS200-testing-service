@@ -9,5 +9,11 @@ type ` npm run server `
 For react server on http://localhost:3000/,
 in a client directory type ` npm run start `
 
+# Trello <https://trello.com/b/pjeqZils/iteration-1>
+Assign yourself to cards you plan to work on. There are Due Date options, Checklist, Descriptions, etc. that you can add to communicate with your team members. 
+
 # Branch Naming
 When creating a new feature branch, reference the problem number being addressed in Trello. Ex: 3.3.CalendarModal
+
+# Finishing a Feature
+Once you feel you've completed a feature, find it in Trello and add the related card to the *Code Review* list. 
