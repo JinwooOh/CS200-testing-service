@@ -17,6 +17,8 @@ var userSchema = new Schema ({
     medianScore: Number,
     highestScore  :Number,
     lowestScore   :Number,
+    multipleChoice: Boolean,
+    difficulty: Number,
     createdBy: mongoose.Schema.Types.ObjectId,
     questions:    [mongoose.Schema.Types.ObjectId]
  });
