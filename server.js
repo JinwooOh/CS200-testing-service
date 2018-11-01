@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express()
+const bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 //https://mongoosejs.com/docs/populate.html
 
@@ -14,23 +15,10 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-
-//Define a schema
-var Schema = mongoose.Schema;
-
-var questionSchema = new Schema ({
-  updated:     Date,
-  question:  String,
-  correctAnswer:     Schema.Types.ObjectId,
-  answers:    [Schema.Types.ObjectId]
-});
-
-var answerSchema = new Schema ({
-  updated:     Date,
-  answer:  String
-});
-
-
+app.use(express.json()); // application / json
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/api/pullquestion', (req, res) => {
   console.log(req.body);
   const dummy = {
@@ -67,6 +55,22 @@ app.post('/api/pullquestion', (req, res) => {
     }
   }
   res.json(dummy);
+});
+
+//Define a schema
+var Schema = mongoose.Schema;
+
+var questionSchema = new Schema ({
+  updated:     Date,
+  question:  String,
+  correctAnswer:     Schema.Types.ObjectId,
+  answers:    [Schema.Types.ObjectId]
+});
+
+var answerSchema = new Schema ({
+  updated:     Date,
+  answer:  String
+});
 
 var userSchema = new Schema ({
   loginType : String,
@@ -183,3 +187,6 @@ score_1.userAnswers.push(answer_1._id)
   if (err) return handleError(err);
    // saved!
  });
+
+const port = process.env.PORT || 5000;
+app.listen(port, ()=> console.log(`Server is running on port ${port}`));
