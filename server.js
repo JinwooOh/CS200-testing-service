@@ -49,6 +49,8 @@ var examSchema = new Schema ({
    medianScore: Number,
    highestScore  :Number,
    lowestScore   :Number,
+   multipleChoice: Boolean,
+   difficulty: Number,
    createdBy: mongoose.Schema.Types.ObjectId,
    questions:    [mongoose.Schema.Types.ObjectId]
 });
@@ -97,6 +99,8 @@ var exam_1 = new Exam({
    medianScore: 9.75,
    highestScore  :10,
    lowestScore   :9.5,
+   difficulty: 2,
+   multipleChoice: true
 })
 
 var user_1 = new User({
