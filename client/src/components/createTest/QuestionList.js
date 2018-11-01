@@ -27,5 +27,5 @@ export default class QuestionList extends Component {
 }
 
 QuestionList.propTypes = {
-  questionList: PropTypes.array.isRequired,
+  questionList: PropTypes.object.isRequired,
 };

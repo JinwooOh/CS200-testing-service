@@ -77,6 +77,13 @@ li {
     outline: none; }
   .createTest label {
     display: block; }
+  .createTest select {
+    outline: none;
+    background: transparent;
+    font-size: 1.2rem;
+    height: 3.4rem;
+    padding: 0.5rem;
+    width: 33.5rem; }
 
 .datePicker {
   display: inline-block; }

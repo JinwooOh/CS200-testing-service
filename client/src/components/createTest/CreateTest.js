@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
+
 import moment from 'moment';
 // import { Link } from 'react-router-dom';
 import Nav from '../Nav';
-import 'react-datepicker/dist/react-datepicker.css';
+import CreateTestForm from './CreateTestForm';
+import CreateTestButtons from './CreateTestButtons';
+import PullQuestion from './PullQuestion';
 
 export default class CreateTest extends Component {
   constructor(props) {
@@ -17,6 +19,7 @@ export default class CreateTest extends Component {
       difficulty: '',
       number: 0, // number of questions
       multiplechoice: '',
+      questionList: {},
       valid: true, // check whether input fields is valid
     };
   }
@@ -41,6 +44,7 @@ export default class CreateTest extends Component {
   pullQuestion = () => {
     const data = this.state;
     // fetch start here
+    // update questionList after fetching
     fetch('/api/pullquestion', {
       method: 'POST',
       headers: {
@@ -48,12 +52,13 @@ export default class CreateTest extends Component {
       },
       body: JSON.stringify(data),
     })
-      .then(response => {
-        console.log(response);
+      .then(res => res.json())
+      .then(res => {
+        this.setState({ questionList: res });
+        console.log(res);
       })
       .catch(error => console.error('fetch error at pull question', error)); // error
     // fetch end
-    return this.state.valid ? this.props.history.push('/pull_question') : ' ';
   };
 
   reset = () => {
@@ -65,6 +70,7 @@ export default class CreateTest extends Component {
       difficulty: '',
       number: 0,
       multiplechoice: '',
+      questionList: {},
     });
   };
 
@@ -73,94 +79,15 @@ export default class CreateTest extends Component {
       <div>
         <Nav />
         <div className="createTest">
-          <h3 className="createTest--title">Create Test</h3>
-
-          <label htmlFor="date"> Date </label>
-          <div className="datePicker">
-            <DatePicker
-              id="date"
-              selected={this.state.startDate}
-              onChange={this.handleChangeDate}
-            />
-          </div>
-          <label htmlFor="name"> Test Name </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={this.state.name}
-            onChange={this.handleChange}
+          <CreateTestForm
+            fields={this.state}
+            handleChange={this.handleChange}
+            handleChangeDate={this.handleChangeDate}
+            handleChangeEndTime={this.handleChangeEndTime}
+            handleChangeStartTime={this.handle}
           />
-
-          <br />
-
-          <label htmlFor="startTime"> Start Time </label>
-          <div className="datePicker">
-            <DatePicker
-              id="startTime"
-              selected={this.state.startTime}
-              onChange={this.handleChangeStartTime}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={15}
-              dateFormat="LT"
-              timeCaption="Time"
-            />
-          </div>
-          <label htmlFor="endTime"> End Time </label>
-          <div className="datePicker">
-            <DatePicker
-              id="endTime"
-              selected={this.state.endTime}
-              onChange={this.handleChangeEndTime}
-              showTimeSelect
-              showTimeSelectOnly
-              timeIntervals={15}
-              dateFormat="LT"
-              timeCaption="Time"
-            />
-          </div>
-          <label htmlFor="number"> Question Number </label>
-          <input
-            value={this.state.number}
-            name="number"
-            id="number"
-            type="number"
-            min="1"
-            onChange={this.handleChange}
-          />
-          <label htmlFor="difficulty">Difficulty</label>
-          <select value={this.state.difficulty} name="difficulty" onChange={this.handleChange}>
-            <option value="easy">easy</option>
-            <option value="medium">medium</option>
-            <option value="hard">hard</option>
-          </select>
-          <br />
-          <label htmlFor="multiplechoice"> Multiplechoice </label>
-          <form>
-            <input
-              type="radio"
-              name="multiplechoice"
-              id="multiplechoice"
-              value="true"
-              onChange={this.handleChange}
-            />
-            <input
-              type="radio"
-              name="multiplechoice"
-              id="multiplechoice"
-              value="false"
-              onChange={this.handleChange}
-            />
-          </form>
-          <div className="createTest--btn">
-            <button className="btn btn__createTest" onClick={() => this.reset()}>
-              Reset
-            </button>
-            <button className="btn btn__createTest" onClick={() => this.pullQuestion()}>
-              Pull Question
-            </button>
-          </div>
+          <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
+          <PullQuestion questionList={this.state.questionList} />
         </div>
       </div>
     );
