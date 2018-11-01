@@ -21,8 +21,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/api/pullquestion', (req, res) => {
   console.log(req.body);
-  const dummy = {
-    "q1": {
+  const dummy = [{
+    "question1": {
       "answers": [
         3,
         2,
@@ -31,29 +31,31 @@ app.post('/api/pullquestion', (req, res) => {
       "updated": "01/01/2018",
       "question": "1+2?",
       "correctAnswer": "3"
-    },
-    "q2": {
+      }
+    },{
+    "question2": {
       "answers": [
-        5,
-        4,
         3,
-        1,
-        0
+        2,
+        1
       ],
-      "updated": "12/31/2018",
-      "question": "0+0?",
-      "correctAnswer": "0"
-    },
-    "q3": {
-      "answers": [
-        1,
-        0
-      ],
-      "updated": "12/31/2018",
-      "question": "0+0?",
-      "correctAnswer": "0"
-    }
-  }
+      "updated": "01/01/2018",
+      "question": "1c+2a?",
+      "correctAnswer": "3e"
+      }
+    },{
+      "question3": {
+        "answers": [
+          3,
+          2,
+          1
+        ],
+        "updated": "01/01/2018",
+        "question": "111+222?",
+        "correctAnswer": "333"
+        }
+      },
+  ];
   res.json(dummy);
 });
 

@@ -8,7 +8,6 @@ export default class PullQuestion extends Component {
     return (
       <div>
         <PullingOptions />
-
         <QuestionList questionList={this.props.questionList} />
       </div>
     );

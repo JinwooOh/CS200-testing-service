@@ -6,9 +6,18 @@ export default class QuestionList extends Component {
     // individual question
     const question = this.props.questionList[key];
     const renderQuestion = Object.keys(question).map(item => {
+      // console.log(item); // string
+      // console.log(question[item]); // object
       return (
         <span className="question-list-gap" key={item}>
-          {item}: {question[item]}
+          {item} :
+          <ol>
+            {Object.keys(question[item]).map(e => (
+              <li>
+                {e}: {question[item][e]}
+              </li>
+            ))}
+          </ol>
         </span>
       );
     });
@@ -18,6 +27,7 @@ export default class QuestionList extends Component {
 
   render() {
     const questionKeys = Object.keys(this.props.questionList);
+
     return (
       <div className="question-list">
         <ol>{questionKeys.map(this.renderQuestion)}</ol>
@@ -27,5 +37,5 @@ export default class QuestionList extends Component {
 }
 
 QuestionList.propTypes = {
-  questionList: PropTypes.object.isRequired,
+  questionList: PropTypes.array.isRequired,
 };

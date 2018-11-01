@@ -19,7 +19,7 @@ export default class CreateTest extends Component {
       difficulty: '',
       number: 0, // number of questions
       multiplechoice: '',
-      questionList: {},
+      questionList: [],
       valid: true, // check whether input fields is valid
     };
   }
@@ -54,11 +54,28 @@ export default class CreateTest extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        this.setState({ questionList: res });
+        // console.log(JSON.parse(res));
         console.log(res);
+        this.setState({ questionList: res });
       })
       .catch(error => console.error('fetch error at pull question', error)); // error
     // fetch end
+  };
+
+  shuffleQuestionList = () => {
+    console.log(JSON.parse(this.state.questionList));
+    const arr = this.state.questionList;
+    let currentIndex = arr.length;
+    let tempValue;
+    let randomIndex;
+    while (currentIndex !== 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      // swap
+      tempValue = arr[currentIndex];
+      arr[currentIndex] = arr[randomIndex];
+      arr[randomIndex] = tempValue;
+    }
   };
 
   reset = () => {
@@ -70,7 +87,7 @@ export default class CreateTest extends Component {
       difficulty: '',
       number: 0,
       multiplechoice: '',
-      questionList: {},
+      questionList: [],
     });
   };
 
