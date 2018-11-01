@@ -3,8 +3,12 @@
 
 @import "base/_base";
 @import "base/_typography";
-@import "components/_question-list";
 
+@import "components/_question-list";
+@import "components/_buttons";
+
+@import "layout/_createTest";
 @import "layout/_nav";
+@import "layout/_layout";
 
 // @import "components/_buttons";
