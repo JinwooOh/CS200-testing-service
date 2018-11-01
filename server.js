@@ -22,8 +22,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/pullquestion', (req, res) => {
   console.log(req.body);
+  const numQuestion = req.body.number;
+  const data_array = [];
+
+  // need to fix this
+  console.log(Question.count({}, (err, c)=>console.log(c)));
   Question.find({}, (err, data)=>{
-    res.json(data[1]);
+    for(let i = 0; i < numQuestion; i++){
+      data_array.push(data[i]);
+    }
+    res.json(data_array);
   })
 });
 
