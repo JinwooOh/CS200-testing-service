@@ -63,7 +63,6 @@ export default class CreateTest extends Component {
   };
 
   shuffleQuestionList = () => {
-    console.log(JSON.parse(this.state.questionList));
     const arr = this.state.questionList;
     let currentIndex = arr.length;
     let tempValue;
@@ -76,6 +75,7 @@ export default class CreateTest extends Component {
       arr[currentIndex] = arr[randomIndex];
       arr[randomIndex] = tempValue;
     }
+    this.setState({ questionList: arr });
   };
 
   reset = () => {
@@ -104,7 +104,10 @@ export default class CreateTest extends Component {
             handleChangeStartTime={this.handle}
           />
           <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
-          <PullQuestion questionList={this.state.questionList} />
+          <PullQuestion
+            questionList={this.state.questionList}
+            shuffleQuestionList={this.shuffleQuestionList}
+          />
         </div>
       </div>
     );

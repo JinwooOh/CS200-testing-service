@@ -7,7 +7,7 @@ export default class PullQuestion extends Component {
   render() {
     return (
       <div>
-        <PullingOptions />
+        <PullingOptions shuffleQuestionList={this.props.shuffleQuestionList} />
         <QuestionList questionList={this.props.questionList} />
       </div>
     );
