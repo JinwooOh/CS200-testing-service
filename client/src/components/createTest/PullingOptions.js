@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // pull question navigation bar
 export default class PullingOptions extends Component {
@@ -18,3 +19,7 @@ export default class PullingOptions extends Component {
     );
   }
 }
+
+PullingOptions.propTypes = {
+  shuffleQuestionList: PropTypes.func.isRequired,
+};

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
 import moment from 'moment';
-// import { Link } from 'react-router-dom';
 import Nav from '../Nav';
 import CreateTestForm from './CreateTestForm';
 import CreateTestButtons from './CreateTestButtons';
@@ -54,20 +51,25 @@ export default class CreateTest extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        // console.log(JSON.parse(res));
-        console.log(res);
-        this.setState({ questionList: res });
+        const result = [];
+        for (const i in res) {
+          result.push([i, res[i]]);
+        }
+        console.log(result);
+        this.setState({ questionList: result });
       })
       .catch(error => console.error('fetch error at pull question', error)); // error
     // fetch end
   };
 
+  // Fisher-Yates-Durstenfeld shuffle
   shuffleQuestionList = () => {
     const arr = this.state.questionList;
     let currentIndex = arr.length;
     let tempValue;
     let randomIndex;
     while (currentIndex !== 0) {
+      // random index
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
       // swap
@@ -113,7 +115,3 @@ export default class CreateTest extends Component {
     );
   }
 }
-
-CreateTest.propTypes = {
-  history: PropTypes.object.isRequired,
-};

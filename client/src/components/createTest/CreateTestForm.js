@@ -57,12 +57,12 @@ const CreateTestForm = props => {
         min="1"
         onChange={props.handleChange}
       />
-      <label htmlFor="difficulty">Difficulty</label>
+      {/* <label htmlFor="difficulty">Difficulty</label>
       <select value={props.fields.difficulty} name="difficulty" onChange={props.handleChange}>
         <option value="easy">easy</option>
         <option value="medium">medium</option>
         <option value="hard">hard</option>
-      </select>
+      </select> */}
       <br />
       <label htmlFor="multiplechoice"> Multiplechoice </label>
       <form>

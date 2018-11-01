@@ -43,6 +43,7 @@
       {}
     ],
     "react/button-has-type": 0,
+    "react/no-unused-state": 0,
     "no-debugger": 0,
     "no-alert": 0,
     "no-unused-vars": [

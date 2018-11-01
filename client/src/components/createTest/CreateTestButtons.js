@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const CreateTestButtons = props => {
   return (
@@ -14,3 +15,8 @@ const CreateTestButtons = props => {
 };
 
 export default CreateTestButtons;
+
+CreateTestButtons.propTypes = {
+  reset: PropTypes.func.isRequired,
+  pullQuestion: PropTypes.func.isRequired,
+};

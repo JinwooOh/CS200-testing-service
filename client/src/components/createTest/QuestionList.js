@@ -13,7 +13,7 @@ export default class QuestionList extends Component {
           {item} :
           <ol>
             {Object.keys(question[item]).map(e => (
-              <li>
+              <li key={e}>
                 {e}: {question[item][e]}
               </li>
             ))}

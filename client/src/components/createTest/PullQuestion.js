@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import PullingOptions from './PullingOptions';
 import QuestionList from './QuestionList';
-
 // pull question page from CreateTest component
 export default class PullQuestion extends Component {
   render() {
@@ -13,3 +13,8 @@ export default class PullQuestion extends Component {
     );
   }
 }
+
+PullQuestion.propTypes = {
+  shuffleQuestionList: PropTypes.func.isRequired,
+  questionList: PropTypes.array.isRequired,
+};

@@ -19,44 +19,12 @@ app.use(express.json()); // application / json
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 app.post('/api/pullquestion', (req, res) => {
   console.log(req.body);
-  const dummy = [{
-    "question1": {
-      "answers": [
-        3,
-        2,
-        1
-      ],
-      "updated": "01/01/2018",
-      "question": "1+2?",
-      "correctAnswer": "3"
-      }
-    },{
-    "question2": {
-      "answers": [
-        3,
-        2,
-        1
-      ],
-      "updated": "01/01/2018",
-      "question": "1c+2a?",
-      "correctAnswer": "3e"
-      }
-    },{
-      "question3": {
-        "answers": [
-          3,
-          2,
-          1
-        ],
-        "updated": "01/01/2018",
-        "question": "111+222?",
-        "correctAnswer": "333"
-        }
-      },
-  ];
-  res.json(dummy);
+  Question.find({}, (err, data)=>{
+    res.json(data[1]);
+  })
 });
 
 //Define a schema
@@ -116,83 +84,83 @@ var Score = mongoose.model('Score', scoreSchema );
 
 // // create instances of the models
 
+// var answer_1 = new Answer({
+//   updated:     Date.now(),
+//   answer:  "Right Answer"
+// });
+// var answer_2 = new Answer({
+//   updated:     Date.now(),
+//   answer:  "Wrong Answer"
+// });
+// var question_1 = new Question({
+//   updated:     Date.now(),
+//   question:  "What will the following code print out when it is run?",
+//   correctAnswer:    answer_1._id,
+// });
+// question_1.answers.push(answer_1._id);
+// question_1.answers.push(answer_2._id);
 
-var answer_1 = new Answer({
-  updated:     Date.now(),
-  answer:  "Right Answer"
-});
-var answer_2 = new Answer({
-  updated:     Date.now(),
-  answer:  "Wrong Answer"
-});
-var question_1 = new Question({
-  updated:     Date.now(),
-  question:  "What will the following code print out when it is run?",
-  correctAnswer:    answer_1._id,
-});
-question_1.answers.push(answer_1._id);
-question_1.answers.push(answer_2._id);
+// var exam_1 = new Exam({
+//    timeLimit: 60,
+//    courseName: "Software Engineering",
+//    courseNumber: 1234,
+//    dateCreated: Date.now(),
+//    updated:     Date.now(),
+//    avgScore: 9.8,
+//    medianScore: 9.75,
+//    highestScore  :10,
+//    lowestScore   :9.5,
+//    difficulty: 2,
+//    multipleChoice: true
+// })
 
-var exam_1 = new Exam({
-   timeLimit: 60,
-   courseName: "Software Engineering",
-   courseNumber: 1234,
-   dateCreated: Date.now(),
-   updated:     Date.now(),
-   avgScore: 9.8,
-   medianScore: 9.75,
-   highestScore  :10,
-   lowestScore   :9.5,
-   difficulty: 2,
-   multipleChoice: true
-})
+// var user_1 = new User({
+//   loginType : 'Admin',
+//   name:        'Mark',
+//   userId:          'mrenault',
+//   updated:     Date.now(),
+// })
+// user_1.exams.push(exam_1._id)
+// exam_1.userId = user_1._id
 
-var user_1 = new User({
-  loginType : 'Admin',
-  name:        'Mark',
-  userId:          'mrenault',
-  updated:     Date.now(),
-})
-user_1.exams.push(exam_1._id)
-exam_1.userId = user_1._id
-
-var score_1 = new Score({
-   examId:  exam_1._id,
-   dateTaken:  Date.now(),
-   userId:    user_1._id,
-})
-score_1.relevantQuestions.push(question_1._id)
-score_1.userAnswers.push(answer_1._id)
+// var score_1 = new Score({
+//    examId:  exam_1._id,
+//    dateTaken:  Date.now(),
+//    userId:    user_1._id,
+// })
+// score_1.relevantQuestions.push(question_1._id)
+// score_1.userAnswers.push(answer_1._id)
 
 
- answer_1.save(function (err) {
-  if (err) return handleError(err);
-   // saved!
- });
- answer_2.save(function (err) {
-  if (err) return handleError(err);
-   // saved!
- });
- // Save the data
- question_1.save(function (err) {
-  if (err) return handleError(err);
-   // saved!
- });
+// answer_1.save(function (err) {
+// if (err) return handleError(err);
+//   // saved!
+// });
+// answer_2.save(function (err) {
+// if (err) return handleError(err);
+//   // saved!
+// });
+// // Save the data
+// question_1.save(function (err) {
+// if (err) return handleError(err);
+//   // saved!
+// });
 
- exam_1.save(function (err) {
-  if (err) return handleError(err);
-   // saved!
- });
+// exam_1.save(function (err) {
+// if (err) return handleError(err);
+//   // saved!
+// });
 
- user_1.save(function (err) {
-  if (err) return handleError(err);
-   // saved!
- });
+// user_1.save(function (err) {
+// if (err) return handleError(err);
+//   // saved!
+// });
 
- score_1.save(function (err) {
-  if (err) return handleError(err);
-   // saved!
- });
+// score_1.save(function (err) {
+// if (err) return handleError(err);
+//   // saved!
+// });
+
 
 const port = process.env.PORT || 5000;
 app.listen(port, ()=> console.log(`Server is running on port ${port}`));
