@@ -1,0 +1,33 @@
+.btn{
+  font-size: 1.4rem;
+  font-weight: 500;
+  position: relative;
+  outline: 0;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1.5rem 4rem;
+  display: inline-block;
+  border: 0.1rem solid $color-primary;
+  border-radius: 1.2rem;
+  transition: all 0.2s;
+  background-color: $color-primary;
+  color: $color-white;
+  &:hover {
+    background-color: $color-secondary;
+    transform: translateY(-0.3rem);
+    box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+    border: 0.1rem solid $color-secondary;
+    &::after {
+      transform: scaleX(1.4) scaleY(1.6);
+      opacity: 0;
+    }
+  }
+  &:active {
+    transform: translateY(-0.1rem);
+    box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
+  }
+  &__createTest{
+    padding: 1rem 2rem;
+    margin: 0.4rem;
+  }
+}

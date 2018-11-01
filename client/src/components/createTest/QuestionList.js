@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class QuestionList extends Component {
   renderQuestion = key => {
@@ -24,3 +25,7 @@ export default class QuestionList extends Component {
     );
   }
 }
+
+QuestionList.propTypes = {
+  questionList: PropTypes.object.isRequired,
+};
