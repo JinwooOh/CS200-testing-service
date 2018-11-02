@@ -26,17 +26,33 @@ app.post('/api/pullquestion', async (req, res) => {
   const numQuestion = parseInt(req.body.number); // get the question number from front end
   let questionList = await Question.find({}).limit(numQuestion);
 // extract objectID from answers array
-  res.send(questionList);
-  console.log('My object : ' + questionList);
-  var testId = questionList[0].answers[0];  // get the first id of the first question
-  console.log(testId);
-  let realAnswer =  Answer.find({           // find id of the first question
-     // _id: 5bdb5fec917c35cec07f1d7c;
-     _id: mongoose.Types.ObjectId("5bdb5fec917c35cec07f1d7c")
-  }).limit(1);
-  console.log('name ' + realAnswer.name);
-});
 
+// change answer: objectId -> string
+  for (let i = 0; i < questionList.length; i++) {
+    for (let j = 0; j < questionList[i].answers.length; j++) {
+      // questionList[i].answers[j] = "faf";
+      let realAnswer = await Answer.findById(questionList[i].answers[j]).then(answer => 
+         answer.answer);
+     questionList[i].answers[j] = realAnswer;
+    }
+    for (let j = 0; j < questionList[i].correctAnswer.length; j++) {
+      // questionList[i].answers[j] = "faf";
+      let realAnswer = await Answer.findById(questionList[i].correctAnswer[j]).then(correctAnswer => 
+        correctAnswer.answer);
+     questionList[i].correctAnswer[j] = realAnswer;
+    }
+  }
+
+
+
+  console.log(questionList);
+  
+  res.send(questionList);
+  
+  // var testId = questionList[0].answers[0];  // get the first id of the first question
+  // console.log(testId);
+  
+});
 
 
 
@@ -47,7 +63,7 @@ var Schema = mongoose.Schema;
 var questionSchema = new Schema ({
   updated:     Date,
   question:  String,
-  correctAnswer:     Schema.Types.ObjectId,
+  correctAnswer:     [Schema.Types.ObjectId],
   answers:    [Schema.Types.ObjectId],
 });
 
