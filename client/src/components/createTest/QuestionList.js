@@ -1,40 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class QuestionList extends Component {
-  renderQuestion = key => {
-    // individual question
-    const question = this.props.questionList[key];
-    const renderQuestion = Object.keys(question).map(item => {
-      // console.log(item); // string
-      // console.log(question[item]); // object
-      return (
-        <span className="question-list-gap" key={item}>
-          {item} :
-          <ol>
-            {Object.keys(question[item]).map(e => (
-              <li key={e}>
-                {e}: {question[item][e]}
-              </li>
-            ))}
-          </ol>
-        </span>
-      );
-    });
-    return <li key={key}>{renderQuestion}</li>;
-    // const renderQuestion = Object.keys()
-  };
-
-  render() {
-    const questionKeys = Object.keys(this.props.questionList);
-
-    return (
-      <div className="question-list">
-        <ol>{questionKeys.map(this.renderQuestion)}</ol>
-      </div>
-    );
-  }
-}
+const QuestionList = props => {
+  const questions = props.questionList;
+  return (
+    <div className="question-list">
+      <ol>
+        {questions.map(question => (
+          <div>
+            <p>{question.question}</p>
+            <p>{question.updated}</p>
+            <p>{question.answers}</p>
+          </div>
+        ))}
+      </ol>
+    </div>
+  );
+};
+export default QuestionList;
 
 QuestionList.propTypes = {
   questionList: PropTypes.array.isRequired,

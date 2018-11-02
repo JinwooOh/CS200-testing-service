@@ -51,11 +51,7 @@ export default class CreateTest extends Component {
     })
       .then(res => res.json())
       .then(res => {
-        const result = [];
-        for (const i in res) {
-          result.push([i, res[i]]);
-        }
-        console.log(result);
+        const result = [...res];
         this.setState({ questionList: result });
       })
       .catch(error => console.error('fetch error at pull question', error)); // error

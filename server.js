@@ -20,19 +20,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/api/pullquestion', (req, res) => {
-  console.log(req.body);
-  const numQuestion = req.body.number;
-  const data_array = [];
-
-  // need to fix this
-  console.log(Question.count({}, (err, c)=>console.log(c)));
-  Question.find({}, (err, data)=>{
-    for(let i = 0; i < numQuestion; i++){
-      data_array.push(data[i]);
-    }
-    res.json(data_array);
-  })
+app.post('/api/pullquestion', async (req, res) => {
+  //write error handler
+  const numQuestion = parseInt(req.body.number);
+  let questionList = await Question.find({},'-_id -__v').limit(numQuestion);
+  res.send(questionList);
 });
 
 //Define a schema
@@ -42,7 +34,7 @@ var questionSchema = new Schema ({
   updated:     Date,
   question:  String,
   correctAnswer:     Schema.Types.ObjectId,
-  answers:    [Schema.Types.ObjectId]
+  answers:    [Schema.Types.ObjectId],
 });
 
 var answerSchema = new Schema ({
