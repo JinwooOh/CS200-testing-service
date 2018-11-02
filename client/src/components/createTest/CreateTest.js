@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import Nav from '../Nav';
-import CreateTestForm from './CreateTestForm';
-import CreateTestButtons from './CreateTestButtons';
-import PullQuestion from './PullQuestion';
+import React, { Component } from "react";
+import moment from "moment";
+import Nav from "../Nav";
+import CreateTestForm from "./CreateTestForm";
+import CreateTestButtons from "./CreateTestButtons";
+import PullQuestion from "./PullQuestion";
 
 export default class CreateTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
       startDate: moment(),
-      name: '', // test name
-      difficulty: '',
+      name: "", // test name
+      difficulty: "",
       timeLimit: 20,
       number: 0, // number of questions
-      multiplechoice: '',
+      multiplechoice: "",
       questionList: [],
-      valid: true, // check whether input fields is valid
+      valid: true // check whether input fields is valid
     };
   }
 
@@ -28,10 +28,10 @@ export default class CreateTest extends Component {
     if (e.target.validity.valid) {
       // input is numeric
       this.setState({ timeLimit: e.target.value });
-    } else if (e.target.value == '') {
+    } else if (e.target.value == "") {
       // input is not numeric
-      this.numberInput.value = ''; // suppress UI change
-      this.setState({ timeLimit: '' }); // reset state
+      this.numberInput.value = ""; // suppress UI change
+      this.setState({ timeLimit: "" }); // reset state
     }
     // this.setState(event.target.value);
   };
@@ -60,20 +60,30 @@ export default class CreateTest extends Component {
     const data = this.state;
     // fetch start here
     // update questionList after fetching
-    fetch('/api/pullquestion', {
-      method: 'POST',
+    fetch("/api/pullquestion", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(res => {
         const result = [...res];
         this.setState({ questionList: result });
       })
-      .catch(error => console.error('fetch error at pull question', error)); // error
+      .catch(error => console.error("fetch error at pull question", error)); // error
     // fetch end
+  };
+
+  createTest = () => {
+    fetch("/api/createtest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    });
   };
 
   // Fisher-Yates-Durstenfeld shuffle
@@ -97,12 +107,12 @@ export default class CreateTest extends Component {
   reset = () => {
     this.setState({
       startDate: moment(),
-      name: '',
-      difficulty: '',
+      name: "",
+      difficulty: "",
       number: 0,
       timeLimit: 20,
-      multiplechoice: '',
-      questionList: [],
+      multiplechoice: "",
+      questionList: []
     });
   };
 
@@ -117,7 +127,11 @@ export default class CreateTest extends Component {
             handleChangeDate={this.handleChangeDate}
             handleChangeTimeLimit={this.handleChangeTimeLimit}
           />
-          <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
+          <CreateTestButtons
+            reset={this.reset}
+            pullQuestion={this.pullQuestion}
+            createTest={this.createTest}
+          />
           <PullQuestion
             removeQuestion={this.removeQuestion}
             questionList={this.state.questionList}
