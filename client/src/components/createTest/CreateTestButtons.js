@@ -13,12 +13,6 @@ const CreateTestButtons = props => {
       >
         Pull Question
       </button>
-      <button
-        className="btn btn__createTest"
-        onClick={() => props.createTest()}
-      >
-        create test
-      </button>
     </div>
   );
 };
