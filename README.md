@@ -6,7 +6,7 @@ For node server on http://localhost:5000/,
 type ` npm run server ` first 
 
 For react server on http://localhost:3000/,
-in a client/src directory type ` npm run start ` 
+in a client/src directory type ` npm run dev ` 
 
 # Trello <https://trello.com/b/pjeqZils/iteration-1>
 Assign yourself to cards you plan to work on. There are Due Date options, Checklist, Descriptions, etc. that you can add to communicate with your team members. 
