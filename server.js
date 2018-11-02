@@ -20,12 +20,26 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.post('/api/pullquestion', async (req, res) => {
-  //write error handler
-  const numQuestion = parseInt(req.body.number);
+  // TODO write error handler
+  const numQuestion = parseInt(req.body.number); // get the question number from front end
   let questionList = await Question.find({}).limit(numQuestion);
+// extract objectID from answers array
   res.send(questionList);
+  console.log('My object : ' + questionList);
+  var testId = questionList[0].answers[0];  // get the first id of the first question
+  console.log(testId);
+  let realAnswer =  Answer.find({           // find id of the first question
+     // _id: 5bdb5fec917c35cec07f1d7c;
+     _id: mongoose.Types.ObjectId("5bdb5fec917c35cec07f1d7c")
+  }).limit(1);
+  console.log('name ' + realAnswer.name);
 });
+
+
+
+
 
 //Define a schema
 var Schema = mongoose.Schema;
@@ -77,7 +91,7 @@ var scoreSchema = new Schema ({
 
 // Compile model from schema
 var Question = mongoose.model('Question', questionSchema);
-var Answer = mongoose.model('Answer', answerSchema );
+var Answer = mongoose.model('Answer', answerSchema);
 var Exam = mongoose.model('Exam', examSchema );
 var User = mongoose.model('User', userSchema );
 var Score = mongoose.model('Score', scoreSchema );
@@ -92,11 +106,10 @@ var Score = mongoose.model('Score', scoreSchema );
 //   updated:     Date.now(),
 //   answer:  "Wrong Answer"
 // });
-// var question_1 = new Question({
-//   updated:     Date.now(),
-//   question:  "What will the following code print out when it is run?",
-//   correctAnswer:    answer_1._id,
-// });
+var question_1 = new Question({
+  updated:     Date.now(),
+  question:  "Test Question?"
+});
 // question_1.answers.push(answer_1._id);
 // question_1.answers.push(answer_2._id);
 
@@ -116,12 +129,15 @@ var Score = mongoose.model('Score', scoreSchema );
 
 // var user_1 = new User({
 //   loginType : 'Admin',
-//   name:        'Mark',
-//   userId:          'mrenault',
-//   updated:     Date.now(),
+//   name:        'Test',
+//   userId:          'User',
+//   updated:     Date.now()
 // })
-// user_1.exams.push(exam_1._id)
-// exam_1.userId = user_1._id
+//
+// user_1.save(function (err) {
+//     if (err) return handleError(err);
+//     // saved!
+// });
 
 // var score_1 = new Score({
 //    examId:  exam_1._id,
@@ -141,20 +157,17 @@ var Score = mongoose.model('Score', scoreSchema );
 //   // saved!
 // });
 // // Save the data
-// question_1.save(function (err) {
-// if (err) return handleError(err);
-//   // saved!
-// });
+question_1.save(function (err) {
+if (err) return handleError(err);
+  // saved!
+});
 
 // exam_1.save(function (err) {
 // if (err) return handleError(err);
 //   // saved!
 // });
 
-// user_1.save(function (err) {
-// if (err) return handleError(err);
-//   // saved!
-// });
+
 
 // score_1.save(function (err) {
 // if (err) return handleError(err);
