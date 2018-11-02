@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import moment from 'moment';
-import Nav from '../Nav';
-import CreateTestForm from './CreateTestForm';
-import CreateTestButtons from './CreateTestButtons';
-import PullQuestion from './PullQuestion';
+import React, { Component } from "react";
+import moment from "moment";
+import Nav from "../Nav";
+import CreateTestForm from "./CreateTestForm";
+import CreateTestButtons from "./CreateTestButtons";
+import PullQuestion from "./PullQuestion";
 
 export default class CreateTest extends Component {
   constructor(props) {
@@ -12,12 +12,12 @@ export default class CreateTest extends Component {
       startDate: moment(),
       startTime: moment(),
       endTime: moment(),
-      name: '', // test name
-      difficulty: '',
+      name: "", // test name
+      difficulty: "",
       number: 0, // number of questions
-      multiplechoice: '',
+      multiplechoice: "",
       questionList: [],
-      valid: true, // check whether input fields is valid
+      valid: true // check whether input fields is valid
     };
   }
 
@@ -42,12 +42,12 @@ export default class CreateTest extends Component {
     const data = this.state;
     // fetch start here
     // update questionList after fetching
-    fetch('/api/pullquestion', {
-      method: 'POST',
+    fetch("/api/pullquestion", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     })
       .then(res => res.json())
       .then(res => {
@@ -58,8 +58,17 @@ export default class CreateTest extends Component {
         console.log(result);
         this.setState({ questionList: result });
       })
-      .catch(error => console.error('fetch error at pull question', error)); // error
+      .catch(error => console.error("fetch error at pull question", error)); // error
     // fetch end
+  };
+
+  createTest = () => {
+    fetch("/api/createtest", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
   };
 
   // Fisher-Yates-Durstenfeld shuffle
@@ -85,11 +94,11 @@ export default class CreateTest extends Component {
       startDate: moment(),
       startTime: moment(),
       endTime: moment(),
-      name: '',
-      difficulty: '',
+      name: "",
+      difficulty: "",
       number: 0,
-      multiplechoice: '',
-      questionList: [],
+      multiplechoice: "",
+      questionList: []
     });
   };
 
@@ -105,7 +114,11 @@ export default class CreateTest extends Component {
             handleChangeEndTime={this.handleChangeEndTime}
             handleChangeStartTime={this.handle}
           />
-          <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
+          <CreateTestButtons
+            reset={this.reset}
+            pullQuestion={this.pullQuestion}
+            createTest={this.createTest}
+          />
           <PullQuestion
             questionList={this.state.questionList}
             shuffleQuestionList={this.shuffleQuestionList}

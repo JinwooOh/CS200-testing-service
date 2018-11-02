@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class QuestionList extends Component {
   renderQuestion = key => {
@@ -8,6 +8,7 @@ export default class QuestionList extends Component {
     const renderQuestion = Object.keys(question).map(item => {
       // console.log(item); // string
       // console.log(question[item]); // object
+      //console.log(question);
       return (
         <span className="question-list-gap" key={item}>
           {item} :
@@ -25,9 +26,14 @@ export default class QuestionList extends Component {
     // const renderQuestion = Object.keys()
   };
 
-  render() {
-    const questionKeys = Object.keys(this.props.questionList);
+  renderQuestion2 = key => {
+    console.log(key);
+  };
 
+  render() {
+    //console.log(this.props.questionList);
+    const questionKeys = Object.keys(this.props.questionList);
+    //console.log(questionKeys);
     return (
       <div className="question-list">
         <ol>{questionKeys.map(this.renderQuestion)}</ol>
@@ -37,5 +43,5 @@ export default class QuestionList extends Component {
 }
 
 QuestionList.propTypes = {
-  questionList: PropTypes.array.isRequired,
+  questionList: PropTypes.array.isRequired
 };

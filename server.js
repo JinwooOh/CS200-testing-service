@@ -1,86 +1,111 @@
 const express = require("express");
-const app = express()
-const bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+const app = express();
+const bodyParser = require("body-parser");
+var mongoose = require("mongoose");
 //https://mongoosejs.com/docs/populate.html
 
 // var mongoDB = 'mongodb:127.0.0.1:27017/Testing_service.Question';
-var mongoDB = 'mongodb://admin:admin123@ds153239.mlab.com:53239/cs_200_testing_service';
-mongoose.connect(mongoDB,  {useNewUrlParser: true });
+var mongoDB =
+  "mongodb://admin:admin123@ds153239.mlab.com:53239/cs_200_testing_service";
+mongoose.connect(
+  mongoDB,
+  { useNewUrlParser: true }
+);
 mongoose.Promise = global.Promise; // Get Mongoose to use the global promise library
 
 //Get the default connection
 var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.use(express.json()); // application / json
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post('/api/pullquestion', (req, res) => {
+app.post("/api/pullquestion", (req, res) => {
   console.log(req.body);
-  Question.find({}, (err, data)=>{
+  Question.find({}, (err, data) => {
     res.json(data[1]);
-  })
+  });
+});
+
+app.post("/api/createtest", (req, res) => {
+  console.log("create a new test");
+  var new_test = Exam({
+    timeLimit: 40,
+    courseName: "Software Engineering",
+    courseNumber: 506,
+    dateCreated: new Date(),
+    updated: new Date(),
+    avgScore: 0,
+    medianScore: 0,
+    highestScore: 0,
+    lowestScore: 0,
+    multipleChoice: true,
+    difficulty: 2,
+    questions: ["5bdb5fec917c35cec07f1d7e"]
+  });
+  new_test.save(err => {
+    if (err) throw err;
+    console.log("test created");
+  });
 });
 
 //Define a schema
 var Schema = mongoose.Schema;
 
-var questionSchema = new Schema ({
-  updated:     Date,
-  question:  String,
-  correctAnswer:     Schema.Types.ObjectId,
-  answers:    [Schema.Types.ObjectId]
+var questionSchema = new Schema({
+  updated: Date,
+  question: String,
+  correctAnswer: Schema.Types.ObjectId,
+  answers: [Schema.Types.ObjectId]
 });
 
-var answerSchema = new Schema ({
-  updated:     Date,
-  answer:  String
+var answerSchema = new Schema({
+  updated: Date,
+  answer: String
 });
 
-var userSchema = new Schema ({
-  loginType : String,
-  name:        String,
-  userId:          String,
-  updated:     Date,
-  exams:    [mongoose.Schema.Types.ObjectId],
+var userSchema = new Schema({
+  loginType: String,
+  name: String,
+  userId: String,
+  updated: Date,
+  exams: [mongoose.Schema.Types.ObjectId],
   studentList: [mongoose.Schema.Types.ObjectId]
 });
 
-var examSchema = new Schema ({
-   timeLimit: Number,
-   courseName: String,
-   courseNumber: Number,
-   dateCreated: Date,
-   updated:     Date,
-   avgScore: Number,
-   medianScore: Number,
-   highestScore  :Number,
-   lowestScore   :Number,
-   multipleChoice: Boolean,
-   difficulty: Number,
-   createdBy: mongoose.Schema.Types.ObjectId,
-   questions:    [mongoose.Schema.Types.ObjectId]
+var examSchema = new Schema({
+  timeLimit: Number,
+  courseName: String,
+  courseNumber: Number,
+  dateCreated: Date,
+  updated: Date,
+  avgScore: Number,
+  medianScore: Number,
+  highestScore: Number,
+  lowestScore: Number,
+  multipleChoice: Boolean,
+  difficulty: Number,
+  questions: [mongoose.Schema.Types.ObjectId]
 });
 
-var scoreSchema = new Schema ({
-   examId:  mongoose.Schema.Types.ObjectId,
-   dateTaken:  Date,
-   userId:    mongoose.Schema.Types.ObjectId,
-   userAnswers:    [mongoose.Schema.Types.ObjectId],
-   relevantQuestions: [mongoose.Schema.Types.ObjectId]
- });
+var scoreSchema = new Schema({
+  examId: mongoose.Schema.Types.ObjectId,
+  dateTaken: Date,
+  userId: mongoose.Schema.Types.ObjectId,
+  userAnswers: [mongoose.Schema.Types.ObjectId],
+  relevantQuestions: [mongoose.Schema.Types.ObjectId]
+});
 
 // Compile model from schema
-var Question = mongoose.model('Question', questionSchema);
-var Answer = mongoose.model('Answer', answerSchema );
-var Exam = mongoose.model('Exam', examSchema );
-var User = mongoose.model('User', userSchema );
-var Score = mongoose.model('Score', scoreSchema );
+var Question = mongoose.model("Question", questionSchema);
+var Answer = mongoose.model("Answer", answerSchema);
+var Exam = mongoose.model("Exam", examSchema);
+var User = mongoose.model("User", userSchema);
+var Score = mongoose.model("Score", scoreSchema);
 
 // // create instances of the models
 
@@ -131,7 +156,6 @@ var Score = mongoose.model('Score', scoreSchema );
 // score_1.relevantQuestions.push(question_1._id)
 // score_1.userAnswers.push(answer_1._id)
 
-
 // answer_1.save(function (err) {
 // if (err) return handleError(err);
 //   // saved!
@@ -161,6 +185,5 @@ var Score = mongoose.model('Score', scoreSchema );
 //   // saved!
 // });
 
-
 const port = process.env.PORT || 5000;
-app.listen(port, ()=> console.log(`Server is running on port ${port}`));
+app.listen(port, () => console.log(`Server is running on port ${port}`));
