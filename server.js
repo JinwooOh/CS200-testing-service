@@ -24,18 +24,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/api/pullquestion", (req, res) => {
-  console.log(req.body);
-  Question.find({}, (err, data) => {
-    res.json(data[1]);
-  });
-});
-
 app.post("/api/createtest", (req, res) => {
-  console.log("create a new test");
+  var questionId_list = [];
+  for (var i = 0; i < req.body.length; i++) {
+    questionId_list.push(req.body[i]._id);
+  }
   var new_test = Exam({
-    timeLimit: 40,
-    courseName: "Software Engineering",
+    timeLimit: req.body.timeLimit,
+    courseName: req.body.name,
     courseNumber: 506,
     dateCreated: new Date(),
     updated: new Date(),
@@ -45,12 +41,19 @@ app.post("/api/createtest", (req, res) => {
     lowestScore: 0,
     multipleChoice: true,
     difficulty: 2,
-    questions: ["5bdb5fec917c35cec07f1d7e"]
+    questions: questionId_list
   });
   new_test.save(err => {
     if (err) throw err;
     console.log("test created");
   });
+});
+app.post("/api/pullquestion", async (req, res) => {
+  //write error handler
+  console.log(req.body);
+  const numQuestion = parseInt(req.body.number);
+  let questionList = await Question.find({}).limit(numQuestion);
+  res.send(questionList);
 });
 
 //Define a schema
