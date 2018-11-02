@@ -23,7 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/api/pullquestion', async (req, res) => {
   //write error handler
   const numQuestion = parseInt(req.body.number);
-  let questionList = await Question.find({},'-_id -__v').limit(numQuestion);
+  let questionList = await Question.find({}).limit(numQuestion);
   res.send(questionList);
 });
 

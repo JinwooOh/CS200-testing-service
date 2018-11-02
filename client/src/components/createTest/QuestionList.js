@@ -7,7 +7,7 @@ const QuestionList = props => {
     <div className="question-list">
       <ol>
         {questions.map(question => (
-          <div>
+          <div key={question._id}>
             <p>{question.question}</p>
             <p>{question.updated}</p>
             <p>{question.answers}</p>
