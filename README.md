@@ -10,6 +10,7 @@ For react server on http://localhost:3000/,
 in a client directory type ` npm run dev `
 
 Overview:
+
 Develop should always be merged into Test first so the following testing procedures can be undergone before updating the stable version of the application in the origin/Master branch.
 
 4.3. Integration Testing (Iterations 1-3)
