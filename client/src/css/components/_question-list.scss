@@ -1,8 +1,36 @@
-.question-list{
-  background-color: $color-gray;
-  border: 1px solid $color-primary;
-  & span {
-    display: block;
-    margin: 0 auto;
+.questions{
+  text-align: left;
+  &--item{
+    flex: 0 1 28rem;
+    margin: 2rem 8rem;
+    min-height: 20rem;
+
+    background-color: $color-tertiary-light;
+    border-radius: 1rem;
+    box-shadow: 0 1.5rem 4rem rgba($color-black, 0.15);
+  }
+  &--title{
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    padding: 1rem;
+    background-color: $color-primary;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: $color-white;
+  }
+  &--question{
+    padding-left: 1rem;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  &--answerList{
+    padding-left: 1rem;
+  }
+  &--answers{
+    padding-left: 1rem;
+  }
+  &--correctAnswer{
+    margin-top: 1rem;
+    padding-left: 1rem;
   }
 }

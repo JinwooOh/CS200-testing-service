@@ -38,6 +38,22 @@ export default class CreateTest extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  removeQuestion = key => {
+    // console.log(key);
+
+    const questions = this.state.questionList;
+    questions.splice(key, 1);
+    this.setState([questions]);
+  };
+
+  removeTask = key => {
+    const tasks = { ...this.state.tasks };
+    const totalHours = this.state.totalHours - tasks[key].hours;
+    delete tasks[key];
+    this.setState({ tasks });
+    this.setState({ totalHours });
+  };
+
   pullQuestion = () => {
     const data = this.state;
     // fetch start here
@@ -103,6 +119,7 @@ export default class CreateTest extends Component {
           />
           <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
           <PullQuestion
+            removeQuestion={this.removeQuestion}
             questionList={this.state.questionList}
             shuffleQuestionList={this.shuffleQuestionList}
           />

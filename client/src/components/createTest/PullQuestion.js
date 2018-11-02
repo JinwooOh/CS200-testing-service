@@ -7,8 +7,19 @@ export default class PullQuestion extends Component {
   render() {
     return (
       <div>
-        <PullingOptions shuffleQuestionList={this.props.shuffleQuestionList} />
-        <QuestionList questionList={this.props.questionList} />
+        {this.props.questionList.length === 0 ? (
+          ''
+        ) : (
+          <div className="pullQuestion">
+            <PullingOptions shuffleQuestionList={this.props.shuffleQuestionList} />
+
+            <QuestionList
+              removeQuestion={this.props.removeQuestion}
+              questionList={this.props.questionList}
+            />
+            <button className="btn">Confirm/Review</button>
+          </div>
+        )}
       </div>
     );
   }
