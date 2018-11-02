@@ -10,10 +10,9 @@ export default class CreateTest extends Component {
     super(props);
     this.state = {
       startDate: moment(),
-      startTime: moment(),
-      endTime: moment(),
       name: '', // test name
       difficulty: '',
+      timeLimit: 20,
       number: 0, // number of questions
       multiplechoice: '',
       questionList: [],
@@ -22,20 +21,39 @@ export default class CreateTest extends Component {
   }
 
   handleChangeDate = date => {
-    console.log(date);
     this.setState({ startDate: date });
   };
 
-  handleChangeStartTime = date => {
-    this.setState({ startTime: date });
-  };
-
-  handleChangeEndTime = date => {
-    this.setState({ endTime: date });
+  handleChangeTimeLimit = e => {
+    if (e.target.validity.valid) {
+      // input is numeric
+      this.setState({ timeLimit: e.target.value });
+    } else if (e.target.value == '') {
+      // input is not numeric
+      this.numberInput.value = ''; // suppress UI change
+      this.setState({ timeLimit: '' }); // reset state
+    }
+    // this.setState(event.target.value);
   };
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  removeQuestion = key => {
+    // console.log(key);
+
+    const questions = this.state.questionList;
+    questions.splice(key, 1);
+    this.setState([questions]);
+  };
+
+  removeTask = key => {
+    const tasks = { ...this.state.tasks };
+    const totalHours = this.state.totalHours - tasks[key].hours;
+    delete tasks[key];
+    this.setState({ tasks });
+    this.setState({ totalHours });
   };
 
   pullQuestion = () => {
@@ -79,11 +97,10 @@ export default class CreateTest extends Component {
   reset = () => {
     this.setState({
       startDate: moment(),
-      startTime: moment(),
-      endTime: moment(),
       name: '',
       difficulty: '',
       number: 0,
+      timeLimit: 20,
       multiplechoice: '',
       questionList: [],
     });
@@ -98,11 +115,11 @@ export default class CreateTest extends Component {
             fields={this.state}
             handleChange={this.handleChange}
             handleChangeDate={this.handleChangeDate}
-            handleChangeEndTime={this.handleChangeEndTime}
-            handleChangeStartTime={this.handle}
+            handleChangeTimeLimit={this.handleChangeTimeLimit}
           />
           <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
           <PullQuestion
+            removeQuestion={this.removeQuestion}
             questionList={this.state.questionList}
             shuffleQuestionList={this.shuffleQuestionList}
           />

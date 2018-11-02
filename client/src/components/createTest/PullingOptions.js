@@ -7,14 +7,15 @@ export default class PullingOptions extends Component {
     return (
       <div className="pulling--options">
         <button
+          className="btn btn--pullingOtions"
           onClick={() => {
             this.props.shuffleQuestionList();
           }}
         >
           Shuffle Questions
         </button>
-        <button>Add Question from DB</button>
-        <button>Regenerate</button>
+        <button className="btn btn__pullingOtions">Add Question from DB</button>
+        <button className="btn btn__pullingOtions">Regenerate</button>
       </div>
     );
   }

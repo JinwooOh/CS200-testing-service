@@ -6,7 +6,6 @@ const CreateTestForm = props => {
   return (
     <div>
       <h3 className="createTest--title">Create Test</h3>
-
       <label htmlFor="date"> Date </label>
       <div className="datePicker">
         <DatePicker id="date" selected={props.fields.startDate} onChange={props.handleChangeDate} />
@@ -19,35 +18,20 @@ const CreateTestForm = props => {
         value={props.fields.name}
         onChange={props.handleChange}
       />
-
       <br />
-
-      <label htmlFor="startTime"> Start Time </label>
-      <div className="datePicker">
-        <DatePicker
-          id="startTime"
-          selected={props.fields.startTime}
-          onChange={props.handleChangeStartTime}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={15}
-          dateFormat="LT"
-          timeCaption="Time"
-        />
-      </div>
-      <label htmlFor="endTime"> End Time </label>
-      <div className="datePicker">
-        <DatePicker
-          id="endTime"
-          selected={props.fields.endTime}
-          onChange={props.handleChangeEndTime}
-          showTimeSelect
-          showTimeSelectOnly
-          timeIntervals={15}
-          dateFormat="LT"
-          timeCaption="Time"
-        />
-      </div>
+      <label htmlFor="timeLimit"> Time Limit </label>
+      <input
+        value={props.fields.timeLimit}
+        name="timeLimit"
+        id="timeLimit"
+        type="number"
+        step="10"
+        min="20"
+        ref={elm => {
+          this.numberInput = elm;
+        }}
+        onChange={event => props.handleChangeTimeLimit(event)}
+      />
       <label htmlFor="number"> Question Number </label>
       <input
         value={props.fields.number}
