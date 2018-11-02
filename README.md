@@ -9,14 +9,8 @@ type ` npm run server `
 For react server on http://localhost:3000/,
 in a client directory type ` npm run dev `
 
- 
-4.2. Unit Testing (Iterations 1-3)
- 
-Because most of the critical data lives in our database, we will write a test unit for every function that uses CRUD operations. Functions or classes can be rewritten or modified later in the development process. Because of this, we are focusing on the BDD model when we write test units so that we don't need to rewrite the test unit every time functions or classes are changed.  
-Steps for writing a unit test are: 
-Write a unit test before implementing functionalities.  
-Write code that makes the test pass. 
-Check if the test works correctly. 
+Overview:
+Develop should always be merged into Test first so the following testing procedures can be undergone before updating the stable version of the application in the origin/Master branch.
 
 4.3. Integration Testing (Iterations 1-3)
  
