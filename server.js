@@ -25,9 +25,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/api/createtest", (req, res) => {
+  console.log(req.body);
   var questionId_list = [];
-  for (var i = 0; i < req.body.length; i++) {
-    questionId_list.push(req.body[i]._id);
+  for (var i = 0; i < req.body.questionList.length; i++) {
+    questionId_list.push(req.body.questionList[i]._id);
   }
   var new_test = Exam({
     timeLimit: req.body.timeLimit,
@@ -40,7 +41,7 @@ app.post("/api/createtest", (req, res) => {
     highestScore: 0,
     lowestScore: 0,
     multipleChoice: true,
-    difficulty: 2,
+    difficulty: req.body.difficulty,
     questions: questionId_list
   });
   new_test.save(err => {
@@ -91,7 +92,7 @@ var examSchema = new Schema({
   highestScore: Number,
   lowestScore: Number,
   multipleChoice: Boolean,
-  difficulty: Number,
+  difficulty: String,
   questions: [mongoose.Schema.Types.ObjectId]
 });
 

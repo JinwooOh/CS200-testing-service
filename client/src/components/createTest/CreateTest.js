@@ -82,7 +82,7 @@ export default class CreateTest extends Component {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(this.state.questionList)
+      body: JSON.stringify(this.state)
     });
   };
 
