@@ -13,7 +13,7 @@ export default class CreateTest extends Component {
       name: '', // test name
       difficulty: '',
       timeLimit: 20,
-      number: 0, // number of questions
+      number: 1, // number of questions
       multiplechoice: '',
       questionList: [],
       valid: true, // check whether input fields is valid
