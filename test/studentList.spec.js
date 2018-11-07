@@ -1,2 +1,2 @@
-var assert = require('chai').assert;
-var studentList = require('.../StudentList')
+// var assert = require('chai').assert;
+// var studentList = require('.../StudentList')

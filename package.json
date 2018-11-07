@@ -15,6 +15,7 @@
     "chai": "^4.2.0",
     "express": "^4.16.3",
     "mocha": "^5.2.0",
+    "supertest": "^3.1.0",
     "mongoose": "^5.3.8",
     "nodemon": "^1.18.4"
   }

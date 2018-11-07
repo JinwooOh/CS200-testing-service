@@ -1,2 +1,2 @@
-var assert = require('chai').assert;
-var testResult = require('.../TestResult')
+// var assert = require('chai').assert;
+// var testResult = require('.../TestResult')
