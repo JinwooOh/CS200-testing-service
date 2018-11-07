@@ -1,5 +1,6 @@
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
+const Exam = require('../models/Exam');
 
 module.exports = app => {
   // write api description
