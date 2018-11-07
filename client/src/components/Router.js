@@ -2,6 +2,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
+import Login from './Login';
 import StudentList from './StudentList';
 import TestResult from './TestResult';
 import CreateTest from './createTest/CreateTest';
@@ -18,6 +19,7 @@ const Router = () => (
       <Route path={`${baseUrl}/createtest`} component={CreateTest} />
       <Route path={`${baseUrl}/importquestion`} component={ImportQ} />
       <Route path={`${baseUrl}/pull_question`} component={PullQuestion} />
+      <Route path={`${baseUrl}/login`} component={Login} />
     </Switch>
   </BrowserRouter>
 );

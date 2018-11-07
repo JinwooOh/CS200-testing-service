@@ -8,7 +8,8 @@ class Nav extends Component {
         <Link to="/studentlist">Student List</Link>
         <Link to="/testresult">Test Result</Link>
         <Link to="/createtest">Create Test</Link>
-        <Link to="/importquestion">Import Question</Link>
+        <Link to="/importquestion">Imprrt Question</Link>
+        <Link to="/login">Login</Link>
       </div>
     );
   }
