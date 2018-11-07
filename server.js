@@ -6,14 +6,20 @@ const routes = require('./routes/routes');
 const app = express();
 //https://mongoosejs.com/docs/populate.html
 
-//DB setting
-var mongoDB =
+
+mongoose.Promise = global.Promise; // Get Mongoose to use the global promise
+
+//dev version of DB
+if (process.env.NODE_ENV !== 'test') {
+  //DB setting
+  var mongoDB =
   "mongodb://admin:admin123@ds153239.mlab.com:53239/cs_200_testing_service";
-mongoose.connect(
-  mongoDB,
-  { useNewUrlParser: true }
-);
-mongoose.Promise = global.Promise; // Get Mongoose to use the global promise library
+  mongoose.connect(mongoDB,{ useNewUrlParser: true });
+}else{
+  //set test db here script for running test:
+  //"test": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'"
+}
+
 //Get the default connection
 var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
