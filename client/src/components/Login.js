@@ -4,29 +4,31 @@ import Nav from './Nav';
 
 export default class Login extends Component {
   state = {
-    redirect: false
-  }
+    redirect: false,
+  };
+
   setRedirect = () => {
     this.setState({
-      redirect: true
-    })
-  }
+      redirect: true,
+    });
+  };
+
   renderRedirect = () => {
     if (this.state.redirect) {
-      return <Redirect to='${baseUrl}:5000/api/login' />
+      return <Redirect to="${baseUrl}:5000/api/login" />;
     }
-  }
+  };
+
   render() {
     return (
       <div>
         <Nav />
         <p>Welcome</p>
         <ul>
-	    {this.renderRedirect()}
-            <button onClick={this.setRedirect}>Login</button>
+          {this.renderRedirect()}
+          <button onClick={this.setRedirect}>Login</button>
         </ul>
       </div>
     );
   }
 }
-
