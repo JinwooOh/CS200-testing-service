@@ -58,5 +58,9 @@ module.exports = app => {
   });
 
 
+  app.get("/api/pullExamList", async (req, res)=>{
+    const examList = await Exam.find();
+    res.send(examList);
+  })
 }
 
