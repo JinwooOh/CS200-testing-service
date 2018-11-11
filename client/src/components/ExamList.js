@@ -24,10 +24,9 @@ export default class ExamList extends Component {
       <div>
         <Nav />
         <p>ExamList Component</p>
-        <ul>
-          <li>Exam 1</li>
-          <li>Exam 2</li>
-        </ul>
+        {this.state.examList.map((exam, i) => (
+          <li key={i}>{exam.courseName}</li>
+        ))}
       </div>
     );
   }
