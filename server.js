@@ -18,6 +18,8 @@ if (process.env.NODE_ENV !== 'test') {
 }else{
   //set test db here script for running test:
   //"test": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'"
+  var mongoDB = "mongodb://<admin123>:<admin123>@ds231229.mlab.com:31229/test_database_cs_200";
+  mongoose.connect(mongoDB, { useNewUrlParser: true });
 }
 
 //Get the default connection
