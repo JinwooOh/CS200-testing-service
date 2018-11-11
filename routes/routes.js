@@ -62,8 +62,10 @@ module.exports = app => {
     res.send(examList);
   })
 
-  app.get("/api/pullExamById", async(req, res)=>{
-    console.log(req.body);
+  //get single exam from Exams by exam ID
+  app.get("/api/pullExamById/:id", async(req, res)=>{
+    const exam = await Exam.findById(req.params.id);
+    console.log(exam);
+    res.status(200);
   })
-
 }

@@ -19,13 +19,29 @@ export default class ExamList extends Component {
       });
   }
 
+  handleViewExam = id => {
+    const url = `/api/pullExamById/${id}`;
+    fetch(url)
+      .then()
+      .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
+  };
+
   render() {
     return (
       <div>
         <Nav />
         <p>ExamList Component</p>
         {this.state.examList.map((exam, i) => (
-          <li key={i}>{exam.courseName}</li>
+          <div key={i}>
+            <li>{exam.courseName}</li>
+            <button
+              onClick={() => {
+                this.handleViewExam(exam._id);
+              }}
+            >
+              View
+            </button>
+          </div>
         ))}
       </div>
     );
