@@ -6,7 +6,7 @@ import StudentList from './StudentList';
 import CreateTest from './createTest/CreateTest';
 import ImportQ from './ImportQ';
 import PullQuestion from './createTest/PullQuestion';
-import ExamList from './ExamList';
+import ExamList from './examList/ExamList';
 
 const baseUrl = process.env.PUBLIC_URL;
 const Router = () => (

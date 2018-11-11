@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Nav from './Nav';
+import Nav from '../Nav';
 
 export default class ExamList extends Component {
   constructor(props) {
