@@ -67,6 +67,8 @@ module.exports = app => {
     try{
       const exam = await Exam.findById(req.params.id);
       let result = [];
+      let courseInfo = {courseName: exam.courseName, courseNumber: exam.courseNumber, timeLimit: exam.timeLimit};
+      result.push(courseInfo);
       let questionListID = exam.questions //array of questionId
       //convert objectId -> string
         for (let k = 0; k < questionListID.length; k++) {
@@ -74,11 +76,13 @@ module.exports = app => {
           let answers = temp.answers;
           let correctAnswer = temp.correctAnswer;
           for(let i = 0; i < answers.length; i++){
-            let realAnswer = await Answer.findById(answers[i]);
+            let realAnswer = await Answer.findById(answers[i]).then(answer =>
+              answer.answer);
             temp.answers[i] = realAnswer;
           }
           for(let i = 0; i < correctAnswer.length; i++){
-            let realAnswer = await Answer.findById(correctAnswer[i]);
+            let realAnswer = await Answer.findById(correctAnswer[i]).then(correctAnswer =>
+              correctAnswer.answer);
             temp.correctAnswer[i] = realAnswer;
           }
           result.push(temp);
@@ -89,5 +93,6 @@ module.exports = app => {
       console.log(err);
       res.status(400);
     }
+
   })
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Nav from '../Nav';
+import ExamEdit from './ExamEdit';
 
 export default class ExamList extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ export default class ExamList extends Component {
             </button>
           </div>
         ))}
+        <ExamEdit exam={this.state.exam} />
       </div>
     );
   }
