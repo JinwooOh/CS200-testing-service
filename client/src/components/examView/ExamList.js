@@ -33,7 +33,6 @@ export default class ExamList extends Component {
     return (
       <div>
         <Nav />
-        <p>ExamList Component</p>
         {this.state.examList.map((exam, i) => (
           <div key={i}>
             <li>{exam.courseName}</li>

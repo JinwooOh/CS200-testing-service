@@ -6,13 +6,13 @@ export default class ExamEdit extends Component {
     console.log(question);
     return (
       <div>
-        <p className="questions--question">{question.question}</p>
+        <p>{question.question}</p>
         {question.answers.map((answer, j) => (
-          <p key={j} className="questions--answers">
+          <p key={j}>
             {j + 1}: {answer}
           </p>
         ))}
-        <p className="questions--correctAnswer">Correct Answer: {question.correctAnswer}</p>
+        <p>Correct Answer: {question.correctAnswer}</p>
       </div>
     );
   };
@@ -21,18 +21,19 @@ export default class ExamEdit extends Component {
     return exam.map((item, i) => {
       // course info first index of exam
       if (i === 0) {
-        return <h3 key={i}>{item.courseName}</h3>;
+        return (
+          <div>
+            <h3 key={i}>Test Name: {item.courseName}</h3>
+            <p>Course Number: {item.courseNumber}</p>
+            <p>Time Limit: {item.timeLimit}</p>
+          </div>
+        );
       } // questions
       return this.renderQuestions(item);
     });
   };
 
   render() {
-    return (
-      <div>
-        <p>ExamEdit Component</p>
-        {this.renderExam(this.props.exam)}
-      </div>
-    );
+    return <div>{this.renderExam(this.props.exam)}</div>;
   }
 }
