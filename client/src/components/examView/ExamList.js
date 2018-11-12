@@ -43,6 +43,7 @@ export default class ExamList extends Component {
             >
               View
             </button>
+            <button>Delete</button>
           </div>
         ))}
         <ExamEdit exam={this.state.exam} />

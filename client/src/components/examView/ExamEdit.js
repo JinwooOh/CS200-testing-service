@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import Nav from '../Nav';
+import PropTypes from 'prop-types';
 
 export default class ExamEdit extends Component {
   renderQuestions = question => {
@@ -37,3 +37,7 @@ export default class ExamEdit extends Component {
     return <div>{this.renderExam(this.props.exam)}</div>;
   }
 }
+
+ExamEdit.propTypes = {
+  exam: PropTypes.array.isRequired,
+};
