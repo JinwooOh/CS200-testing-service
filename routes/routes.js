@@ -64,8 +64,30 @@ module.exports = app => {
 
   //get single exam from Exams by exam ID
   app.get("/api/pullExamById/:id", async(req, res)=>{
-    const exam = await Exam.findById(req.params.id);
-    console.log(exam);
-    res.status(200);
+    try{
+      const exam = await Exam.findById(req.params.id);
+      let result = [];
+      let questionListID = exam.questions //array of questionId
+      //convert objectId -> string
+        for (let k = 0; k < questionListID.length; k++) {
+          let temp = await Question.findById(questionListID[k]);
+          let answers = temp.answers;
+          let correctAnswer = temp.correctAnswer;
+          for(let i = 0; i < answers.length; i++){
+            let realAnswer = await Answer.findById(answers[i]);
+            temp.answers[i] = realAnswer;
+          }
+          for(let i = 0; i < correctAnswer.length; i++){
+            let realAnswer = await Answer.findById(correctAnswer[i]);
+            temp.correctAnswer[i] = realAnswer;
+          }
+          result.push(temp);
+        }
+        console.log(result);
+        res.send(result);
+    }catch(err){
+      console.log(err);
+      res.status(400);
+    }
   })
 }

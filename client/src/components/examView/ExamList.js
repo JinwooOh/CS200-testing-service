@@ -5,7 +5,8 @@ export default class ExamList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      examList: [],
+      examList: [], // list of exams
+      exam: [], // one exam for editing mode
     };
   }
 
@@ -22,7 +23,8 @@ export default class ExamList extends Component {
   handleViewExam = id => {
     const url = `/api/pullExamById/${id}`;
     fetch(url)
-      .then()
+      .then(res => res.json())
+      .then(res => this.setState({ exam: res }))
       .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
