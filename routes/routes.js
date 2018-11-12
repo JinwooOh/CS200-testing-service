@@ -1,6 +1,7 @@
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const Exam = require('../models/Exam');
+const User = require('../models/User');
 
 module.exports = app => {
   // write api description
@@ -57,6 +58,12 @@ module.exports = app => {
     res.send(questionList);
   });
 
+  app.get("/api/pullstudentslist", async (req, res)=>{
+    //this should find the studentlist of the PARTICULAR USER who is querying.
+    //TODO ^that, right now it give list of all students in database.
+    const studentList = await User.find({});
+    res.send(studentList);
+  });
 
 }
 

@@ -3,32 +3,22 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
 export default class StudentTable extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      jsonFile: {},
-    };
-    this.fileReader = new FileReader();
-    this.fileReader.onload = event => {
-      this.setState({ jsonFile: JSON.parse(event.target.result) }, () => {
-        console.log(this.state.jsonFile);
-      });
+      studentList: [],
     };
   }
 
-  handleLoadJson = file => {
-    const fileReader = new FileReader();
-    fileReader.onload = event => {
-      this.setState({ jsonFile: JSON.parse(event.target.result) }, () => {
-        console.log(this.state.jsonFile);
+  componentDidMount() {
+    fetch('/api/pullstudentlist')
+      .then(res => res.json())
+      .then(res => this.setState({ studentList: res }))
+      .catch(err => {
+        console.log(err, 'failed to fetch');
       });
-    };
-    fileReader.readAsText(file[0]);
-  };
-
-  updateJson = e => {
-    this.setState(e);
-  };
+  }
 
   render() {
     const columns = [
@@ -45,12 +35,20 @@ export default class StudentTable extends Component {
         accessor: 'testscore',
       },
     ];
+    /* const data = [{
+              
+        'name': 'Tanner Linsley',
+        'csid': 'abs@abs.edu',
+        'testscore': '90',
+      
+    }];
+*/
     return (
       <div>
         <ReactTable
-          data={{ name: 'bill' }}
+          data = {this.studentList}
           columns={columns}
-          defaultSorted={[{ id: 'name' }]}
+          
           defaultPageSize={10}
           className="-striped -highlight"
         />
