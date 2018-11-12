@@ -50,6 +50,7 @@ const CreateTestForm = props => {
       <br />
       <label htmlFor="multiplechoice"> Multiplechoice </label>
       <form>
+        <span>Yes</span>
         <input
           type="radio"
           name="multiplechoice"
@@ -57,6 +58,7 @@ const CreateTestForm = props => {
           value="true"
           onChange={this.handleChange}
         />
+        <span>No</span>
         <input
           type="radio"
           name="multiplechoice"
