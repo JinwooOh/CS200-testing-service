@@ -4,22 +4,6 @@ import 'react-table/react-table.css';
 
 export default class ExamTable extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      examList: [],
-      loading: true
-    };
-  }
-
-  componentDidMount() {
-    fetch('/api/pullexamlist')
-      .then(res => res.json())
-      .then(res => this.setState({examList: res, loading: false }, () => {/*was used for error testing*/}))
-      .catch(err => {
-        console.log(err, 'failed to fetch');
-      });
-  }
 
 /*
   //try to implement updatable table?
@@ -35,39 +19,47 @@ export default class ExamTable extends Component {
   render() {
     const columns = [
       {
-        Header: 'Name',
-        accessor: 'name',
+        Header: 'Course Name',
+        accessor: 'courseName',
       },
       {
         Header: 'Course Number',
-        accessor: '',
+        accessor: 'courseNumber',
       },
       {
         Header: 'Test Difficulty',
-        accessor: '',
+        accessor: 'difficulty',
       },
       {
         Header: 'Number of Questions',
-        accessor: '',
+        accessor: 'numberQuestions',
       },
       {
         Header: 'Time Limit',
-        accessor: '',
-      },
+        accessor: 'timeLimit',
+      }
+      
     ];
     
-    const {examList, loading} = this.state;
-    //console.log(examList);
     return (
       <div>
         <ReactTable
           columns={columns}
-          data = {examList}
-          loading={loading}
+          data = {this.props.examList}
           //onFetchData={this.fetchData}
-
-          defaultPageSize={10}
-          className="-striped -highlight"
+          defaultPageSize={6}
+          SubComponent={row => {
+            return (
+              <div style={{ padding: "5px" }}>
+                <div>
+                  <button onClick={()=>{
+                    this.props.handleViewExam(row.original._id);
+                  }}>View/Edit</button>
+                  <button>Delete</button>
+                </div>
+              </div>
+            );
+          }}
         />
       </div>
     );

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Nav from '../Nav';
 import ExamEdit from './ExamEdit';
-//import ReactTable from 'react-table';
-//import 'react-table/react-table.css';
+import ExamTable from './ExamTable';
+import 'react-table/react-table.css';
 
 export default class ExamList extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ export default class ExamList extends Component {
       });
   }
 
+
   handleViewExam = id => {
     const url = `/api/pullExamById/${id}`;
     fetch(url)
@@ -33,57 +34,11 @@ export default class ExamList extends Component {
   };
 
   render() {
-    const columns = [
-      {
-        Header: 'Name',
-        accessor: 'name',
-      },
-      {
-        Header: 'Course Number',
-        accessor: '',
-      },
-      {
-        Header: 'Test Difficulty',
-        accessor: '',
-      },
-      {
-        Header: 'Number of Questions',
-        accessor: '',
-      },
-      {
-        Header: 'Time Limit',
-        accessor: '',
-      },
-    ];
-    const {examList, exam, loading} = this.state;
     return (
       <div>
         <Nav />
-{/*        <div>
-          <ReactTable
-           columns={columns}
-            data = {examList}
-            loading={loading}
-           //onFetchData={this.fetchData}
+        <ExamTable examList = {this.state.examList} handleViewExam={this.handleViewExam}/>
 
-            defaultPageSize={10}
-           className="-striped -highlight"
-         />
-        </div>
-*/}
-        {this.state.examList.map((exam, i) => (
-          <div key={i}>
-            <li>{exam.courseName}</li>
-            <button
-              onClick={() => {
-                this.handleViewExam(exam._id);
-              }}
-            >
-              View
-            </button>
-            <button>Delete</button>
-          </div>
-        ))}
         <ExamEdit exam={this.state.exam} />
       </div>
     );
