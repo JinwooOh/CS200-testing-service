@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Nav from '../Nav';
 import ExamEdit from './ExamEdit';
+//import ReactTable from 'react-table';
+//import 'react-table/react-table.css';
 
 export default class ExamList extends Component {
   constructor(props) {
@@ -8,6 +10,7 @@ export default class ExamList extends Component {
     this.state = {
       examList: [], // list of exams
       exam: [], // one exam for editing mode
+//      loading: true,
     };
   }
 
@@ -30,9 +33,44 @@ export default class ExamList extends Component {
   };
 
   render() {
+    const columns = [
+      {
+        Header: 'Name',
+        accessor: 'name',
+      },
+      {
+        Header: 'Course Number',
+        accessor: '',
+      },
+      {
+        Header: 'Test Difficulty',
+        accessor: '',
+      },
+      {
+        Header: 'Number of Questions',
+        accessor: '',
+      },
+      {
+        Header: 'Time Limit',
+        accessor: '',
+      },
+    ];
+    const {examList, exam, loading} = this.state;
     return (
       <div>
         <Nav />
+{/*        <div>
+          <ReactTable
+           columns={columns}
+            data = {examList}
+            loading={loading}
+           //onFetchData={this.fetchData}
+
+            defaultPageSize={10}
+           className="-striped -highlight"
+         />
+        </div>
+*/}
         {this.state.examList.map((exam, i) => (
           <div key={i}>
             <li>{exam.courseName}</li>
