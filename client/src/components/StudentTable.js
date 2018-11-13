@@ -8,17 +8,29 @@ export default class StudentTable extends Component {
     super(props);
     this.state = {
       studentList: [],
+      loading: true
     };
   }
 
   componentDidMount() {
     fetch('/api/pullstudentlist')
       .then(res => res.json())
-      .then(res => this.setState({ studentList: res }))
+      .then(res => this.setState({studentList: res, loading: false }, () => {/*was used for error testing*/}))
       .catch(err => {
         console.log(err, 'failed to fetch');
       });
   }
+
+/*
+  //try to implement updatable table?
+  fetchData(state, instance) {
+    this.setState({ loading: true });
+    
+    //update?
+
+    this.setState({loading: false });
+  }
+*/
 
   render() {
     const columns = [
@@ -28,27 +40,24 @@ export default class StudentTable extends Component {
       },
       {
         Header: 'CS ID',
-        accessor: 'csid',
+        accessor: 'userId',
       },
-      {
+     /* {
         Header: 'Test 1 Score',
         accessor: 'testscore',
-      },
+      }, */
     ];
-    /* const data = [{
-              
-        'name': 'Tanner Linsley',
-        'csid': 'abs@abs.edu',
-        'testscore': '90',
-      
-    }];
-*/
+    
+    const {studentList, loading} = this.state;
+    console.log(studentList);
     return (
       <div>
         <ReactTable
-          data = {this.studentList}
           columns={columns}
-          
+          data = {studentList}
+          loading={loading}
+          //onFetchData={this.fetchData}
+
           defaultPageSize={10}
           className="-striped -highlight"
         />

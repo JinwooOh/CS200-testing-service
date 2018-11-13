@@ -61,8 +61,34 @@ module.exports = app => {
   app.get("/api/pullstudentlist", async (req, res)=>{
     //this should find the studentlist of the PARTICULAR USER who is querying.
     //TODO ^that, right now it give list of all students in database.
-    const studentList = await User.find({});
-    res.send(studentList);
+    const userList = await User.find(); //list of all users
+    let studentIDs = []; //list of id's of students of user
+    let myStudentList = []; //final list of students
+
+    
+    //get student list from proper user
+    for (let i = 0; i < userList.length; i++) {
+      if(userList[i].name == "Student Test Mark"){
+        for (let j = 0; j < userList[i].studentList.length; j++){
+          studentIDs.push(userList[i].studentList[j]);
+        }
+        break;
+      }
+    }
+
+    //make array of students from that list and return
+    for (let i = 0; i < studentIDs.length; i++){
+      currStudent = studentIDs[i];
+      for (let j = 0; j < userList.length; j++) {
+        currUser = userList[j]._id;
+        if(currStudent.toString() == currUser.toString()){
+          myStudentList.push(userList[j]);
+          break;
+        }
+      }
+    }    
+
+    res.send(myStudentList);
   });
 
 }
