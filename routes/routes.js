@@ -58,7 +58,7 @@ module.exports = app => {
     res.send(questionList);
   });
 
-  app.get("/api/pullstudentslist", async (req, res)=>{
+  app.get("/api/pullstudentlist", async (req, res)=>{
     //this should find the studentlist of the PARTICULAR USER who is querying.
     //TODO ^that, right now it give list of all students in database.
     const studentList = await User.find({});
