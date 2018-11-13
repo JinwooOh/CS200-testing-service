@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class ExamEdit extends Component {
-  renderQuestions = question => {
+  renderQuestions = (question, i) => {
     console.log(question);
     return (
-      <div>
+      <div className="questions--item">
+        <div className="questions--title">
+          <h3>Question {i}</h3>
+        </div>
         <p>{question.question}</p>
         {question.answers.map((answer, j) => (
-          <div className="questions--item" key={j}>
-          <div className="questions--title">
-              <h3>Question {j + 1}</h3>
-            </div>
-          <p key={j}>
-            {j + 1}: {answer}
-          </p>
+          <div key={j}>
+            <p>
+              {j + 1}: {answer}
+            </p>
           </div>
         ))}
         <p>Correct Answer: {question.correctAnswer}</p>
@@ -28,13 +28,17 @@ export default class ExamEdit extends Component {
       if (i === 0) {
         return (
           <div className="questions">
-            <h3 key={i}>Test Name: {item.courseName}</h3>
-            <p>Course Number: {item.courseNumber}</p>
-            <p>Time Limit: {item.timeLimit}</p>
+            <h3 className="questions--examTitle" key={i}>
+              Test Name: {item.courseName}
+            </h3>
+            <div className="questions--examData">
+              <p>Course Number: {item.courseNumber}</p>
+              <p>Time Limit: {item.timeLimit}</p>
+            </div>
           </div>
         );
       } // questions
-      return this.renderQuestions(item);
+      return this.renderQuestions(item, i);
     });
   };
 

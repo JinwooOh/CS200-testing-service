@@ -10,7 +10,7 @@ export default class ExamList extends Component {
     this.state = {
       examList: [], // list of exams
       exam: [], // one exam for editing mode
-//      loading: true,
+      //      loading: true,
     };
   }
 
@@ -24,7 +24,6 @@ export default class ExamList extends Component {
       });
   }
 
-
   handleViewExam = id => {
     const url = `/api/pullExamById/${id}`;
     fetch(url)
@@ -37,7 +36,7 @@ export default class ExamList extends Component {
     return (
       <div>
         <Nav />
-        <ExamTable examList = {this.state.examList} handleViewExam={this.handleViewExam}/>
+        <ExamTable examList={this.state.examList} handleViewExam={this.handleViewExam} />
 
         <ExamEdit exam={this.state.exam} />
       </div>
