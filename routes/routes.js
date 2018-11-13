@@ -67,7 +67,7 @@ module.exports = app => {
     try{
       const exam = await Exam.findById(req.params.id);
       let result = [];
-      let courseInfo = {courseName: exam.courseName, courseNumber: exam.courseNumber, timeLimit: exam.timeLimit};
+      let courseInfo = {id: exam._id,courseName: exam.courseName, courseNumber: exam.courseNumber, timeLimit: exam.timeLimit};
       result.push(courseInfo);
       let questionListID = exam.questions //array of questionId
       //convert objectId -> string
@@ -93,6 +93,46 @@ module.exports = app => {
       console.log(err);
       res.status(400);
     }
+
+    app.post("/api/shuffleExam", (req, res) => {
+      console.log("shuffle request");
+      
+      var exam_id = req.body[0].id;
+      var questions_ids = [];
+      for (var i = 1; i < req.body.length; i++){
+        questions_ids.push(req.body[i]._id);
+      }
+      console.log(exam_id);
+      console.log(questions_ids);
+      Exam.findByIdAndUpdate(exam_id, {questions: questions_ids}, (err)=>{
+        if (err) throw err;
+        console.log("update success");
+      })
+
+      
+      /*var questionId_list = [];
+      for (var i = 0; i < req.body.questionList.length; i++) {
+        questionId_list.push(req.body.questionList[i]._id);
+      }
+      var new_test = Exam({
+        timeLimit: req.body.timeLimit,
+        courseName: req.body.name,
+        courseNumber: 506,
+        dateCreated: new Date(),
+        updated: new Date(),
+        avgScore: 0,
+        medianScore: 0,
+        highestScore: 0,
+        lowestScore: 0,
+        multipleChoice: true,
+        difficulty: req.body.difficulty,
+        questions: questionId_list
+      });
+      new_test.save(err => {
+        if (err) throw err;
+        console.log("test created");
+      });*/
+    });
 
   })
 }

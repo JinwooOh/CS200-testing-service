@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class ExamEdit extends Component {
+  constructor(props){
+    super(props);
+  }
   renderQuestions = question => {
     console.log(question);
     return (
@@ -18,6 +21,7 @@ export default class ExamEdit extends Component {
   };
 
   renderExam = exam => {
+    console.log(exam);
     return exam.map((item, i) => {
       // course info first index of exam
       if (i === 0) {
@@ -26,6 +30,7 @@ export default class ExamEdit extends Component {
             <h3 key={i}>Test Name: {item.courseName}</h3>
             <p>Course Number: {item.courseNumber}</p>
             <p>Time Limit: {item.timeLimit}</p>
+            <button onClick={this.props.shuffle}>Shuffle</button>
           </div>
         );
       } // questions
