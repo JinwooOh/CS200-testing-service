@@ -10,6 +10,7 @@ export default class ExamList extends Component {
       exam: [], // one exam for editing mode
     };
     this.shuffleExams = this.shuffleExams.bind(this);
+    this.removeQuestion = this.removeQuestion.bind(this);
   }
 
   shuffleExams(){
@@ -29,6 +30,22 @@ export default class ExamList extends Component {
     })
       .then(alert('The test is updated.'))
       .catch(error => console.error('fetch error at shuffleExam', error));
+  }
+
+  removeQuestion(index){
+    var newExam = this.state.exam;
+    newExam.splice(index, 1);
+    this.setState({exam: newExam});
+
+    fetch('/api/removeQuestionFromExam', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state.exam),
+    })
+      .then(alert('The test question is removed.'))
+      .catch(error => console.error('fetch error at remove test question', error));
   }
 
   componentDidMount() {
@@ -66,7 +83,7 @@ export default class ExamList extends Component {
             <button>Delete</button>
           </div>
         ))}
-        <ExamEdit exam={this.state.exam} shuffle = {this.shuffleExams} />
+        <ExamEdit exam={this.state.exam} shuffle = {this.shuffleExams} removeQuestion = {this.removeQuestion} />
       </div>
     );
   }

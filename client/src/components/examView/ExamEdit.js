@@ -5,7 +5,7 @@ export default class ExamEdit extends Component {
   constructor(props){
     super(props);
   }
-  renderQuestions = question => {
+  renderQuestions = (question, i) => {
     console.log(question);
     return (
       <div>
@@ -16,6 +16,9 @@ export default class ExamEdit extends Component {
           </p>
         ))}
         <p>Correct Answer: {question.correctAnswer}</p>
+        <button onClick={() => {
+                this.props.removeQuestion(i);
+              }}> remove</button>
       </div>
     );
   };
@@ -34,7 +37,7 @@ export default class ExamEdit extends Component {
           </div>
         );
       } // questions
-      return this.renderQuestions(item);
+      return this.renderQuestions(item, i);
     });
   };
 
