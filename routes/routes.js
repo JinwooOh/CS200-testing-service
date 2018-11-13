@@ -62,6 +62,35 @@ module.exports = app => {
     res.send(examList);
   })
 
+    /*  add a question to an exam given questionID and examID
+      @ If the questionID is already the exam ID, the question won't be added
+      @ questionID: req.params.questionID
+      @ examID: req.params.examId
+
+  */ 
+ app.get("/api/addQuestionToExam/:questionId/:examId", async(req, res)=>{
+  try {
+    const exam = await Exam.findById(req.params.examId);
+    let question = await Question.findById(req.params.questionId);
+
+    // check some corner cases
+
+    // push the question to the exam
+    exam.questions.addToSet(question);
+    exam.save(err => {
+      if (err) throw err;
+      console.log("Question added to the exam");
+    });
+    res.send(exam);
+
+  } catch (err) {
+    console.log(err);
+    res.status(400);
+  }
+})
+
+
+
   //get single exam from Exams by exam ID
   app.get("/api/pullExamById/:id", async(req, res)=>{
     try{
