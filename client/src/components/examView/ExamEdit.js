@@ -5,7 +5,7 @@ export default class ExamEdit extends Component {
   renderQuestions = (question, i) => {
     console.log(question);
     return (
-      <div className="questions--item">
+      <div className="questions--item" draggable>
         <div className="questions--title">
           <h3>Question {i}</h3>
         </div>
