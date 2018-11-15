@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ExamInfo from './ExamInfo';
-import SortableList from './Sortable';
+import SortableList from '../helper/Sortable';
 
 export default class ExamEdit extends Component {
   render() {

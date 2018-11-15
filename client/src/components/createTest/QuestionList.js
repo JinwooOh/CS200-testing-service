@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// import SortableList from '../helper/Sortable';
 
 const QuestionList = props => {
   const questions = props.questionList;
   return (
     <div className="questions">
       <ol>
+        {/* <SortableList items={questions} onSortEnd={props.onSortEnd} /> */}
         {questions.map((question, i) => (
           <div className="questions--item" key={i}>
             <div className="questions--title">
