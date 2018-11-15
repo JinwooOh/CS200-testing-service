@@ -5,9 +5,7 @@ import SortableList from '../helper/Sortable';
 
 export default class ExamEdit extends Component {
   render() {
-    const examCopy = [...this.props.exam];
-    const examInfo = examCopy[0];
-
+    const examInfo = this.props.exam[0] || '';
     return (
       <div>
         {examInfo !== undefined ? <ExamInfo examInfo={examInfo} /> : ''}
