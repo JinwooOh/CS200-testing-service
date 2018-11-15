@@ -1,0 +1,17 @@
+.nav{
+  background-color: $color-gray;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  padding: 2.4rem;
+  justify-content: space-evenly;
+  a:visited, a:link, a:active
+  {
+    color: $color-black;
+    text-decoration: none;
+  }
+  a:hover{
+    color: lighten($color-black, 30);
+  }
+
+}
