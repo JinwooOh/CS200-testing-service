@@ -71,24 +71,24 @@ module.exports = app => {
       result.push(courseInfo);
       let questionListID = exam.questions //array of questionId
       //convert objectId -> string
-        for (let k = 0; k < questionListID.length; k++) {
-          let temp = await Question.findById(questionListID[k]);
-          let answers = temp.answers;
-          let correctAnswer = temp.correctAnswer;
-          for(let i = 0; i < answers.length; i++){
-            let realAnswer = await Answer.findById(answers[i]).then(answer =>
-              answer.answer);
-            temp.answers[i] = realAnswer;
-          }
-          for(let i = 0; i < correctAnswer.length; i++){
-            let realAnswer = await Answer.findById(correctAnswer[i]).then(correctAnswer =>
-              correctAnswer.answer);
-            temp.correctAnswer[i] = realAnswer;
-          }
-          result.push(temp);
+      for (let k = 0; k < questionListID.length; k++) {
+        let temp = await Question.findById(questionListID[k]);
+        let answers = temp.answers;
+        let correctAnswer = temp.correctAnswer;
+        for(let i = 0; i < answers.length; i++){
+          let realAnswer = await Answer.findById(answers[i]).then(answer =>
+            answer.answer);
+          temp.answers[i] = realAnswer;
         }
-        console.log(result);
-        res.send(result);
+        for(let i = 0; i < correctAnswer.length; i++){
+          let realAnswer = await Answer.findById(correctAnswer[i]).then(correctAnswer =>
+            correctAnswer.answer);
+          temp.correctAnswer[i] = realAnswer;
+        }
+        result.push(temp);
+      }
+      console.log(result);
+      res.send(result);
     }catch(err){
       console.log(err);
       res.status(400);

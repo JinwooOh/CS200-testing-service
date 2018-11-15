@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { arrayMove } from 'react-sortable-hoc';
 import Nav from '../Nav';
 import ExamEdit from './ExamEdit';
 import ExamTable from './ExamTable';
@@ -10,6 +11,7 @@ export default class ExamList extends Component {
     this.state = {
       examList: [], // list of exams
       exam: [], // one exam for editing mode
+      questionList: [],
       //      loading: true,
     };
   }
@@ -24,11 +26,22 @@ export default class ExamList extends Component {
       });
   }
 
+  onSortEnd = ({ oldIndex, newIndex }) => {
+    this.setState({
+      questionList: arrayMove(this.state.questionList, oldIndex, newIndex),
+    });
+  };
+
   handleViewExam = id => {
     const url = `/api/pullExamById/${id}`;
     fetch(url)
       .then(res => res.json())
       .then(res => this.setState({ exam: res }))
+      .then(() => {
+        const copyExam = [...this.state.exam];
+        copyExam.shift();
+        this.setState({ questionList: copyExam });
+      })
       .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
@@ -37,8 +50,11 @@ export default class ExamList extends Component {
       <div>
         <Nav />
         <ExamTable examList={this.state.examList} handleViewExam={this.handleViewExam} />
-
-        <ExamEdit exam={this.state.exam} />
+        <ExamEdit
+          exam={this.state.exam}
+          onSortEnd={this.onSortEnd}
+          questionList={this.state.questionList}
+        />
       </div>
     );
   }
