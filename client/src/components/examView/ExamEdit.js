@@ -4,12 +4,31 @@ import ExamInfo from './ExamInfo';
 import SortableList from '../helper/Sortable';
 
 export default class ExamEdit extends Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+
   render() {
     const examInfo = this.props.exam[0] || '';
     return (
       <div>
-        {examInfo !== undefined ? <ExamInfo examInfo={examInfo} /> : ''}
-        <SortableList items={this.props.questionList} onSortEnd={this.props.onSortEnd} />
+        {examInfo !== undefined ? (
+          <ExamInfo shuffleExams={this.props.shuffleExams} examInfo={examInfo} />
+        ) : (
+          ''
+        )}
+        <SortableList
+          items={this.props.questionList}
+          onSortEnd={this.props.onSortEnd}
+          removeQuestion={this.props.removeQuestion}
+        />
+        <button
+          onClick={() => {
+            this.props.handleSave();
+          }}
+        >
+          Save
+        </button>
       </div>
     );
   }

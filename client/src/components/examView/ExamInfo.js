@@ -1,13 +1,20 @@
 import React from 'react';
 
-const ExamInfo = ({ examInfo }) => {
+const ExamInfo = props => {
   return (
     <div className="questions">
       {/* <SortableList items={this.props.exam} onSortEnd={this.props.onSortEnd} /> */}
-      <h3 className="questions--examTitle">Test Name: {examInfo.courseName}</h3>
+      <h3 className="questions--examTitle">Test Name: {props.examInfo.courseName}</h3>
       <div className="questions--examData">
-        <p>Course Number: {examInfo.courseNumber}</p>
-        <p>Time Limit: {examInfo.timeLimit}</p>
+        <p>Course Number: {props.examInfo.courseNumber}</p>
+        <p>Time Limit: {props.examInfo.timeLimit}</p>
+        <button
+          onClick={() => {
+            props.shuffleExams();
+          }}
+        >
+          Shuffle
+        </button>
       </div>
     </div>
   );
