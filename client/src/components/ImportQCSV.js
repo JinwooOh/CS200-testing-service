@@ -15,8 +15,10 @@ export default class ImportQCSV extends Component {
  }
 
  handleFileRead = e => {
-   const content = fileReader.result;
+   var content = fileReader.result;
    console.log(content);
+   console.log(content.split(","));
+
    // … do something with the ‘content’ …
  };
 
