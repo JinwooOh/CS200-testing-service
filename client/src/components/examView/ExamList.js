@@ -27,6 +27,7 @@ export default class ExamList extends Component {
   }
 
   removeQuestion = index => {
+    console.log(index);
     const newExam = this.state.exam.slice(0);
     newExam.splice(index + 1, 1);
     const newQuestionList = this.state.questionList.slice(0);

@@ -20,7 +20,7 @@ const SortableItem = SortableElement(props => {
       <button
         className="btn btn__remove"
         onClick={() => {
-          props.removeQuestion(props.index);
+          props.removeQuestion(props.i);
         }}
       >
         Remove
@@ -38,6 +38,7 @@ const SortableList = SortableContainer(props => {
           index={index}
           value={value}
           removeQuestion={props.removeQuestion}
+          i={index}
         />
       ))}
     </ul>
