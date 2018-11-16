@@ -174,5 +174,26 @@ module.exports = app => {
     //   })
     // });
 
+    /* @@@remove question permanently from database by ID
+     - examID: req.params.id
+     */
+    app.delete("/api/removeQuestionFromDatabaseById/:id", async(req, res)=>{
+          try {
+            console.log("test");
+              const question = await Question.findById(req.params.id);
+              Question.deleteOne(question, function(err, obj) {
+                  if (err) throw err;
+                  console.log("1 question permanently deleted");
+                  res.send(obj);
+              });
+
+          } catch (err) {
+              console.log(err);
+              res.status(400);
+          }
+
+          //res.status(200); //success
+      })
+
   })
 }
