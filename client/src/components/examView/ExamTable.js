@@ -14,7 +14,6 @@ export default class ExamTable extends Component {
     this.setState({loading: false });
   }
 */
-
   render() {
     const columns = [
       {
@@ -57,7 +56,14 @@ export default class ExamTable extends Component {
                   >
                     View/Edit
                   </button>
-                  <button>Delete</button>
+                  <button
+                    onClick={() => {
+                      this.props.removeExam(row.original._id);
+                    }}
+                  >
+                    Delete
+                  
+                  </button>
                 </div>
               </div>
             );

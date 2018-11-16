@@ -77,11 +77,32 @@ export default class ExamList extends Component {
       .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
+  removeExam = id => {
+    const url = `/api/removeExamById/${id}`;
+    console.log(url);
+    fetch(url, { method: 'delete' })
+      .then(res => console.log(res))
+      .then(() => {
+        fetch('/api/pullExamList')
+          // .then(res => res.json())
+          .then(res => res.json())
+          .then(res => this.setState({ examList: res }))
+          .catch(err => {
+            console.log(err, 'failed to fetch');
+          });
+      })
+      .catch(error => console.error('fetch error at /api/removeExamById', error)); // error
+  };
+
   render() {
     return (
       <div>
         <Nav />
-        <ExamTable examList={this.state.examList} handleViewExam={this.handleViewExam} />
+        <ExamTable
+          examList={this.state.examList}
+          handleViewExam={this.handleViewExam}
+          removeExam={this.removeExam}
+        />
         <ExamEdit
           shuffleExams={this.shuffleExams}
           exam={this.state.exam}
