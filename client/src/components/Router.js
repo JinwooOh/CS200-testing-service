@@ -6,7 +6,9 @@ import StudentList from './StudentList';
 import CreateTest from './createTest/CreateTest';
 import ImportQ from './ImportQ';
 import PullQuestion from './createTest/PullQuestion';
-import ExamList from './ExamList';
+import ExamList from './examView/ExamList';
+import ExamEdit from './examView/ExamEdit';
+
 
 const baseUrl = process.env.PUBLIC_URL;
 const Router = () => (
@@ -15,6 +17,7 @@ const Router = () => (
       <Route exact path={`${baseUrl}/`} component={App} />
       <Route path={`${baseUrl}/studentlist`} component={StudentList} />
       <Route path={`${baseUrl}/examlist`} component={ExamList} />
+      <Route path={`${baseUrl}/examedit`} component={ExamEdit} />
       <Route path={`${baseUrl}/createtest`} component={CreateTest} />
       <Route path={`${baseUrl}/importquestion`} component={ImportQ} />
       <Route path={`${baseUrl}/pull_question`} component={PullQuestion} />
