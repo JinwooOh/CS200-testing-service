@@ -179,5 +179,23 @@ module.exports = app => {
     //   })
     // });
 
-    
+    //As a user I would like to be able to add an answer to a question or permanently remove it.
+    // app.post("/api/addAnswerToQuestion", (req, res) => {
+    //
+    // });
+
+    app.delete("/api/deleteAnswerToQuestion/:id", async(req, res)=>{
+        try {
+            const answer = await Answer.findById(req.params.id);
+            Answer.findByIdAndDelete(answer, function(err, obj) {
+                if (err) throw err;
+                console.log("1 answer deleted");
+                res.send(obj);
+            });
+
+        } catch (err) {
+            console.log(err);
+            res.status(400);
+        }
+    });
 }
