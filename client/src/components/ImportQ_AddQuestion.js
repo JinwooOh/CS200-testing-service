@@ -33,8 +33,8 @@ export default class ImportQ_AddQuestion extends Component {
         <ParentComponent addChild={this.onAddChild} deleteChild={this.onDeleteChild}>
           {children}
         </ParentComponent>
-        <button>import image</button>
-        <button> Add Question </button>
+        <button className="btn btn__createTest">import image</button>
+        <button className="btn btn__createTest"> Add Question </button>
       </div>
     );
   }
@@ -43,8 +43,8 @@ export default class ImportQ_AddQuestion extends Component {
 const ParentComponent = props => (
   <div className="card calculator">
     <p>
-      <button onClick={props.addChild}>Add Answer Option</button>
-      <button onClick={props.deleteChild}>Delete Answer Option</button>
+      <button className="btn btn__createTest" onClick={props.addChild}>Add Answer Option</button>
+      <button className="btn btn__createTest" onClick={props.deleteChild}>Delete Answer Option</button>
     </p>
     <div id="children-pane">{props.children}</div>
   </div>

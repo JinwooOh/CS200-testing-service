@@ -63,20 +63,56 @@ module.exports = app => {
   })
 
   app.post("/api/importCSV", async (req, res) => {
-    console.log(req.body);
-    var answerId_list = [];
+    //console.log(req.body);
+    
     // Iterate through string answer list
     // Creating answers and adding their ids to the answerID_list
-    var new_upload = Exam({
-      answers: [],
-      question: "",
-      updated: new Date(),
-      correctAnswer: null,
-    });
-    new_upload.save(err => {
-      if (err) throw err;
-      console.log("test created");
-    });
+    // ITerate though array of answers, splitting them up and retrieving correct answer
+    // Creating
+    for (var i = 0; i < req.body.questions.length; i++) {
+      var answerId_list = [];
+      var correctA = 0;
+      var answers = req.body.answers[i].split(',');
+      for (var j = 0; j < answers.length; j++) {
+        // Check that the entry holds an answer
+        // console.log(answers[j]);
+        // console.log(answers[j] === '<');
+        // console.log(answers[j] === 'fixed');
+        // console.log(isNaN(parseInt(answers[j])));
+        // if (answers[j] !== '<' && answers[j] !== 'fixed' && isNaN(parseInt(answers[j]))) {
+          //console.log(answers[j]);
+          var new_answer = Answer({
+            updated: new Date(),
+            answer: answers[j],
+          });
+  
+          answerId_list.push(new_answer._id);
+          console.log(new_answer._id);
+          new_answer.save(err => {
+            if (err) throw err;
+            console.log("answer created");
+          });
+        // }
+
+        // else if (!isNaN(parseInt(answers[j]))) {
+        //   console.log("here");
+        //   correctA = parseInt(answers[j]);
+        // }
+        
+      }
+      console.log(answerId_list);
+      var new_question = Question({
+        answers: answerId_list,
+        question: req.body.questions[i],
+        updated: new Date(),
+        correctAnswer: answerId_list[correctA],
+      });
+      new_question.save(err => {
+        if (err) throw err;
+        console.log("question created");
+      });
+    }
+    
   });
 }
 

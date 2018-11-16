@@ -7,7 +7,7 @@ export default class ImportQCSV extends Component {
    super(props);
    this.state = {
     answers: [],
-    question: '',
+    questions: [],
   };
    this.fileReader = new FileReader();
    this.fileReader.onload = event => {
@@ -19,12 +19,22 @@ export default class ImportQCSV extends Component {
 
  handleFileRead = e => {
   var content = fileReader.result;
-  console.log(content);
+  //console.log(content);
    //console.log(content.split(/,/));
    // Array that holds the questions and answers after being split by commas
    // Note in order for this to work, last answer must be followed by a comma
    // Need Regex expression to effectively split in cases where last answer is not followed by comma
-  var qAndA = content.split(/,/);
+  var qAndA = content.split(/,(.+)?/).slice(0,-1); // slice gets rid of newline char
+  // Populate state with data
+  // If "Fixed" then the order must be preserved
+  // After "Fixed" is the index of the correct answer
+  // questions.push(qAndA[0]);
+  for(var i = 0; i < qAndA.length; i+=2) {
+    // first is questionsAndAnswers, followed by string containing answers
+    this.state.questions.push(qAndA[i]);
+    this.state.answers.push(qAndA[i+1]);
+  }
+  // Make API call
     fetch('/api/importCSV', {
       method: 'POST',
       headers: {
@@ -48,7 +58,7 @@ export default class ImportQCSV extends Component {
    return (
      <div>
        <h4>Import CSV</h4>
-       <input
+       <input className="btn btn__createTest"
          type="file"
          id="file"
          className="file"

@@ -35,14 +35,14 @@ export default class ImportQ extends Component {
 
   render() {
     return (
-      <div>
+      <div className="createTest">
         <Nav />
-        <p>ImportQ Component</p>
+        <h3 className="createTest--title">Import Question</h3>
         <ImportQCSV updateJson={this.updateJson} />
         <ImportQAddQuestion />
-        <h3>ImportQ Component</h3>
+        {/* <h3>ImportQ Component</h3>
 
-        <p>Import JSON file</p>
+        <p>Import JSON file</p> */}
       </div>
     );
   }
