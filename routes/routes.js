@@ -65,7 +65,7 @@ module.exports = app => {
   /* @@@remove question from database by ID
      - examID: req.params.id
   */
-  app.delete("/api/removeExamById/:id", async(req, res)=>{  
+  app.delete("/api/removeExamById/:id", async(req, res)=>{
     try {
       const exam = await Exam.findById(req.params.id);
       Exam.deleteOne(exam, function(err, obj) {
@@ -73,7 +73,7 @@ module.exports = app => {
         console.log("1 document deleted");
         res.send(obj);
       });
-    
+
       // how to send success status?
       //  res.status(200);
     } catch (err) {
@@ -87,7 +87,7 @@ module.exports = app => {
       @ questionID: req.params.questionID
       @ examID: req.params.examId
 
-  */ 
+  */
   app.get("/api/addQuestionToExam/:questionId/:examId", async(req, res)=>{
     try {
       const exam = await Exam.findById(req.params.examId);
@@ -108,9 +108,6 @@ module.exports = app => {
       res.status(400);
     }
   })
-
-  
-
 
 
   //get single exam from Exams by exam ID

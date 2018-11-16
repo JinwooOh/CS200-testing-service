@@ -9,6 +9,7 @@ const ExamInfo = props => {
         <p>Course Number: {props.examInfo.courseNumber}</p>
         <p>Time Limit: {props.examInfo.timeLimit}</p>
         <button
+          className="btn"
           onClick={() => {
             props.shuffleExams();
           }}

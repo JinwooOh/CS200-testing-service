@@ -18,10 +18,13 @@ const SortableItem = SortableElement(props => {
       ))}
       <p>Correct Answer: {props.value.correctAnswer}</p>
       <button
+        className="btn btn__remove"
         onClick={() => {
           props.removeQuestion(props.index);
         }}
-      />
+      >
+        Remove
+      </button>
     </div>
   );
 });
