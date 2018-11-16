@@ -61,6 +61,23 @@ module.exports = app => {
     const examList = await Exam.find();
     res.send(examList);
   })
+
+  app.post("/api/importCSV", async (req, res) => {
+    console.log(req.body);
+    var answerId_list = [];
+    // Iterate through string answer list
+    // Creating answers and adding their ids to the answerID_list
+    var new_upload = Exam({
+      answers: [],
+      question: "",
+      updated: new Date(),
+      correctAnswer: null,
+    });
+    new_upload.save(err => {
+      if (err) throw err;
+      console.log("test created");
+    });
+  });
 }
 
 
