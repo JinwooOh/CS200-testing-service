@@ -82,11 +82,37 @@ module.exports = app => {
     }
   })
 
-    /*  add a question to an exam given questionID and examID
-      @ If the questionID is already the exam ID, the question won't be added
-      @ questionID: req.params.questionID
-      @ examID: req.params.examId
+      /*
+      5.1 5.2
+      Getting all the questions from database
+    */
+  app.get("/api/retrieveAllQuestions/", async(req, res)=>{
+    try {
+      const questionList = await Question.find({});
+      res.send(questionList);
+    } catch (err) {
+      console.log(err);
+      res.status(400);
+    }
+  })
 
+  /* Feature 5.4
+    - click a question card 
+    - edit the question or answers
+    - save the changes to the database
+    - parameter should be
+    @ param 
+
+  */ 
+  
+
+
+  
+
+  /*  add a question to an exam given questionID and examID
+    @ If the questionID is already the exam ID, the question won't be added
+    @ questionID: req.params.questionID
+    @ examID: req.params.examId
   */
   app.get("/api/addQuestionToExam/:questionId/:examId", async(req, res)=>{
     try {
