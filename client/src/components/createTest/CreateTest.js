@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+// import { arrayMove } from 'react-sortable-hoc';
 import Nav from '../Nav';
 import CreateTestForm from './CreateTestForm';
 import CreateTestButtons from './CreateTestButtons';
@@ -19,6 +20,12 @@ export default class CreateTest extends Component {
       valid: true, // check whether input fields is valid
     };
   }
+
+  // onSortEnd = ({ oldIndex, newIndex }) => {
+  //   this.setState({
+  //     questionList: arrayMove(this.state.questionList, oldIndex, newIndex),
+  //   });
+  // };
 
   handleChangeDate = date => {
     this.setState({ startDate: date });
@@ -135,6 +142,7 @@ export default class CreateTest extends Component {
             questionList={this.state.questionList}
             createTest={this.createTest}
             shuffleQuestionList={this.shuffleQuestionList}
+            // onSortEnd={this.onSortEnd}
           />
         </div>
       </div>

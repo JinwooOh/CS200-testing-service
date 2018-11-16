@@ -4,13 +4,11 @@ import Files from 'react-files';
 export default class ImportQCSV extends Component {
   constructor(props) {
     super(props);
-
     this.fileReader = new FileReader();
     this.fileReader.onload = event => {
       this.props.updateJson({ jsonFile: JSON.parse(event.target.result) }, () => {
         console.log(this.state.jsonFile);
       });
-
     };
   }
 

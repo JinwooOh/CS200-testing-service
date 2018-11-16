@@ -16,6 +16,7 @@ export default class PullQuestion extends Component {
             <QuestionList
               removeQuestion={this.props.removeQuestion}
               questionList={this.props.questionList}
+              onSortEnd={this.props.onSortEnd}
             />
             <button className="btn btn__createTest" onClick={() => this.props.createTest()}>
               create test
