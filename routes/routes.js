@@ -86,7 +86,6 @@ module.exports = app => {
       @ If the questionID is already the exam ID, the question won't be added
       @ questionID: req.params.questionID
       @ examID: req.params.examId
-
   */
   app.get("/api/addQuestionToExam/:questionId/:examId", async(req, res)=>{
     try {
@@ -121,6 +120,7 @@ module.exports = app => {
       //convert objectId -> string
       for (let k = 0; k < questionListID.length; k++) {
         let temp = await Question.findById(questionListID[k]);
+        console.log(temp);
         let answers = temp.answers;
         let correctAnswer = temp.correctAnswer;
         for(let i = 0; i < answers.length; i++){
@@ -142,9 +142,9 @@ module.exports = app => {
       res.status(400);
     }
 
-    app.post("/api/shuffleExam", (req, res) => {
+    app.post("/api/saveExam", (req, res) => {
       console.log("shuffle request");
-
+      console.log(req.body);
       var exam_id = req.body[0].id;
       var questions_ids = [];
       for (var i = 1; i < req.body.length; i++){
