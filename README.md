@@ -2,7 +2,7 @@
 First install node packages by running
 ` npm install ` in both root and /client directory
 
-For node server on both http://localhost:5000/, and react server on http://localhost:3000/,
+Then to start the node server on http://localhost:5000/, and the react server on http://localhost:3000/,
 in root directory type ` npm run dev ` 
 
 # Trello <https://trello.com/b/pjeqZils/iteration-1>
