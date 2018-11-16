@@ -186,7 +186,7 @@ module.exports = app => {
     app.delete("/api/removeQuestionFromDatabaseById/:id", async(req, res)=>{
           try {
               const question = await Question.findById(req.params.id);
-              Question.deleteOne(question, function(err, obj) {
+              Question.findByIdAndDelete(question, function(err, obj) {
                   if (err) throw err;
                   console.log("1 question permanently deleted");
                   res.send(obj);
