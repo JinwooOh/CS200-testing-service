@@ -181,11 +181,10 @@ module.exports = app => {
     // });
 
     /* @@@remove question permanently from database by ID
-     - examID: req.params.id
+     - questionID: req.params.id
      */
     app.delete("/api/removeQuestionFromDatabaseById/:id", async(req, res)=>{
           try {
-            console.log("test");
               const question = await Question.findById(req.params.id);
               Question.deleteOne(question, function(err, obj) {
                   if (err) throw err;
