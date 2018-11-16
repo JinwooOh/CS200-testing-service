@@ -1,12 +1,9 @@
 # Usage - Get Website Up and Running
-Install Node packages
-` npm install `
+First install node packages by running
+` npm install ` in both root and /client directory
 
-For node server on http://localhost:5000/,
-type ` npm run server ` first 
-
-For react server on http://localhost:3000/,
-in a client/src directory type ` npm run dev ` 
+For node server on both http://localhost:5000/, and react server on http://localhost:3000/,
+in root directory type ` npm run dev ` 
 
 # Trello <https://trello.com/b/pjeqZils/iteration-1>
 Assign yourself to cards you plan to work on. There are Due Date options, Checklist, Descriptions, etc. that you can add to communicate with your team members. 
