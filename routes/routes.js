@@ -157,7 +157,6 @@ module.exports = app => {
     }
 
     app.post("/api/saveExam", (req, res) => {
-
       console.log("shuffle request");
       console.log("I am BODY: "+ req.body);
       var exam_id = req.body[0].id;

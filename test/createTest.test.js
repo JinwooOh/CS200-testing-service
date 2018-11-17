@@ -54,6 +54,7 @@ describe('API Test', () => {
       courseName: 'No one can pass this test',
       valid: true
     });
+
     newExam.save().then(()=>{
       request(app)
       .get('/api/pullExamList')
@@ -62,10 +63,9 @@ describe('API Test', () => {
         done();
       })
     })
-
-
   })
 
 });
+
 
 
