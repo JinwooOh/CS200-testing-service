@@ -189,6 +189,11 @@ module.exports = app => {
         }
         result.push(temp);
       }
+    }
+      catch (err) {
+        console.log(err);
+        res.status(400);
+    }
   });
 
     app.post("/api/saveExam", (req, res) => {
