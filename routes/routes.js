@@ -4,13 +4,31 @@ const Exam = require('../models/Exam');
 
 module.exports = app => {
   // write api description
-  app.post("/api/createtest", (req, res) => {
-    console.log(req.body);
+  app.post("/api/createtest", (req, res, next) => {
     var questionId_list = [];
     for (var i = 0; i < req.body.questionList.length; i++) {
       questionId_list.push(req.body.questionList[i]._id);
     }
-    var new_test = Exam({
+    console.log(questionId_list);
+    // var new_test = Exam({
+    //   timeLimit: req.body.timeLimit,
+    //   courseName: req.body.name,
+    //   courseNumber: 506,
+    //   dateCreated: new Date(),
+    //   updated: new Date(),
+    //   avgScore: 0,
+    //   medianScore: 0,
+    //   highestScore: 0,
+    //   lowestScore: 0,
+    //   multipleChoice: true,
+    //   difficulty: req.body.difficulty,
+    //   questions: questionId_list
+    // });
+    // new_test.save(err => {
+    //   if (err) throw err;
+    //   console.log("test created");
+    // });
+    Exam.create({
       timeLimit: req.body.timeLimit,
       courseName: req.body.name,
       courseNumber: 506,
@@ -23,11 +41,7 @@ module.exports = app => {
       multipleChoice: true,
       difficulty: req.body.difficulty,
       questions: questionId_list
-    });
-    new_test.save(err => {
-      if (err) throw err;
-      console.log("test created");
-    });
+    }).then(exam=> res.send(exam)).catch(next);
   });
 
   // write api description
