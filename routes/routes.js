@@ -60,7 +60,7 @@ module.exports = app => {
   app.get("/api/pullExamList", async (req, res)=>{
     const examList = await Exam.find();
     res.send(examList);
-  })
+  });
 
   app.post("/api/importCSV", async (req, res) => {
     //console.log(req.body);
@@ -134,7 +134,7 @@ module.exports = app => {
       console.log(err);
       res.status(400);
     }
-  })
+  });
 
     /*  add a question to an exam given questionID and examID
       @ If the questionID is already the exam ID, the question won't be added
@@ -160,7 +160,7 @@ module.exports = app => {
       console.log(err);
       res.status(400);
     }
-  })
+  });
 
 
   //get single exam from Exams by exam ID
@@ -189,12 +189,7 @@ module.exports = app => {
         }
         result.push(temp);
       }
-      console.log(result);
-      res.send(result);
-    }catch(err){
-      console.log(err);
-      res.status(400);
-    }
+  });
 
     app.post("/api/saveExam", (req, res) => {
 
@@ -229,5 +224,49 @@ module.exports = app => {
       })
     });
 
-  })
+    //As a user I would like to be able to add an answer to a question or permanently remove it.
+    /*  add a answer to a question given answerID and questionID
+     @ If the answerID is already with the question ID, the answer won't be added
+     @ answerID: req.params.answerId
+     @ questionID: req.params.questionId
+     */
+    app.get("/api/addAnswerToQuestion/:answerId/:questionId", async(req, res)=>{
+        try {
+            const question = await Question.findById(req.params.questionId);
+            let answer = await Answer.findById(req.params.answerId);
+
+            // check some corner cases
+
+            // push the question to the exam
+            question.answers.addToSet(answer);
+            question.save(err => {
+                if (err) throw err;
+                console.log("Answer added to the question");
+            });
+            res.send(question);
+
+        } catch (err) {
+            console.log(err);
+            res.status(400);
+        }
+    });
+
+    //As a user I would like to be able to delete an answer.
+    /*  delete a answer given answerID
+     @ answerID: req.params.answerId
+     */
+    app.delete("/api/deleteAnswerToQuestion/:id/", async(req, res)=>{
+        try {
+            const answer = await Answer.findById(req.params.id);
+            Answer.findByIdAndDelete(answer, function(err, obj) {
+                if (err) throw err;
+                console.log("1 answer deleted");
+                res.send(obj);
+            });
+
+        } catch (err) {
+            console.log(err);
+            res.status(400);
+        }
+    });
 }
