@@ -2,9 +2,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require('./routes/routes');
+const MongoClient = require('mongodb');
 
 const app = express();
 //https://mongoosejs.com/docs/populate.html
+
 
 
 mongoose.Promise = global.Promise; // Get Mongoose to use the global promise
@@ -20,6 +22,12 @@ if (process.env.NODE_ENV !== 'test') {
   //"test": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'"
   var mongoDB = "mongodb://admin:admin123@ds231229.mlab.com:31229/test_database_cs_200";
   mongoose.connect(mongoDB, { useNewUrlParser: true });
+  //copy collection
+  // var url  = "mongodb://admin:admin123@ds231229.mlab.com:31229/test_database_cs_200";
+  // MongoClient.connect(url, function(err, db){
+  //   if (err) throw err;
+  //   db.copyDatabase("mongodb://admin:admin123@ds153239.mlab.com:53239/cs_200_testing_service");
+  // })
 }
 
 //Get the default connection
