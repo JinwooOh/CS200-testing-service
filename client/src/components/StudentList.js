@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
+import StudentTable from './StudentTable';
+import 'react-table/react-table.css';
 
 export default class StudentList extends Component {
   render() {
@@ -7,10 +9,7 @@ export default class StudentList extends Component {
       <div>
         <Nav />
         <p>StudentList Component</p>
-        <ul>
-          <li>Student 1</li>
-          <li>Student 2</li>
-        </ul>
+        <StudentTable />
       </div>
     );
   }
