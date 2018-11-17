@@ -6,6 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { RadioGroup, RadioButton } from "react-radio-buttons";
 
 export default class takeExam extends Component {
   constructor(props) {
@@ -16,7 +17,9 @@ export default class takeExam extends Component {
       currentExam: null,
       open: false,
       scroll: "paper",
-      selectExam_index: null
+      selectExam_index: null,
+      exam: null,
+      questionList: []
     }; // list of exams
   }
   componentDidMount() {
@@ -43,7 +46,33 @@ export default class takeExam extends Component {
 
   gotoExam(index) {
     this.setState({ isHomePage: false });
+    console.log(this.state.selectExam_index);
+    this.handleViewExam(this.state.examList[this.state.selectExam_index]._id);
   }
+
+  handleViewExam = id => {
+    const url = `/api/pullExamById/${id}`;
+    fetch(url)
+      .then(res => res.json())
+      .then(res => this.setState({ exam: res }))
+      .then(() => {
+        const copyExam = [...this.state.exam];
+        copyExam.shift();
+        this.setState({ questionList: copyExam });
+        console.log(this.state.questionList);
+      })
+      .catch(error =>
+        console.error("fetch error at /api/pullExamById/", error)
+      ); // error
+  };
+
+  formatAnswers = answers => {
+    console.log(answers);
+    const listItems = answers.map((item, i) => (
+      <RadioButton key={i}> {item}</RadioButton>
+    ));
+    return <RadioGroup>{listItems}</RadioGroup>;
+  };
   render() {
     console.log(this.state.examList);
 
@@ -88,10 +117,18 @@ export default class takeExam extends Component {
         </div>
       );
     } else {
+      console.log(this.state.questionList);
+      const listItems = this.state.questionList.map((item, i) => (
+        <div key={i}>
+          <p>{item.question}</p>
+          {this.formatAnswers(item.answers)}
+        </div>
+      ));
+
       return (
         <div>
           <Nav />
-          <p>fsdf</p>
+          {listItems}
         </div>
       );
     }
