@@ -1,0 +1,17 @@
+{
+    "student1": {
+        "name": "Tanner Linsley",
+        "csid": "abs@abs.edu",
+        "testscore": "90"
+    },
+    "student2": {
+        "name": "Banner Binsley",
+        "csid": "sefsef@abs.edu",
+        "testscore": "80"
+    },
+    "student3": {
+        "name": "Hanner Hinsley",
+        "csid": "fses@abs.edu",
+        "testscore": "70"
+    }
+}

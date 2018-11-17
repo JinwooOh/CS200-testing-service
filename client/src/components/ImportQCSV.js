@@ -1,37 +1,86 @@
 import React, { Component } from 'react';
-import Files from 'react-files';
+//import Files from 'react-files';
 
+let fileReader;
 export default class ImportQCSV extends Component {
-  constructor(props) {
-    super(props);
-    this.fileReader = new FileReader();
-    this.fileReader.onload = event => {
-      this.props.updateJson({ jsonFile: JSON.parse(event.target.result) }, () => {
-        console.log(this.state.jsonFile);
-      });
-    };
-  }
+ constructor(props) {
+   super(props);
+   this.state = {
+    answers: [],
+    questions: [],
+  };
+   this.fileReader = new FileReader();
+   this.fileReader.onload = event => {
+     this.props.updateJson({ jsonFile: JSON.parse(event.target.result) }, () => {
+       console.log(this.state.jsonFile);
+     });
+   };
+ }
 
-  render() {
-    return (
-      <div>
-        <h4>Import CSV</h4>
-        <Files
-          className="files-dropzone"
-          onChange={file => {
-            this.fileReader.readAsText(file[0]);
-          }}
-          onError={err => console.log(err)}
-          accepts={['.json']}
-          multiple
-          maxFiles={3}
-          maxFileSize={10000000}
-          minFileSize={0}
-          clickable
-        >
-          <button>Import CSV</button>
-        </Files>
-      </div>
-    );
+ handleFileRead = e => {
+  var content = fileReader.result;
+  //console.log(content);
+   //console.log(content.split(/,/));
+   // Array that holds the questions and answers after being split by commas
+   // Note in order for this to work, last answer must be followed by a comma
+   // Need Regex expression to effectively split in cases where last answer is not followed by comma
+  var qAndA = content.split(/,(.+)?/).slice(0,-1); // slice gets rid of newline char
+  // Populate state with data
+  // If "Fixed" then the order must be preserved
+  // After "Fixed" is the index of the correct answer
+  // questions.push(qAndA[0]);
+  for(var i = 0; i < qAndA.length; i+=2) {
+    // first is questionsAndAnswers, followed by string containing answers
+    this.state.questions.push(qAndA[i]);
+    this.state.answers.push(qAndA[i+1]);
   }
+  // Make API call
+    fetch('/api/importCSV', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state),
+    })
+      .then(alert('The file is uploaded and saved.'))
+      .catch(error => console.error('fetch error at importCSV', error)); // error
+    // update state with array of answers
+   // … do something with the ‘content’ …
+ };
+
+ handleFileChosen = file => {
+   fileReader = new FileReader();
+   fileReader.onloadend = this.handleFileRead;
+   fileReader.readAsText(file);
+ };
+
+ render() {
+   return (
+     <div>
+       <h4>Import CSV</h4>
+       <input className="btn btn__createTest"
+         type="file"
+         id="file"
+         className="file"
+         accept=".csv"
+         onChange={e => this.handleFileChosen(e.target.files[0])}
+       />
+       {/* <Files
+         className=“files-dropzone”
+         onChange={file => {
+           this.fileReader.readAsText(file[0]);
+         }}
+         onError={err => console.log(err)}
+         accepts={[‘.json’]}
+         multiple
+         maxFiles={3}
+         maxFileSize={10000000}
+         minFileSize={0}
+         clickable
+       >
+         <button>Import CSV</button>
+       </Files> */}
+     </div>
+   );
+ }
 }
