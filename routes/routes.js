@@ -229,6 +229,25 @@ module.exports = app => {
       })
     });
 
+    /* @@@remove question permanently from database by ID
+     - questionID: req.params.id
+     */
+    app.delete("/api/removeQuestionFromDatabaseById/:id", async(req, res)=>{
+          try {
+              const question = await Question.findById(req.params.id);
+              Question.findByIdAndDelete(question, function(err, obj) {
+                  if (err) throw err;
+                  console.log("1 question permanently deleted");
+                  res.send(obj);
+              });
+
+          } catch (err) {
+              console.log(err);
+              res.status(400);
+          }
+      })
+}
+
     //As a user I would like to be able to add an answer to a question or permanently remove it.
     /*  add a answer to a question given answerID and questionID
      @ If the answerID is already with the question ID, the answer won't be added
