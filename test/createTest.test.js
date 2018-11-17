@@ -3,7 +3,7 @@ const assert = require('assert');
 const request = require('supertest');
 const app = require('../server');
 
-describe('The Express app', () => {
+describe('API Test', () => {
   it('handles a POST requests to /api/pullquestion', done => {
     const req = {
       startDate: '2018-11-07T05:54:25.054Z',
@@ -36,19 +36,36 @@ describe('The Express app', () => {
       valid: true
     }
     Exam.count().then(count =>{
-      console.log("count: "+count);
       request(app)
       .post('/api/createtest')
       .send(req)
       .end(()=>{
         Exam.count().then(newCount => {
-          console.log("newCount: "+newCount);
           assert(count +1 === newCount);
           done();
         })
       })
     })
   })
+
+  it('handles a GET requests to /api/pullExamList', done =>{
+    const newExam = new Exam({
+      startDate: '2018-11-07T05:54:25.054Z',
+      courseName: 'No one can pass this test',
+      valid: true
+    });
+    newExam.save().then(()=>{
+      request(app)
+      .get('/api/pullExamList')
+      .end((err, res)=>{
+        assert(res.body[res.body.length-1].courseName==='No one can pass this test')
+        done();
+      })
+    })
+
+
+  })
+
 });
 
 
