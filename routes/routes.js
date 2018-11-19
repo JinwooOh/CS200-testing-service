@@ -121,9 +121,21 @@ module.exports = app => {
           });    
           
           // @TODO: writing editting for correctAnswer and answers
-          // access req.body.correctAnswer to get new correctAnswer
-          
+          // access req.body.correctAnswer to get array of new correct answers
+          // in here we assume that the first element of req.body.correctAnswer 
+          // to the first element of question.correctAnswer
+          // go to the answer collection 
+          // find the answer given id of the answer in the question
+          // change the title of the answer to something else
+          for (let i = 0; i < req.body.correctAnswer.length; i++) {
+          Answer.findByIdAndUpdate(question.correctAnswer[i], {answer: req.body.correctAnswer[i]},
+                                                              function (err, data) {
+            if (err) return console.error(err);
+            console.log(data.answer.toString());
+          });
 
+            
+          }
 
           res.send(question);
        } catch (err) {
