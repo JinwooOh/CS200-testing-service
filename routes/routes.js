@@ -96,24 +96,52 @@ module.exports = app => {
     }
   })
 
-  /* Feature 5.4
-    - click a question card 
-    - edit the question or answers
-    - save the changes to the database
-    - parameter should be
-    @ param 
-
-  */ 
   
 
+  /**   Feature 5.4 : Edit question/answer
+     * Click on a question card and edit the question or answers 
+     * and save the changes into the database
+     * @param questionID ID of the question that we want to edit
+     * @param req.body.question : string of the new question
+     * @param req.body.correctAnswer[]: arrays of ID of the new Answer
+     */
+
+     app.post("/api/editQuestionAnswer/:questionID", async(req, res) => {
+       try {
+          // find question given ID
+          let question = await Question.findById(req.params.questionID);
+          console.log(req.body.question);
+          // access req.body.question to change question title
+          if (req.params.questionID != null) {
+            question.question = req.body.question; // set new question title 
+          }
+          question.save(err => {
+            if (err) throw err;
+            console.log("Question title changed!");
+          });    
+          
+          // @TODO: writing editting for correctAnswer and answers
+          // access req.body.correctAnswer to get new correctAnswer
+          
+
+
+          res.send(question);
+       } catch (err) {
+         if (err) throw err;
+         res.status(400);
+       }
+        
+     })
+
 
   
 
-  /*  add a question to an exam given questionID and examID
-    @ If the questionID is already the exam ID, the question won't be added
-    @ questionID: req.params.questionID
-    @ examID: req.params.examId
+  /** add a question to an exam given questionID and examID
+    * If the questionID is already the exam ID, the question won't be added
+    * @param questionID: req.params.questionID
+    * @param examID: req.params.examId
   */
+
   app.get("/api/addQuestionToExam/:questionId/:examId", async(req, res)=>{
     try {
       const exam = await Exam.findById(req.params.examId);
