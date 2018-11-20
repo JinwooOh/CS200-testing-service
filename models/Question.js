@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var questionSchema = new Schema ({
   updated:     Date,
   question:  String,
-  correctAnswer:     Schema.Types.ObjectId,
+  correctAnswer: [Schema.Types.ObjectId],
   answers:    [Schema.Types.ObjectId],
 });
 
