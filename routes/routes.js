@@ -64,7 +64,7 @@ module.exports = app => {
 
   app.post("/api/importCSV", async (req, res) => {
     //console.log(req.body);
-    
+
     // Iterate through string answer list
     // Creating answers and adding their ids to the answerID_list
     // ITerate though array of answers, splitting them up and retrieving correct answer
@@ -85,7 +85,7 @@ module.exports = app => {
             updated: new Date(),
             answer: answers[j],
           });
-  
+
           answerId_list.push(new_answer._id);
           console.log(new_answer._id);
           new_answer.save(err => {
@@ -98,7 +98,7 @@ module.exports = app => {
         //   console.log("here");
         //   correctA = parseInt(answers[j]);
         // }
-        
+
       }
       console.log(answerId_list);
       var new_question = Question({
@@ -112,7 +112,7 @@ module.exports = app => {
         console.log("question created");
       });
     }
-    
+
   });
 
 
