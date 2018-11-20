@@ -189,6 +189,7 @@ module.exports = app => {
         }
         result.push(temp);
       }
+      res.send(result);
     }
       catch (err) {
         console.log(err);
@@ -198,16 +199,18 @@ module.exports = app => {
 
     app.post("/api/saveExam", (req, res) => {
 
-      console.log("shuffle request");
-      console.log("I am BODY: "+ req.body);
+      console.log("update request");
+      console.log(req.body[0].courseName);
       var exam_id = req.body[0].id;
       var questions_ids = [];
       for (var i = 1; i < req.body.length; i++){
         questions_ids.push(req.body[i]._id);
       }
-      console.log(exam_id);
-      console.log(questions_ids);
-      Exam.findByIdAndUpdate(exam_id, {questions: questions_ids}, (err)=>{
+      
+      Exam.findByIdAndUpdate(exam_id, {questions: questions_ids, 
+        courseName:req.body[0].courseName, 
+        courseNumber: parseInt(req.body[0].courseNumber), 
+        timeLimit: parseInt(req.body[0].timeLimit)}, (err)=>{
         if (err) throw err;
         console.log("update success");
       })
@@ -246,7 +249,7 @@ module.exports = app => {
               res.status(400);
           }
       })
-}
+
 
     //As a user I would like to be able to add an answer to a question or permanently remove it.
     /*  add a answer to a question given answerID and questionID
@@ -293,4 +296,4 @@ module.exports = app => {
             res.status(400);
         }
     });
-}
+  }
