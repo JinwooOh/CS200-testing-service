@@ -1,3 +1,9 @@
+const Exam = require('../models/Exam');
+const assert = require('assert');
+const request = require('supertest');
+const app = require('../server');
+
+describe('API Test', () => {
 it('handles a GET requests to /api/pullExamById', done =>{
   const req = {
       startDate: '2018-11-07T05:54:25.054Z',
@@ -18,4 +24,5 @@ it('handles a GET requests to /api/pullExamById', done =>{
       assert(res.body._id.should.eql(req._id))
       done();
     });
+});
 });
