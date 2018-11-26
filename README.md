@@ -8,6 +8,9 @@ type ` npm run server ` first
 For react server on http://localhost:3000/,
 in a client/src directory type ` npm run dev ` 
 
+If you want to run both front and back-end at the same time, 
+type ` npm run dev ` in root directory. 
+
 # Trello <https://trello.com/b/rQZHePim/iteration-2>
 Assign yourself to cards you plan to work on. There are Due Date options, Checklist, Descriptions, etc. that you can add to communicate with your team members. 
 Once you feel you've completed a feature, find it in Trello and add the related card to the *Code Review* list. 
