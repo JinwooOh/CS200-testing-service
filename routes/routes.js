@@ -200,7 +200,7 @@ module.exports = app => {
   // get single question by its ID
   app.get("/api/pullQuestionById/:id", async(req, res)=>{
     const question = await Question.findById(req.params.id);
-    console.log(question);
+    res.send(question);
   });
 
   app.post("/api/saveExam", (req, res) => {

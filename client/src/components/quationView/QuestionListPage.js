@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Nav from '../Nav';
 import QuestionTable from './QuestionTable';
+import QuestionEdit from './QuestionEdit';
 
 export default class QuestionListPage extends Component {
   constructor(props) {
@@ -23,7 +24,7 @@ export default class QuestionListPage extends Component {
       .then(res => res.json())
       .then(res => {
         const result = [...res];
-        this._isMounted = true;
+
         this.setState({ questionList: result });
       })
       .catch(error => console.error('fetch error at pull question', error)); // error
@@ -35,9 +36,6 @@ export default class QuestionListPage extends Component {
     fetch(url)
       .then(res => res.json())
       .then(res => this.setState({ question: res }))
-      .then(() => {
-        // this.setState({ questionList: copyExam });
-      })
       .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
@@ -47,12 +45,12 @@ export default class QuestionListPage extends Component {
     return (
       <div>
         <Nav />
-
         <QuestionTable
           questionList={this.state.questionList}
           handleViewQuestion={this.handleViewQuestion}
           removeQuestion={this.removeQuestion}
         />
+        <QuestionEdit question={this.state.question} />
       </div>
     );
   }
