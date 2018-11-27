@@ -14,8 +14,7 @@ export default class ExamList extends Component {
       questionList: [],
       //      loading: true,
     };
-    this.handleChange= this.handleChange.bind(this);
-    
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -49,20 +48,20 @@ export default class ExamList extends Component {
 
   handleSave = () => {
     console.log(this.state);
-    var newExam = this.state.exam.slice(0);
-    if (this.state.newName != undefined && this.state.newExam != ""){
-      
+    let newExam = this.state.exam.slice(0);
+    if (this.state.newName != undefined && this.state.newExam != ''){
+
       newExam[0].courseName = this.state.newName;
     }
-    if (this.state.newCourseNumber != undefined && this.state.newCourseNumber != ""){
+    if (this.state.newCourseNumber != undefined && this.state.newCourseNumber != ''){
       newExam[0].courseNumber = this.state.newCourseNumber;
     }
-    if (this.state.newTimeLimit != undefined && this.state.newTimeLimit != ""){
-      console.log("hi");
+    if (this.state.newTimeLimit != undefined && this.state.newTimeLimit != ''){
+      console.log('hi');
       newExam[0].timeLimit = this.state.newTimeLimit;
     }
     console.log(newExam);
-    this.setState({exam: newExam});
+    this.setState({ exam: newExam });
     console.log(this.state.exam);
     fetch('/api/saveExam', {
       method: 'POST',
@@ -85,7 +84,6 @@ export default class ExamList extends Component {
   handleChange(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-
 
   handleViewExam = id => {
     const url = `/api/pullExamById/${id}`;
