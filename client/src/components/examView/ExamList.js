@@ -47,20 +47,18 @@ export default class ExamList extends Component {
   };
 
   handleSave = () => {
-    console.log(this.state);
-    let newExam = this.state.exam.slice(0);
-    if (this.state.newName != undefined && this.state.newExam != ''){
-
+    const newExam = this.state.exam.slice(0);
+    if (this.state.newName !== undefined && this.state.newExam !== '') {
       newExam[0].courseName = this.state.newName;
     }
-    if (this.state.newCourseNumber != undefined && this.state.newCourseNumber != ''){
+    if (this.state.newCourseNumber !== undefined && this.state.newCourseNumber !== '') {
       newExam[0].courseNumber = this.state.newCourseNumber;
     }
-    if (this.state.newTimeLimit != undefined && this.state.newTimeLimit != ''){
+    if (this.state.newTimeLimit !== undefined && this.state.newTimeLimit !== '') {
       console.log('hi');
       newExam[0].timeLimit = this.state.newTimeLimit;
     }
-    console.log(newExam);
+    // FIX: need to update questionList as well
     this.setState({ exam: newExam });
     console.log(this.state.exam);
     fetch('/api/saveExam', {

@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
 import StudentList from './StudentList';
-import QuationListPage from './quationView/QuationListPage.js';
+import QuationListPage from './quationView/QuestionListPage.js';
 import CreateTest from './createTest/CreateTest';
 import ImportQ from './ImportQ';
 import PullQuestion from './createTest/PullQuestion';
