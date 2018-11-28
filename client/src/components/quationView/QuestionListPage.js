@@ -13,7 +13,7 @@ export default class QuestionListPage extends Component {
   }
 
   componentDidMount() {
-    const numberOfQuestion = { number: '10' };
+    const numberOfQuestion = { number: '10' }; // factor out this later
     fetch('/api/pullquestion', {
       method: 'POST',
       headers: {
@@ -39,7 +39,30 @@ export default class QuestionListPage extends Component {
       .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
-  removeQuestion = () => {};
+  removeQuestion = id => {
+    const numberOfQuestion = { number: '10' }; // factor out this later
+    const url = `/api/removeQuestionFromDatabaseById/${id}`;
+    console.log(url);
+    fetch(url, { method: 'delete' })
+      .then(res => console.log(res))
+      .then(() => {
+        fetch('/api/pullquestion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(numberOfQuestion),
+        })
+          .then(res => res.json())
+          .then(res => {
+            const result = [...res];
+
+            this.setState({ questionList: result });
+          })
+          .catch(error => console.error('fetch error at pull question', error));
+      })
+      .catch(error => console.error('fetch error at /api/removeQuestionFromDatabaseById', error)); // error
+  };
 
   render() {
     return (

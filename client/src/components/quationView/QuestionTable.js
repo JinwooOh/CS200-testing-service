@@ -47,7 +47,7 @@ export default class QuestionTable extends Component {
                   </button>
                   <button
                     onClick={() => {
-                      console.log('Delete this question');
+                      this.props.removeQuestion(row.original._id);
                     }}
                   >
                     Delete

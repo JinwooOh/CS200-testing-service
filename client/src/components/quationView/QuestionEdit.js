@@ -10,8 +10,15 @@ export default class QuestionEdit extends Component {
           <h3>Question</h3>
         </div>
         <p>{question}</p>
-
         <p>Correct Answer: {correctAnswer}</p>
+        <button
+          className="btn btn__remove"
+          onClick={() => {
+            this.prop.removeQuestion(_id);
+          }}
+        >
+          Remove
+        </button>
       </div>
     );
   }
