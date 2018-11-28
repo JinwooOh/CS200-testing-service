@@ -3,7 +3,7 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import App from './App';
 import StudentList from './StudentList';
-import QuationListPage from './quationView/QuestionListPage.js';
+import QuestionListPage from './questionView/QuestionListPage.js';
 import CreateTest from './createTest/CreateTest';
 import ImportQ from './ImportQ';
 import PullQuestion from './createTest/PullQuestion';
@@ -18,7 +18,7 @@ const Router = () => (
       <Route exact path={`${baseUrl}/`} component={App} />
       <Route path={`${baseUrl}/studentlist`} component={StudentList} />
       <Route path={`${baseUrl}/examlist`} component={ExamList} />
-      <Route path={`${baseUrl}/questionlist`} component={QuationListPage} />
+      <Route path={`${baseUrl}/questionlist`} component={QuestionListPage} />
       <Route path={`${baseUrl}/examedit`} component={ExamEdit} />
       <Route path={`${baseUrl}/createtest`} component={CreateTest} />
       <Route path={`${baseUrl}/importquestion`} component={ImportQ} />
