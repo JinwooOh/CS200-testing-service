@@ -9,11 +9,12 @@ export default class QuestionListPage extends Component {
     this.state = {
       questionList: [],
       question: {},
+      loading: true,
     };
   }
 
   componentDidMount() {
-    const numberOfQuestion = { number: '30' }; // factor out this later
+    const numberOfQuestion = { number: '4' }; // factor out this later
     fetch('/api/pullquestion', {
       method: 'POST',
       headers: {
@@ -25,7 +26,7 @@ export default class QuestionListPage extends Component {
       .then(res => {
         const result = [...res];
 
-        this.setState({ questionList: result });
+        this.setState({ questionList: result, loading: false });
       })
       .catch(error => console.error('fetch error at pull question', error)); // error
     // fetch end
@@ -40,7 +41,7 @@ export default class QuestionListPage extends Component {
   };
 
   removeQuestion = id => {
-    const numberOfQuestion = { number: '30' }; // factor out this later
+    const numberOfQuestion = { number: '4' }; // factor out this later
     const url = `/api/removeQuestionFromDatabaseById/${id}`;
     console.log(url);
     fetch(url, { method: 'delete' })
@@ -72,6 +73,7 @@ export default class QuestionListPage extends Component {
           questionList={this.state.questionList}
           handleViewQuestion={this.handleViewQuestion}
           removeQuestion={this.removeQuestion}
+          loading={this.state.loading}
         />
         <QuestionEdit question={this.state.question} />
       </div>

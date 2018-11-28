@@ -26,13 +26,13 @@ export default class QuestionTable extends Component {
         accessor: 'timeLimit',
       },
     ];
-
+    const { loading } = this.props;
     return (
       <div>
         <ReactTable
           columns={columns}
           data={this.props.questionList}
-          // onFetchData={this.fetchData}
+          loading={loading}
           defaultPageSize={10}
           SubComponent={row => {
             return (

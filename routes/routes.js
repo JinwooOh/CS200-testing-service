@@ -30,6 +30,23 @@ module.exports = app => {
     });
   });
 
+  // get single question by its ID
+  app.get("/api/pullQuestionById/:id", async(req, res)=>{
+    const question = await Question.findById(req.params.id);
+    for (let j = 0; j < question.answers.length; j++) {
+      // question.answers[j] = "faf";
+      let realAnswer = await Answer.findById(question.answers[j]).then(answer =>
+         answer.answer).catch(()=>'');// catch => cannot find question
+      question.answers[j] = realAnswer;
+    }
+    for (let j = 0; j < question.correctAnswer.length; j++) {
+      // question.answers[j] = "faf";
+      let realAnswer = await Answer.findById(question.correctAnswer[j]).then(correctAnswer =>
+        correctAnswer.answer).catch(()=>'');// catch => cannot find question
+      question.correctAnswer[j] = realAnswer;
+    }
+    res.send(question);
+  });
   // write api description
   app.post("/api/pullquestion", async (req, res) => {
     //write error handler
@@ -43,13 +60,13 @@ module.exports = app => {
       for (let j = 0; j < questionList[i].answers.length; j++) {
         // questionList[i].answers[j] = "faf";
         let realAnswer = await Answer.findById(questionList[i].answers[j]).then(answer =>
-           answer.answer).catch(()=>'');
+           answer.answer).catch(()=>'');// catch => cannot find question
         questionList[i].answers[j] = realAnswer;
       }
       for (let j = 0; j < questionList[i].correctAnswer.length; j++) {
         // questionList[i].answers[j] = "faf";
         let realAnswer = await Answer.findById(questionList[i].correctAnswer[j]).then(correctAnswer =>
-          correctAnswer.answer).catch(()=>'');
+          correctAnswer.answer).catch(()=>'');// catch => cannot find question
         questionList[i].correctAnswer[j] = realAnswer;
       }
     }
@@ -179,12 +196,12 @@ module.exports = app => {
         let correctAnswer = temp.correctAnswer;
         for(let i = 0; i < answers.length; i++){
           let realAnswer = await Answer.findById(answers[i]).then(answer =>
-            answer.answer);
+            answer.answer).catch(()=>'');
           temp.answers[i] = realAnswer;
         }
         for(let i = 0; i < correctAnswer.length; i++){
           let realAnswer = await Answer.findById(correctAnswer[i]).then(correctAnswer =>
-            correctAnswer.answer);
+            correctAnswer.answer).catch(()=>'');
           temp.correctAnswer[i] = realAnswer;
         }
         result.push(temp);
@@ -195,12 +212,6 @@ module.exports = app => {
         console.log(err);
         res.status(400);
     }
-  });
-
-  // get single question by its ID
-  app.get("/api/pullQuestionById/:id", async(req, res)=>{
-    const question = await Question.findById(req.params.id);
-    res.send(question);
   });
 
   app.post("/api/saveExam", (req, res) => {
