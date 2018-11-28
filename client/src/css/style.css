@@ -25,7 +25,17 @@ li {
   padding-top: 0.8rem; }
 
 .questions {
+  padding: 1.2rem;
   text-align: left; }
+  .questions--examTitle {
+    text-align: center;
+    font-size: 3.2rem;
+    font-weight: 300; }
+  .questions--examData {
+    padding-top: 1.2rem;
+    text-align: center;
+    font-size: 2.4rem;
+    font-weight: 300; }
   .questions--item {
     flex: 0 1 28rem;
     margin: 2rem 8rem;

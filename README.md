@@ -1,12 +1,9 @@
 # Usage - Get Website Up and Running
-Install Node packages
-` npm install `
+First install node packages by running
+` npm install ` in both root and /client directory
 
-For node server on http://localhost:5000/,
-type ` npm run server ` first 
-
-For react server on http://localhost:3000/,
-in a client/src directory type ` npm run dev ` 
+Then to start the node server on http://localhost:5000/, and the react server on http://localhost:3000/,
+in root directory type ` npm run dev ` 
 
 If you want to run both front and back-end at the same time, 
 type ` npm run dev ` in root directory. 

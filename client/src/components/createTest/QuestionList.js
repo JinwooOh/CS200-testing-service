@@ -1,11 +1,13 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+// import SortableList from '../helper/Sortable';
 
 const QuestionList = props => {
   const questions = props.questionList;
   return (
     <div className="questions">
       <ol>
+        {/* <SortableList items={questions} onSortEnd={props.onSortEnd} /> */}
         {questions.map((question, i) => (
           <div className="questions--item" key={i}>
             <div className="questions--title">
@@ -19,9 +21,7 @@ const QuestionList = props => {
                 </p>
               ))}
             </div>
-            <p className="questions--correctAnswer">
-              Correct Answer: {question.correctAnswer}
-            </p>
+            <p className="questions--correctAnswer">Correct Answer: {question.correctAnswer}</p>
             <button
               onClick={() => {
                 props.removeQuestion(i);
@@ -39,5 +39,5 @@ const QuestionList = props => {
 export default QuestionList;
 
 QuestionList.propTypes = {
-  questionList: PropTypes.array.isRequired
+  questionList: PropTypes.array.isRequired,
 };
