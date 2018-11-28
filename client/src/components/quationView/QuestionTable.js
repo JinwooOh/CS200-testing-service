@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import PropTypes from 'prop-types';
 import 'react-table/react-table.css';
 
-export default class ExamTable extends Component {
-  /*
-  //try to implement updatable table?
-  fetchData(state, instance) {
-    this.setState({ loading: true });
-
-    //update?
-
-    this.setState({loading: false });
-  }
-*/
+export default class QuestionTable extends Component {
   render() {
     const columns = [
       {
-        Header: 'Course Name',
-        accessor: 'courseName',
+        Header: 'Question',
+        accessor: 'question',
       },
       {
         Header: 'Course Number',
@@ -37,28 +26,28 @@ export default class ExamTable extends Component {
         accessor: 'timeLimit',
       },
     ];
-
+    const { loading } = this.props;
     return (
       <div>
         <ReactTable
           columns={columns}
-          data={this.props.examList}
-          // onFetchData={this.fetchData}
-          defaultPageSize={6}
+          data={this.props.questionList}
+          loading={loading}
+          defaultPageSize={10}
           SubComponent={row => {
             return (
               <div style={{ padding: '5px' }}>
                 <div>
                   <button
                     onClick={() => {
-                      this.props.handleViewExam(row.original._id);
+                      this.props.handleViewQuestion(row.original._id);
                     }}
                   >
                     View/Edit
                   </button>
                   <button
                     onClick={() => {
-                      this.props.removeExam(row.original._id);
+                      this.props.removeQuestion(row.original._id);
                     }}
                   >
                     Delete
@@ -72,7 +61,3 @@ export default class ExamTable extends Component {
     );
   }
 }
-
-ExamTable.propTypes = {
-  handleViewExam: PropTypes.func.isRequired,
-};

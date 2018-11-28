@@ -4,17 +4,17 @@ import ExamInfo from './ExamInfo';
 import SortableList from '../helper/Sortable';
 
 export default class ExamEdit extends Component {
-  constructor(props){
-    super(props);
-    console.log(props);
-  }
   render() {
     const examInfo = this.props.exam[0] || '';
-    
+
     return (
       <div>
         {examInfo !== '' ? (
-          <ExamInfo shuffleExams={this.props.shuffleExams} examInfo={examInfo} handleChange = {this.props.handleChange}/>
+          <ExamInfo
+            shuffleExams={this.props.shuffleExams}
+            examInfo={examInfo}
+            handleChange={this.props.handleChange}
+          />
         ) : (
           ''
         )}
