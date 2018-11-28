@@ -43,14 +43,14 @@ module.exports = app => {
       for (let j = 0; j < questionList[i].answers.length; j++) {
         // questionList[i].answers[j] = "faf";
         let realAnswer = await Answer.findById(questionList[i].answers[j]).then(answer =>
-           answer.answer);
-       questionList[i].answers[j] = realAnswer;
+           answer.answer).catch(()=>'');
+        questionList[i].answers[j] = realAnswer;
       }
       for (let j = 0; j < questionList[i].correctAnswer.length; j++) {
         // questionList[i].answers[j] = "faf";
         let realAnswer = await Answer.findById(questionList[i].correctAnswer[j]).then(correctAnswer =>
-          correctAnswer.answer);
-       questionList[i].correctAnswer[j] = realAnswer;
+          correctAnswer.answer).catch(()=>'');
+        questionList[i].correctAnswer[j] = realAnswer;
       }
     }
     console.log(questionList);

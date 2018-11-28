@@ -13,7 +13,7 @@ export default class QuestionListPage extends Component {
   }
 
   componentDidMount() {
-    const numberOfQuestion = { number: '10' }; // factor out this later
+    const numberOfQuestion = { number: '30' }; // factor out this later
     fetch('/api/pullquestion', {
       method: 'POST',
       headers: {
@@ -40,7 +40,7 @@ export default class QuestionListPage extends Component {
   };
 
   removeQuestion = id => {
-    const numberOfQuestion = { number: '10' }; // factor out this later
+    const numberOfQuestion = { number: '30' }; // factor out this later
     const url = `/api/removeQuestionFromDatabaseById/${id}`;
     console.log(url);
     fetch(url, { method: 'delete' })
