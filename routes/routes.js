@@ -1,16 +1,35 @@
 const Question = require('../models/Question');
 const Answer = require('../models/Answer');
 const Exam = require('../models/Exam');
+const User = require('../models/User');
 
 module.exports = app => {
   // write api description
-  app.post("/api/createtest", (req, res) => {
-    console.log(req.body);
+  app.post("/api/createtest", (req, res, next) => {
     var questionId_list = [];
     for (var i = 0; i < req.body.questionList.length; i++) {
       questionId_list.push(req.body.questionList[i]._id);
     }
-    var new_test = Exam({
+    console.log(questionId_list);
+    // var new_test = Exam({
+    //   timeLimit: req.body.timeLimit,
+    //   courseName: req.body.name,
+    //   courseNumber: 506,
+    //   dateCreated: new Date(),
+    //   updated: new Date(),
+    //   avgScore: 0,
+    //   medianScore: 0,
+    //   highestScore: 0,
+    //   lowestScore: 0,
+    //   multipleChoice: true,
+    //   difficulty: req.body.difficulty,
+    //   questions: questionId_list
+    // });
+    // new_test.save(err => {
+    //   if (err) throw err;
+    //   console.log("test created");
+    // });
+    Exam.create({
       timeLimit: req.body.timeLimit,
       courseName: req.body.name,
       courseNumber: 506,
@@ -23,11 +42,7 @@ module.exports = app => {
       multipleChoice: true,
       difficulty: req.body.difficulty,
       questions: questionId_list
-    });
-    new_test.save(err => {
-      if (err) throw err;
-      console.log("test created");
-    });
+    }).then(exam=> res.send(exam)).catch(next);
   });
 
   // get single question by its ID
@@ -130,6 +145,64 @@ module.exports = app => {
       });
     }
 
+  });
+
+
+  app.post("/api/importCSV", async (req, res) => {
+    //console.log(req.body);
+    
+    // Iterate through string answer list
+    // Creating answers and adding their ids to the answerID_list
+    // ITerate though array of answers, splitting them up and retrieving correct answer
+    // Creating
+    for (var i = 0; i < req.body.questions.length; i++) {
+      var answerId_list = [];
+      var correctA = 0;
+      var answers = req.body.answers[i].split(',');
+      for (var j = 0; j < answers.length; j++) {
+        //TODO:
+        // The condition statement should not import the '<', 'fixed', or the number
+        // The number represents the index of the correct answer
+        // The 'fixed' value lets us know whether he wants 
+        // Check that the entry holds an answer
+        // console.log(answers[j]);
+        // console.log(answers[j] === '<');
+        // console.log(answers[j] === 'fixed');
+        // console.log(isNaN(parseInt(answers[j])));
+        // if (answers[j] !== '<' && answers[j] !== 'fixed' && isNaN(parseInt(answers[j]))) {
+          //console.log(answers[j]);
+          var new_answer = Answer({
+            updated: new Date(),
+            answer: answers[j],
+          });
+  
+          answerId_list.push(new_answer._id);
+          console.log(new_answer._id);
+          new_answer.save(err => {
+            if (err) throw err;
+            console.log("answer created");
+          });
+        // }
+
+        // else if (!isNaN(parseInt(answers[j]))) {
+        //   console.log("here");
+        //   correctA = parseInt(answers[j]);
+        // }
+        
+      }
+      console.log(answerId_list);
+      var new_question = Question({
+        answers: answerId_list,
+        question: req.body.questions[i],
+        updated: new Date(),
+        correctAnswer: answerId_list[correctA],
+      });
+      new_question.save(err => {
+        if (err) throw err;
+        console.log("question created");
+      });
+    }
+    
   });
 
 
@@ -293,8 +366,16 @@ module.exports = app => {
           console.log(err);
           res.status(400);
       }
+    });
+    app.post("/api/saveExam", (req, res) => {
+      console.log("shuffle request");
+      console.log("I am BODY: "+ req.body);
+      var exam_id = req.body[0].id;
+      var questions_ids = [];
+      for (var i = 1; i < req.body.length; i++){
+        questions_ids.push(req.body[i]._id);
+      }
   });
-
   //As a user I would like to be able to delete an answer.
   /*  delete a answer given answerID
     @ answerID: req.params.answerId
@@ -313,4 +394,4 @@ module.exports = app => {
           res.status(400);
       }
   });
-  }
+}
