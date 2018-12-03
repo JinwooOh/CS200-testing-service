@@ -249,49 +249,80 @@ module.exports = app => {
    * and save the changes into the database
    * @param questionID ID of the question that we want to edit
    * @param req.body.question : string of the new question
-   * @param req.body.correctAnswer[]: arrays of ID of the new Answer
+   * @param req.body.correctAnswer[]: arrays of strings of the new Answer
    */
 
-  app.post("/api/editQuestionAnswer/:questionID", async (req, res) => {
+  app.post("/api/editQuestionAnswer/:questionID", async(req, res) => {
     try {
-      console.log(req.body.question);
-      // find question given ID
-      let question = await Question.findById(req.params.questionID);
-      console.log(req.body.question);
-      // access req.body.question to change question title
-      if (req.params.questionID != null) {
-        question.question = req.body.question; // set new question title
-      }
-      question.save(err => {
-        if (err) throw err;
-        console.log("Question title changed!");
-      });
 
-      // @TODO: writing editting for correctAnswer and answers
-      // access req.body.correctAnswer to get array of new correct answers
-      // in here we assume that the first element of req.body.correctAnswer
-      // to the first element of question.correctAnswer
-      // go to the answer collection
-      // find the answer given id of the answer in the question
-      // change the title of the answer to something else
-      for (let i = 0; i < req.body.correctAnswer.length; i++) {
-        Answer.findByIdAndUpdate(
-          question.correctAnswer[i],
-          { answer: req.body.correctAnswer[i] },
-          function(err, data) {
-            if (err) return console.error(err);
-            console.log(data.answer.toString());
-          }
-        );
-      }
-      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-      console.log(question);
-      res.send(question);
+      // var newQuestion = {correctAnswer: [],answers: [], question: "", _id :""
+      // }
+      // newQuestion._id = req.params.questionID;
+
+       // find question given ID
+       let question = await Question.findById(req.params.questionID);
+       console.log("@@");
+       console.log(req.body.question);
+       console.log("@@");
+       // access req.body.question to change question title
+       if (req.body.question != null) {
+         question.question = req.body.question; // set new question title
+         question.save(err => {
+          if (err) throw err;
+          console.log("Question title changed!");
+        });
+        //  question.save(err => {
+        //    if (err) throw err;
+        //    console.log("Question title changed!");
+        //  });
+       }
+
+       // @TODO: test running these
+       // access req.body.correctAnswer to get array of new correct answers
+       // in here we assume that the first element of req.body.correctAnswer
+       // to the first element of question.correctAnswer
+       // go to the answer collection
+       // find the answer given id of the answer in the question
+       // change the title of the correct answer to something else
+       for (let i = 0; i < req.body.correctAnswer.length; i++) {
+          await Answer.findByIdAndUpdate(question.correctAnswer[i], {answer: req.body.correctAnswer[i]},function (err, data) {
+
+          //question.correctAnswer[i] = data.answer;
+          console.log("@@");
+          console.log(data.answer);
+          console.log("@@");
+          if (err) return console.error(err);
+         // console.log(data.toString());
+        //  question.save(err => {
+        //   if (err) throw err;
+        //   console.log("Question correct answer changed!");
+        // });
+          });
+       }
+
+
+       for (let i = 0; i < req.body.answers.length; i++) {
+           await Answer.findByIdAndUpdate(question.answers[i], {answer: req.body.answers[i]},function (err, data) {
+             //question.answers[i] = data.answer;
+
+             if (err) return console.error(err);
+            //  question.save(err => {
+            //   if (err) throw err;
+            //   console.log("Question answer changed!");
+            // });
+         });
+       }
+      //  console.log('answerssss' + question.answers);
+
+
+
+       //res.send(question);
+
     } catch (err) {
       if (err) throw err;
       res.status(400);
     }
-  });
+  })
 
   /** add a question to an exam given questionID and examID
    * If the questionID is already the exam ID, the question won't be added
