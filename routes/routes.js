@@ -45,6 +45,23 @@ module.exports = app => {
     }).then(exam=> res.send(exam)).catch(next);
   });
 
+  // get single question by its ID
+  app.get("/api/pullQuestionById/:id", async(req, res)=>{
+    const question = await Question.findById(req.params.id);
+    for (let j = 0; j < question.answers.length; j++) {
+      // question.answers[j] = "faf";
+      let realAnswer = await Answer.findById(question.answers[j]).then(answer =>
+         answer.answer).catch(()=>'');// catch => cannot find question
+      question.answers[j] = realAnswer;
+    }
+    for (let j = 0; j < question.correctAnswer.length; j++) {
+      // question.answers[j] = "faf";
+      let realAnswer = await Answer.findById(question.correctAnswer[j]).then(correctAnswer =>
+        correctAnswer.answer).catch(()=>'');// catch => cannot find question
+      question.correctAnswer[j] = realAnswer;
+    }
+    res.send(question);
+  });
   // write api description
   app.post("/api/pullquestion", async (req, res) => {
     //write error handler
@@ -58,14 +75,14 @@ module.exports = app => {
       for (let j = 0; j < questionList[i].answers.length; j++) {
         // questionList[i].answers[j] = "faf";
         let realAnswer = await Answer.findById(questionList[i].answers[j]).then(answer =>
-           answer.answer);
-       questionList[i].answers[j] = realAnswer;
+           answer.answer).catch(()=>'');// catch => cannot find question
+        questionList[i].answers[j] = realAnswer;
       }
       for (let j = 0; j < questionList[i].correctAnswer.length; j++) {
         // questionList[i].answers[j] = "faf";
         let realAnswer = await Answer.findById(questionList[i].correctAnswer[j]).then(correctAnswer =>
-          correctAnswer.answer);
-       questionList[i].correctAnswer[j] = realAnswer;
+          correctAnswer.answer).catch(()=>'');// catch => cannot find question
+        questionList[i].correctAnswer[j] = realAnswer;
       }
     }
     console.log(questionList);
@@ -75,7 +92,7 @@ module.exports = app => {
   app.get("/api/pullExamList", async (req, res)=>{
     const examList = await Exam.find();
     res.send(examList);
-  })
+  });
 
   app.post("/api/importCSV", async (req, res) => {
     //console.log(req.body);
@@ -89,10 +106,6 @@ module.exports = app => {
       var correctA = 0;
       var answers = req.body.answers[i].split(',');
       for (var j = 0; j < answers.length; j++) {
-        //TODO:
-        // The condition statement should not import the '<', 'fixed', or the number
-        // The number represents the index of the correct answer
-        // The 'fixed' value lets us know whether he wants 
         // Check that the entry holds an answer
         // console.log(answers[j]);
         // console.log(answers[j] === '<');
@@ -153,7 +166,7 @@ module.exports = app => {
       console.log(err);
       res.status(400);
     }
-  })
+  });
 
     /*  add a question to an exam given questionID and examID
       @ If the questionID is already the exam ID, the question won't be added
@@ -179,7 +192,7 @@ module.exports = app => {
       console.log(err);
       res.status(400);
     }
-  })
+  });
 
 
   //get single exam from Exams by exam ID
@@ -198,54 +211,121 @@ module.exports = app => {
         let correctAnswer = temp.correctAnswer;
         for(let i = 0; i < answers.length; i++){
           let realAnswer = await Answer.findById(answers[i]).then(answer =>
-            answer.answer);
+            answer.answer).catch(()=>'');
           temp.answers[i] = realAnswer;
         }
         for(let i = 0; i < correctAnswer.length; i++){
           let realAnswer = await Answer.findById(correctAnswer[i]).then(correctAnswer =>
-            correctAnswer.answer);
+            correctAnswer.answer).catch(()=>'');
           temp.correctAnswer[i] = realAnswer;
         }
         result.push(temp);
       }
-      console.log(result);
       res.send(result);
-    }catch(err){
-      console.log(err);
-      res.status(400);
+    }
+      catch (err) {
+        console.log(err);
+        res.status(400);
+    }
+  });
+
+  app.post("/api/saveExam", (req, res) => {
+
+    console.log("update request");
+    console.log(req.body[0].courseName);
+    var exam_id = req.body[0].id;
+    var questions_ids = [];
+    for (var i = 1; i < req.body.length; i++){
+      questions_ids.push(req.body[i]._id);
     }
 
-    app.post("/api/saveExam", (req, res) => {
-      console.log("shuffle request");
-      console.log("I am BODY: "+ req.body);
-      var exam_id = req.body[0].id;
-      var questions_ids = [];
-      for (var i = 1; i < req.body.length; i++){
-        questions_ids.push(req.body[i]._id);
+    Exam.findByIdAndUpdate(exam_id, {questions: questions_ids,
+      courseName:req.body[0].courseName,
+      courseNumber: parseInt(req.body[0].courseNumber),
+      timeLimit: parseInt(req.body[0].timeLimit)}, (err)=>{
+      if (err) throw err;
+      console.log("update success");
+    })
+  });
+
+  app.post("/api/removeQuestionFromExam", (req, res) => {
+    console.log("remove request");
+
+    var exam_id = req.body[0].id;
+    var questions_ids = [];
+    for (var i = 1; i < req.body.length; i++){
+      questions_ids.push(req.body[i]._id);
+    }
+    console.log(exam_id);
+    console.log(questions_ids);
+    Exam.findByIdAndUpdate(exam_id, {questions: questions_ids}, (err)=>{
+      if (err) throw err;
+      console.log("remove success");
+    })
+  });
+
+  /* @@@remove question permanently from database by ID
+    - questionID: req.params.id
+    */
+  app.delete("/api/removeQuestionFromDatabaseById/:id", async(req, res)=>{
+        try {
+            const question = await Question.findById(req.params.id);
+            Question.findByIdAndDelete(question, function(err, obj) {
+                if (err) throw err;
+                console.log("1 question permanently deleted");
+                res.send(obj);
+            });
+
+        } catch (err) {
+            console.log(err);
+            res.status(400);
+        }
+    })
+
+
+  //As a user I would like to be able to add an answer to a question or permanently remove it.
+  /*  add a answer to a question given answerID and questionID
+    @ If the answerID is already with the question ID, the answer won't be added
+    @ answerID: req.params.answerId
+    @ questionID: req.params.questionId
+    */
+  app.get("/api/addAnswerToQuestion/:answerId/:questionId", async(req, res)=>{
+      try {
+          const question = await Question.findById(req.params.questionId);
+          let answer = await Answer.findById(req.params.answerId);
+
+          // check some corner cases
+
+          // push the question to the exam
+          question.answers.addToSet(answer);
+          question.save(err => {
+              if (err) throw err;
+              console.log("Answer added to the question");
+          });
+          res.send(question);
+
+      } catch (err) {
+          console.log(err);
+          res.status(400);
       }
-      console.log(exam_id);
-      console.log(questions_ids);
-      Exam.findByIdAndUpdate(exam_id, {questions: questions_ids}, (err)=>{
-        if (err) throw err;
-        console.log("update success");
-      })
-    });
+  });
 
-    // app.post("/api/removeQuestionFromExam", (req, res) => {
-    //   console.log("remove request");
+  //As a user I would like to be able to delete an answer.
+  /*  delete a answer given answerID
+    @ answerID: req.params.answerId
+    */
+  app.delete("/api/deleteAnswerToQuestion/:id/", async(req, res)=>{
+      try {
+          const answer = await Answer.findById(req.params.id);
+          Answer.findByIdAndDelete(answer, function(err, obj) {
+              if (err) throw err;
+              console.log("1 answer deleted");
+              res.send(obj);
+          });
 
-    //   var exam_id = req.body[0].id;
-    //   var questions_ids = [];
-    //   for (var i = 1; i < req.body.length; i++){
-    //     questions_ids.push(req.body[i]._id);
-    //   }
-    //   console.log(exam_id);
-    //   console.log(questions_ids);
-    //   Exam.findByIdAndUpdate(exam_id, {questions: questions_ids}, (err)=>{
-    //     if (err) throw err;
-    //     console.log("remove success");
-    //   })
-    // });
-
-  })
-}
+      } catch (err) {
+          console.log(err);
+          res.status(400);
+      }
+  });
+  }

@@ -14,6 +14,7 @@ export default class ExamList extends Component {
       questionList: [],
       //      loading: true,
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +47,20 @@ export default class ExamList extends Component {
   };
 
   handleSave = () => {
+    const newExam = this.state.exam.slice(0);
+    if (this.state.newName !== undefined && this.state.newExam !== '') {
+      newExam[0].courseName = this.state.newName;
+    }
+    if (this.state.newCourseNumber !== undefined && this.state.newCourseNumber !== '') {
+      newExam[0].courseNumber = this.state.newCourseNumber;
+    }
+    if (this.state.newTimeLimit !== undefined && this.state.newTimeLimit !== '') {
+      console.log('hi');
+      newExam[0].timeLimit = this.state.newTimeLimit;
+    }
+    // FIX: need to update questionList as well
+    this.setState({ exam: newExam });
+    console.log(this.state.exam);
     fetch('/api/saveExam', {
       method: 'POST',
       headers: {
@@ -63,6 +78,10 @@ export default class ExamList extends Component {
       questionList: arrayMove(this.state.questionList, oldIndex, newIndex),
     });
   };
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
 
   handleViewExam = id => {
     const url = `/api/pullExamById/${id}`;
@@ -110,6 +129,7 @@ export default class ExamList extends Component {
           questionList={this.state.questionList}
           handleSave={this.handleSave}
           removeQuestion={this.removeQuestion}
+          handleChange={this.handleChange}
         />
       </div>
     );
