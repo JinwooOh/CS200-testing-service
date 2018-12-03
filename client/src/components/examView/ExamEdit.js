@@ -6,10 +6,15 @@ import SortableList from '../helper/Sortable';
 export default class ExamEdit extends Component {
   render() {
     const examInfo = this.props.exam[0] || '';
+
     return (
       <div>
         {examInfo !== '' ? (
-          <ExamInfo shuffleExams={this.props.shuffleExams} examInfo={examInfo} />
+          <ExamInfo
+            shuffleExams={this.props.shuffleExams}
+            examInfo={examInfo}
+            handleChange={this.props.handleChange}
+          />
         ) : (
           ''
         )}
