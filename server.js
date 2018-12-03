@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'test') {
   //"test": "NODE_ENV=test nodemon --exec 'mocha --recursive -R min'"
   var mongoDB = "mongodb://admin:admin123@ds231229.mlab.com:31229/test_database_cs_200";
   mongoose.connect(mongoDB, { useNewUrlParser: true });
-  //copy collection
+  //copy collection example
   // var url  = "mongodb://admin:admin123@ds231229.mlab.com:31229/test_database_cs_200";
   // MongoClient.connect(url, function(err, db){
   //   if (err) throw err;

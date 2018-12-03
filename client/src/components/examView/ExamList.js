@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { arrayMove } from "react-sortable-hoc";
-import Nav from "../Nav";
-import ExamEdit from "./ExamEdit";
-import ExamTable from "./ExamTable";
-import "react-table/react-table.css";
+import React, { Component } from 'react';
+import { arrayMove } from 'react-sortable-hoc';
+import Nav from '../Nav';
+import ExamEdit from './ExamEdit';
+import ExamTable from './ExamTable';
+import 'react-table/react-table.css';
 
 export default class ExamList extends Component {
   constructor(props) {
@@ -11,19 +11,19 @@ export default class ExamList extends Component {
     this.state = {
       examList: [], // list of exams
       exam: [], // one exam for editing mode
-      questionList: []
+      questionList: [],
       //      loading: true,
     };
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
-    fetch("/api/pullExamList")
+    fetch('/api/pullExamList')
       // .then(res => res.json())
       .then(res => res.json())
       .then(res => this.setState({ examList: res }))
       .catch(err => {
-        console.log(err, "failed to fetch");
+        console.log(err, 'failed to fetch');
       });
   }
 
@@ -45,52 +45,45 @@ export default class ExamList extends Component {
     TempShuffled_questions.splice(0, 0, Exam_first_element);
     this.setState({
       questionList: shuffled_questions,
-      exam: TempShuffled_questions
+      exam: TempShuffled_questions,
     });
   };
 
   handleSave = () => {
     const newExam = this.state.exam.slice(0);
     newExam.splice(1, this.state.questionList.length);
-    for (var i = 0; i < this.state.questionList.length; i++) {
+    for (let i = 0; i < this.state.questionList.length; i++) {
       newExam.push(this.state.questionList[i]);
     }
 
-    if (this.state.newName !== undefined && this.state.newExam !== "") {
+    if (this.state.newName !== undefined && this.state.newExam !== '') {
       newExam[0].courseName = this.state.newName;
     }
-    if (
-      this.state.newCourseNumber !== undefined &&
-      this.state.newCourseNumber !== ""
-    ) {
+    if (this.state.newCourseNumber !== undefined && this.state.newCourseNumber !== '') {
       newExam[0].courseNumber = this.state.newCourseNumber;
     }
-    if (
-      this.state.newTimeLimit !== undefined &&
-      this.state.newTimeLimit !== ""
-    ) {
-      console.log("hi");
+    if (this.state.newTimeLimit !== undefined && this.state.newTimeLimit !== '') {
+      console.log('hi');
       newExam[0].timeLimit = this.state.newTimeLimit;
     }
     // FIX: need to update questionList as well
-
-    this.setState({ exam: newExam }, () => {
-      fetch("/api/saveExam", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(this.state.exam)
-      })
-        .then(alert("The test is updated."))
-        .then(console.log(this.state.exam))
-        .catch(error => console.error("fetch error at shuffleExam", error));
-    });
+    this.setState({ exam: newExam });
+    console.log(this.state.exam);
+    fetch('/api/saveExam', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(this.state),
+    })
+      .then(alert('The test is updated.'))
+      .then(console.log(this.state.exam))
+      .catch(error => console.error('fetch error at shuffleExam', error));
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
     this.setState({
-      questionList: arrayMove(this.state.questionList, oldIndex, newIndex)
+      questionList: arrayMove(this.state.questionList, oldIndex, newIndex),
     });
   };
 
@@ -108,28 +101,24 @@ export default class ExamList extends Component {
         copyExam.shift();
         this.setState({ questionList: copyExam });
       })
-      .catch(error =>
-        console.error("fetch error at /api/pullExamById/", error)
-      ); // error
+      .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
   removeExam = id => {
     const url = `/api/removeExamById/${id}`;
     console.log(url);
-    fetch(url, { method: "delete" })
+    fetch(url, { method: 'delete' })
       .then(res => console.log(res))
       .then(() => {
-        fetch("/api/pullExamList")
+        fetch('/api/pullExamList')
           // .then(res => res.json())
           .then(res => res.json())
           .then(res => this.setState({ examList: res }))
           .catch(err => {
-            console.log(err, "failed to fetch");
+            console.log(err, 'failed to fetch');
           });
       })
-      .catch(error =>
-        console.error("fetch error at /api/removeExamById", error)
-      ); // error
+      .catch(error => console.error('fetch error at /api/removeExamById', error)); // error
   };
 
   render() {

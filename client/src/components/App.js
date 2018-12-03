@@ -9,15 +9,6 @@ class App extends Component {
     };
   }
 
-  componentDidMount() {
-    fetch('/test')
-      .then(res => res.json())
-      .then(res => this.setState({ result: res.data }))
-      .catch(err => {
-        console.log(err, 'failed to fetch');
-      });
-  }
-
   render() {
     return (
       <div>
