@@ -106,10 +106,6 @@ module.exports = app => {
       var correctA = 0;
       var answers = req.body.answers[i].split(',');
       for (var j = 0; j < answers.length; j++) {
-        //TODO:
-        // The condition statement should not import the '<', 'fixed', or the number
-        // The number represents the index of the correct answer
-        // The 'fixed' value lets us know whether he wants 
         // Check that the entry holds an answer
         // console.log(answers[j]);
         // console.log(answers[j] === '<');
