@@ -67,18 +67,19 @@ export default class ExamList extends Component {
       newExam[0].timeLimit = this.state.newTimeLimit;
     }
     // FIX: need to update questionList as well
-    this.setState({ exam: newExam });
-    console.log(this.state.exam);
-    fetch('/api/saveExam', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state),
-    })
-      .then(alert('The test is updated.'))
-      .then(console.log(this.state.exam))
-      .catch(error => console.error('fetch error at shuffleExam', error));
+
+    this.setState({ exam: newExam }, () => {
+      fetch('/api/saveExam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.state.exam),
+      })
+        .then(alert('The test is updated.'))
+        .then(console.log(this.state.exam))
+        .catch(error => console.error('fetch error at shuffleExam', error));
+    });
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {

@@ -346,27 +346,22 @@ module.exports = app => {
   });
 
   app.post("/api/saveExam", (req, res) => {
+
     console.log("update request");
     console.log(req.body[0].courseName);
     var exam_id = req.body[0].id;
     var questions_ids = [];
-    for (var i = 1; i < req.body.length; i++) {
+    for (var i = 1; i < req.body.length; i++){
       questions_ids.push(req.body[i]._id);
     }
 
-    Exam.findByIdAndUpdate(
-      exam_id,
-      {
-        questions: questions_ids,
-        courseName: req.body[0].courseName,
-        courseNumber: parseInt(req.body[0].courseNumber),
-        timeLimit: parseInt(req.body[0].timeLimit)
-      },
-      err => {
-        if (err) throw err;
-        console.log("update success");
-      }
-    );
+    Exam.findByIdAndUpdate(exam_id, {questions: questions_ids,
+      courseName:req.body[0].courseName,
+      courseNumber: parseInt(req.body[0].courseNumber),
+      timeLimit: parseInt(req.body[0].timeLimit)}, (err)=>{
+      if (err) throw err;
+      console.log("update success");
+    })
   });
 
   app.post("/api/removeQuestionFromExam", (req, res) => {
