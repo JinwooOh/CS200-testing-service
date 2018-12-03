@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Nav from '../Nav';
-import QuestionTable from './QuestionTable';
-import QuestionEdit from './QuestionEdit';
+import React, { Component } from "react";
+import Nav from "../Nav";
+import QuestionTable from "./QuestionTable";
+import QuestionEdit from "./QuestionEdit";
 
 export default class QuestionListPage extends Component {
   constructor(props) {
@@ -9,18 +9,18 @@ export default class QuestionListPage extends Component {
     this.state = {
       questionList: [],
       question: {},
-      loading: true,
+      loading: true
     };
   }
 
   componentDidMount() {
-    const numberOfQuestion = { number: '20' }; // factor out this later
-    fetch('/api/pullquestion', {
-      method: 'POST',
+    const numberOfQuestion = { number: "4" }; // factor out this later
+    fetch("/api/pullquestion", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify(numberOfQuestion),
+      body: JSON.stringify(numberOfQuestion)
     })
       .then(res => res.json())
       .then(res => {
@@ -28,7 +28,7 @@ export default class QuestionListPage extends Component {
 
         this.setState({ questionList: result, loading: false });
       })
-      .catch(error => console.error('fetch error at pull question', error)); // error
+      .catch(error => console.error("fetch error at pull question", error)); // error
     // fetch end
   }
 
@@ -37,24 +37,44 @@ export default class QuestionListPage extends Component {
     fetch(url)
       .then(res => res.json())
       .then(res => this.setState({ question: res }))
-      .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
+      .catch(error =>
+        console.error("fetch error at /api/pullExamById/", error)
+      ); // error
   };
 
-  handleUpdateQuestion = () => {};
+  handleUpdateQuestion = evt => {
+    evt.preventDefault();
+    //this.setState({ [evt.target.name]: evt.target.value });
+    if (evt.target.name == "question_desc") {
+      console.log(this.state.question);
+      var newQuestion = Object.assign({}, this.state.question);
+      newQuestion.question = evt.target.value;
+      this.setState({ question: newQuestion });
+    } else if (evt.target.name == "correct_answer") {
+      var newQuestion = Object.assign({}, this.state.question);
+      newQuestion.correctAnswer[0] = evt.target.value;
+      this.setState({ question: newQuestion });
+    } else if (evt.target.name.substring(0, 6) == "answer") {
+      var newQuestion = Object.assign({}, this.state.question);
+      var index = parseInt(evt.target.name.substring(6));
+      newQuestion.answers[index] = evt.target.value;
+      this.setState({ question: newQuestion });
+    }
+  };
 
   removeQuestion = id => {
-    const numberOfQuestion = { number: '20' }; // factor out this later
+    const numberOfQuestion = { number: "4" }; // factor out this later
     const url = `/api/removeQuestionFromDatabaseById/${id}`;
     console.log(url);
-    fetch(url, { method: 'delete' })
+    fetch(url, { method: "delete" })
       .then(res => console.log(res))
       .then(() => {
-        fetch('/api/pullquestion', {
-          method: 'POST',
+        fetch("/api/pullquestion", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify(numberOfQuestion),
+          body: JSON.stringify(numberOfQuestion)
         })
           .then(res => res.json())
           .then(res => {
@@ -62,9 +82,31 @@ export default class QuestionListPage extends Component {
 
             this.setState({ questionList: result });
           })
-          .catch(error => console.error('fetch error at pull question', error));
+          .catch(error => console.error("fetch error at pull question", error));
       })
-      .catch(error => console.error('fetch error at /api/removeQuestionFromDatabaseById', error)); // error
+      .catch(error =>
+        console.error(
+          "fetch error at /api/removeQuestionFromDatabaseById",
+          error
+        )
+      ); // error
+  };
+
+  handleSave = id => {
+    console.log("save");
+    const url = `/api/editQuestionAnswer/${id}`;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state.question)
+    })
+      .then(res => res.json())
+      .then(res => this.setState({ question: res }))
+      .catch(error =>
+        console.error("fetch error at /api/pullExamById/", error)
+      );
   };
 
   render() {
@@ -77,7 +119,12 @@ export default class QuestionListPage extends Component {
           removeQuestion={this.removeQuestion}
           loading={this.state.loading}
         />
-        <QuestionEdit question={this.state.question} />
+        <QuestionEdit
+          question={this.state.question}
+          onChange={this.handleUpdateQuestion}
+          fields={this.state}
+          save={this.handleSave}
+        />
       </div>
     );
   }
