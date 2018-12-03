@@ -150,7 +150,7 @@ module.exports = app => {
 
   app.post("/api/importCSV", async (req, res) => {
     //console.log(req.body);
-    
+
     // Iterate through string answer list
     // Creating answers and adding their ids to the answerID_list
     // ITerate though array of answers, splitting them up and retrieving correct answer
@@ -163,7 +163,7 @@ module.exports = app => {
         //TODO:
         // The condition statement should not import the '<', 'fixed', or the number
         // The number represents the index of the correct answer
-        // The 'fixed' value lets us know whether he wants 
+        // The 'fixed' value lets us know whether he wants
         // Check that the entry holds an answer
         // console.log(answers[j]);
         // console.log(answers[j] === '<');
@@ -175,7 +175,7 @@ module.exports = app => {
             updated: new Date(),
             answer: answers[j],
           });
-  
+
           answerId_list.push(new_answer._id);
           console.log(new_answer._id);
           new_answer.save(err => {
@@ -188,7 +188,7 @@ module.exports = app => {
         //   console.log("here");
         //   correctA = parseInt(answers[j]);
         // }
-        
+
       }
       console.log(answerId_list);
       var new_question = Question({
@@ -202,7 +202,7 @@ module.exports = app => {
         console.log("question created");
       });
     }
-    
+
   });
 
 
@@ -230,7 +230,78 @@ module.exports = app => {
       @ If the questionID is already the exam ID, the question won't be added
       @ questionID: req.params.questionID
       @ examID: req.params.examId
+      /*
+      5.1 5.2
+      Getting all the questions from database
+    */
+  app.get("/api/retrieveAllQuestions/", async(req, res)=>{
+    try {
+      const questionList = await Question.find({});
+      res.send(questionList);
+    } catch (err) {
+      console.log(err);
+      res.status(400);
+    }
+  })
+
+
+
+  /**   Feature 5.4 : Edit question/answer
+     * Click on a question card and edit the question or answers
+     * and save the changes into the database
+     * @param questionID ID of the question that we want to edit
+     * @param req.body.question : string of the new question
+     * @param req.body.correctAnswer[]: arrays of ID of the new Answer
+     */
+
+     app.post("/api/editQuestionAnswer/:questionID", async(req, res) => {
+       try {
+          // find question given ID
+          let question = await Question.findById(req.params.questionID);
+          console.log(req.body.question);
+          // access req.body.question to change question title
+          if (req.params.questionID != null) {
+            question.question = req.body.question; // set new question title
+          }
+          question.save(err => {
+            if (err) throw err;
+            console.log("Question title changed!");
+          });
+
+          // @TODO: writing editting for correctAnswer and answers
+          // access req.body.correctAnswer to get array of new correct answers
+          // in here we assume that the first element of req.body.correctAnswer
+          // to the first element of question.correctAnswer
+          // go to the answer collection
+          // find the answer given id of the answer in the question
+          // change the title of the answer to something else
+          for (let i = 0; i < req.body.correctAnswer.length; i++) {
+          Answer.findByIdAndUpdate(question.correctAnswer[i], {answer: req.body.correctAnswer[i]},
+                                                              function (err, data) {
+            if (err) return console.error(err);
+            console.log(data.answer.toString());
+          });
+
+
+          }
+
+          res.send(question);
+       } catch (err) {
+         if (err) throw err;
+         res.status(400);
+       }
+
+     })
+
+
+
+
+  /** add a question to an exam given questionID and examID
+    * If the questionID is already the exam ID, the question won't be added
+    * @param questionID: req.params.questionID
+    * @param examID: req.params.examId
   */
+
   app.get("/api/addQuestionToExam/:questionId/:examId", async(req, res)=>{
     try {
       const exam = await Exam.findById(req.params.examId);

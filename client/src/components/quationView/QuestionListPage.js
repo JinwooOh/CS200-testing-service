@@ -14,7 +14,7 @@ export default class QuestionListPage extends Component {
   }
 
   componentDidMount() {
-    const numberOfQuestion = { number: '4' }; // factor out this later
+    const numberOfQuestion = { number: '20' }; // factor out this later
     fetch('/api/pullquestion', {
       method: 'POST',
       headers: {
@@ -40,8 +40,10 @@ export default class QuestionListPage extends Component {
       .catch(error => console.error('fetch error at /api/pullExamById/', error)); // error
   };
 
+  handleUpdateQuestion = () => {};
+
   removeQuestion = id => {
-    const numberOfQuestion = { number: '4' }; // factor out this later
+    const numberOfQuestion = { number: '20' }; // factor out this later
     const url = `/api/removeQuestionFromDatabaseById/${id}`;
     console.log(url);
     fetch(url, { method: 'delete' })

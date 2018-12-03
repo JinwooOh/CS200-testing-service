@@ -11,12 +11,15 @@ export default class QuestionEdit extends Component {
             <div className="questions--title">
               <h3>Question</h3>
             </div>
+            <p>Question: </p>
             <input type="text" value={question} />
+            <p>Answers: </p>
             {answers.map((answer, j) => (
               <div key={j}>
                 <input type="text" value={answer} />
               </div>
             ))}
+            <p>Correct Answers: </p>
             <input type="text" value={correctAnswer} />
             <button
               className="btn btn__remove"
