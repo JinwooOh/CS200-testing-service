@@ -10,6 +10,7 @@ import PullQuestion from './createTest/PullQuestion';
 import ExamList from './examView/ExamList';
 import ExamEdit from './examView/ExamEdit';
 import takeExam from './takeExam/takeExam';
+import NotFound from './NotFound';
 
 const baseUrl = process.env.PUBLIC_URL;
 const Router = () => (
@@ -24,6 +25,7 @@ const Router = () => (
       <Route path={`${baseUrl}/importquestion`} component={ImportQ} />
       <Route path={`${baseUrl}/pull_question`} component={PullQuestion} />
       <Route path={`${baseUrl}/takeexam`} component={takeExam} />
+      <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
 );
