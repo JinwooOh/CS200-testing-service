@@ -25,7 +25,7 @@ export default class ExamTable extends Component {
         accessor: 'courseNumber',
       },
       {
-        Header: 'Test Difficulty',
+        Header: 'Exam Difficulty',
         accessor: 'difficulty',
       },
       {

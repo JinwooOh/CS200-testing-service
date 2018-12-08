@@ -5,12 +5,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 const CreateTestForm = props => {
   return (
     <div>
-      <h3 className="createTest--title">Create Test</h3>
+      <h3 className="createTest--title">Create Exam</h3>
       <label htmlFor="date"> Date </label>
       <div className="datePicker">
         <DatePicker id="date" selected={props.fields.startDate} onChange={props.handleChangeDate} />
       </div>
-      <label htmlFor="name"> Test Name </label>
+      <label htmlFor="name"> Exam Name </label>
       <input
         type="text"
         id="name"
