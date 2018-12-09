@@ -28,6 +28,10 @@ export default class ExamList extends Component {
   }
 
   removeQuestion = index => {
+    if (this.state.questionList.length < 2) {
+      alert('An exam should have at least one question.');
+      return;
+    }
     console.log(index);
     const newExam = this.state.exam.slice(0);
     newExam.splice(index + 1, 1);
