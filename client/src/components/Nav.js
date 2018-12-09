@@ -6,7 +6,7 @@ class Nav extends Component {
     return (
       <div className="nav">
         <Link to="/createtest">Create Exam</Link>
-        <Link to="/studentlist">Student List</Link>
+        {/* <Link to="/studentlist">Student List</Link> */}
         <Link to="/questionlist"> Question List </Link>
         <Link to="/examlist">Exam List</Link>
         <Link to="/importquestion">Import Question</Link>
