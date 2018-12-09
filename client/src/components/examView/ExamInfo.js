@@ -20,17 +20,17 @@ const ExamInfo = props => {
         <label>
           New Name:
           <input type="text" name="newName" onChange={props.handleChange} />
-              </label>
-              <br />
+        </label>
+        <br />
         <label>
           New Course Number:
-          <input type="text" name="newCourseNumber" onChange={props.handleChange} />
-              </label>
+          <input type="number" name="newCourseNumber" onChange={props.handleChange} />
+        </label>
         <br />
         <label>
           New TimeLimit:
           <input type="number" name="newTimeLimit" onChange={props.handleChange} />
-              </label>
+        </label>
       </div>
     </div>
   );
