@@ -3,7 +3,6 @@ import moment from 'moment';
 // import { arrayMove } from 'react-sortable-hoc';
 import Nav from '../Nav';
 import CreateTestForm from './CreateTestForm';
-import CreateTestButtons from './CreateTestButtons';
 import PullQuestion from './PullQuestion';
 
 export default class CreateTest extends Component {
@@ -63,7 +62,8 @@ export default class CreateTest extends Component {
     this.setState({ totalHours });
   };
 
-  pullQuestion = () => {
+  pullQuestion = e => {
+    e.preventDefault();
     const data = this.state;
     // fetch start here
     // update questionList after fetching
@@ -135,8 +135,10 @@ export default class CreateTest extends Component {
             handleChange={this.handleChange}
             handleChangeDate={this.handleChangeDate}
             handleChangeTimeLimit={this.handleChangeTimeLimit}
+            reset={this.reset}
+            pullQuestion={this.pullQuestion}
           />
-          <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} />
+          {/* <CreateTestButtons reset={this.reset} pullQuestion={this.pullQuestion} /> */}
           <PullQuestion
             removeQuestion={this.removeQuestion}
             questionList={this.state.questionList}
