@@ -9,22 +9,22 @@ export default class QuestionTable extends Component {
         Header: 'Question',
         accessor: 'question',
       },
-      {
-        Header: 'Course Number',
-        accessor: 'courseNumber',
-      },
-      {
-        Header: 'Test Difficulty',
-        accessor: 'difficulty',
-      },
-      {
-        Header: 'Number of Questions',
-        accessor: 'numberQuestions',
-      },
-      {
-        Header: 'Time Limit',
-        accessor: 'timeLimit',
-      },
+      // {
+      //   Header: 'Course Number',
+      //   accessor: 'courseNumber',
+      // },
+      // {
+      //   Header: 'Test Difficulty',
+      //   accessor: 'difficulty',
+      // },
+      // {
+      //   Header: 'Number of Questions',
+      //   accessor: 'numberQuestions',
+      // },
+      // {
+      //   Header: 'Time Limit',
+      //   accessor: 'timeLimit',
+      // },
     ];
     const { loading } = this.props;
     return (
