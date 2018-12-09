@@ -15,7 +15,6 @@ export default class PullingOptions extends Component {
           Shuffle Questions
         </button>
         <button className="btn btn__pullingOtions">Add Question from DB</button>
-        <button className="btn btn__pullingOtions">Regenerate</button>
       </div>
     );
   }
