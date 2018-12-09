@@ -8,6 +8,18 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
 
+
+const divStyle = {
+  margin: '40px',
+  border: '5px solid pink',
+  //paddingLeft: 40,
+  //listStyle: 'none',
+};
+const pStyle = {
+  fontSize: '15px',
+  textAlign: 'center'
+};
+
 export default class takeExam extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +43,7 @@ export default class takeExam extends Component {
         console.log(err, "failed to fetch");
       });
   }
-
+  
   handleClickOpen = scroll => () => {
     this.setState({ open: true, scroll });
   };
@@ -73,6 +85,8 @@ export default class takeExam extends Component {
     ));
     return <RadioGroup>{listItems}</RadioGroup>;
   };
+
+  
   render() {
     console.log(this.state.examList);
 
@@ -83,14 +97,15 @@ export default class takeExam extends Component {
     if (this.state.isHomePage) {
       const listItems = this.state.examList.map((item, i) => (
         <li key={i} onClick={() => this.selectExam(i)}>
-          <Button onClick={this.handleClickOpen("body")}>
+          <Button onClick={this.handleClickOpen("body")} size="large" color="secondary">
             {item.courseName} {item.courseNumber}
           </Button>
         </li>
       ));
       return (
-        <div>
+        <div style={divStyle}>
           <Nav />
+          <p style={pStyle}></p>
           {listItems}
           <Dialog
             open={this.state.open}
