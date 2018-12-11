@@ -43,16 +43,16 @@ export default class QuestionListPage extends Component {
   handleUpdateQuestion = evt => {
     evt.preventDefault();
     // this.setState({ [evt.target.name]: evt.target.value });
-    if (evt.target.name == 'question_desc') {
+    if (evt.target.name === 'question_desc') {
       console.log(this.state.question);
       var newQuestion = Object.assign({}, this.state.question);
       newQuestion.question = evt.target.value;
       this.setState({ question: newQuestion });
-    } else if (evt.target.name == 'correct_answer') {
+    } else if (evt.target.name === 'correct_answer') {
       var newQuestion = Object.assign({}, this.state.question);
       newQuestion.correctAnswer[0] = evt.target.value;
       this.setState({ question: newQuestion });
-    } else if (evt.target.name.substring(0, 6) == 'answer') {
+    } else if (evt.target.name.substring(0, 6) === 'answer') {
       var newQuestion = Object.assign({}, this.state.question);
       const index = parseInt(evt.target.name.substring(6));
       newQuestion.answers[index] = evt.target.value;

@@ -58,13 +58,17 @@ export default class ImportQCSV extends Component {
     return (
       <div>
         <h4>Import CSV</h4>
-        <input
-          className="btn btn__createTest"
-          type="file"
-          id="file"
-          accept=".csv"
-          onChange={e => this.handleFileChosen(e.target.files[0])}
-        />
+
+        <label className="importImg">
+          <input
+            type="file"
+            id="file"
+            accept=".csv"
+            onChange={e => this.handleFileChosen(e.target.files[0])}
+          />
+          <p>Select a CSV file</p>
+        </label>
+
         {/* <Files
          className=“files-dropzone”
          onChange={file => {
