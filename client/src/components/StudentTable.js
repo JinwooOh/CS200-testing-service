@@ -3,29 +3,32 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 
 export default class StudentTable extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
       studentList: [],
-      loading: true
+      loading: true,
     };
   }
 
   componentDidMount() {
     fetch('/api/pullstudentlist')
       .then(res => res.json())
-      .then(res => this.setState({studentList: res, loading: false }, () => {/*was used for error testing*/}))
+      .then(res =>
+        this.setState({ studentList: res, loading: false }, () => {
+          /*was used for error testing */
+        })
+      )
       .catch(err => {
         console.log(err, 'failed to fetch');
       });
   }
 
-/*
+  /*
   //try to implement updatable table?
   fetchData(state, instance) {
     this.setState({ loading: true });
-    
+
     //update?
 
     this.setState({loading: false });
@@ -42,21 +45,21 @@ export default class StudentTable extends Component {
         Header: 'CS ID',
         accessor: 'userId',
       },
-     /* {
+      /* {
         Header: 'Test 1 Score',
         accessor: 'testscore',
       }, */
     ];
-    
-    const {studentList, loading} = this.state;
+
+    const { studentList, loading } = this.state;
     console.log(studentList);
     return (
       <div>
         <ReactTable
           columns={columns}
-          data = {studentList}
+          data={studentList}
           loading={loading}
-          //onFetchData={this.fetchData}
+          // onFetchData={this.fetchData}
 
           defaultPageSize={10}
           className="-striped -highlight"

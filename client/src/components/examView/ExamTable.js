@@ -4,16 +4,6 @@ import PropTypes from 'prop-types';
 import 'react-table/react-table.css';
 
 export default class ExamTable extends Component {
-  /*
-  //try to implement updatable table?
-  fetchData(state, instance) {
-    this.setState({ loading: true });
-
-    //update?
-
-    this.setState({loading: false });
-  }
-*/
   render() {
     const columns = [
       {
@@ -25,19 +15,14 @@ export default class ExamTable extends Component {
         accessor: 'courseNumber',
       },
       {
-        Header: 'Test Difficulty',
-        accessor: 'difficulty',
-      },
-      {
         Header: 'Number of Questions',
-        accessor: 'numberQuestions',
+        accessor: 'questions.length',
       },
       {
         Header: 'Time Limit',
         accessor: 'timeLimit',
       },
     ];
-
     return (
       <div>
         <ReactTable

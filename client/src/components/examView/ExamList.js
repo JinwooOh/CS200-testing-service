@@ -43,11 +43,19 @@ export default class ExamList extends Component {
     const TempShuffled_questions = questions.sort(() => Math.random() - 0.5);
     const shuffled_questions = TempShuffled_questions.slice(0);
     TempShuffled_questions.splice(0, 0, Exam_first_element);
-    this.setState({ questionList: shuffled_questions, exam: TempShuffled_questions });
+    this.setState({
+      questionList: shuffled_questions,
+      exam: TempShuffled_questions,
+    });
   };
 
   handleSave = () => {
     const newExam = this.state.exam.slice(0);
+    newExam.splice(1, this.state.questionList.length);
+    for (let i = 0; i < this.state.questionList.length; i++) {
+      newExam.push(this.state.questionList[i]);
+    }
+
     if (this.state.newName !== undefined && this.state.newExam !== '') {
       newExam[0].courseName = this.state.newName;
     }
@@ -59,18 +67,19 @@ export default class ExamList extends Component {
       newExam[0].timeLimit = this.state.newTimeLimit;
     }
     // FIX: need to update questionList as well
-    this.setState({ exam: newExam });
-    console.log(this.state.exam);
-    fetch('/api/saveExam', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state.exam),
-    })
-      .then(alert('The test is updated.'))
-      .then(console.log(this.state.exam))
-      .catch(error => console.error('fetch error at shuffleExam', error));
+
+    this.setState({ exam: newExam }, () => {
+      fetch('/api/saveExam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.state.exam),
+      })
+        .then(alert('The test is updated.'))
+        .then(console.log(this.state.exam))
+        .catch(error => console.error('fetch error at shuffleExam', error));
+    });
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
