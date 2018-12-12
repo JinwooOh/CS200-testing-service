@@ -28,6 +28,10 @@ export default class ExamList extends Component {
   }
 
   removeQuestion = index => {
+    if (this.state.questionList.length < 2) {
+      alert('An exam should have at least one question.');
+      return;
+    }
     console.log(index);
     const newExam = this.state.exam.slice(0);
     newExam.splice(index + 1, 1);
@@ -60,11 +64,22 @@ export default class ExamList extends Component {
       newExam[0].courseName = this.state.newName;
     }
     if (this.state.newCourseNumber !== undefined && this.state.newCourseNumber !== '') {
-      newExam[0].courseNumber = this.state.newCourseNumber;
+        if (this.state.newCourseNumber.match(/^[0-9]+$/) != null) { //check if string is a number
+            newExam[0].courseNumber = this.state.newCourseNumber;
+        }
+        else {
+            console.log('CourseNumber must be made of digits.');
+            alert("Invalid Course Number. Please enter digits only.");
+        }
     }
     if (this.state.newTimeLimit !== undefined && this.state.newTimeLimit !== '') {
-      console.log('hi');
-      newExam[0].timeLimit = this.state.newTimeLimit;
+        if (this.state.newTimeLimit.match(/^[0-9]+$/) != null) { //check if string is a number
+            newExam[0].timeLimit = this.state.newTimeLimit;
+        }
+        else {
+            console.log('CourseNumber must be made of digits.');
+            alert("Invalid Course Number. Please enter digits only.");
+        }
     }
     // FIX: need to update questionList as well
 
@@ -76,7 +91,7 @@ export default class ExamList extends Component {
         },
         body: JSON.stringify(this.state.exam),
       })
-        .then(alert('The test is updated.'))
+        .then(alert('The test is updated. Please refresh the page to see the updated test.'))
         .then(console.log(this.state.exam))
         .catch(error => console.error('fetch error at shuffleExam', error));
     });

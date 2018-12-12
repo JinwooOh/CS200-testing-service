@@ -5,7 +5,9 @@ export default class ImportQ_AddQuestion extends Component {
     super(props);
     this.state = {
       numChildren: 0,
-      question: { desc: "", answers: [], correct_ans: [] }
+      question: { desc: "", answers: [], correct_ans: [] },
+      file: {},
+      imagePreviewUrl: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.addQuestion = this.addQuestion.bind(this);
@@ -58,9 +60,51 @@ export default class ImportQ_AddQuestion extends Component {
     }
   };
 
+  handleImageChange = e => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files[0];
+
+    reader.onloadend = () => {
+      this.setState({
+        file,
+        imagePreviewUrl: reader.result
+      });
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  uploadHandler = () => {
+    const data = new FormData();
+    data.append("file", this.state.file);
+    data.append("name", this.state.file.name);
+    data.append("description", "imageUpload");
+    fetch("/api/uploadimage", {
+      method: "POST",
+      body: data
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.success === true) {
+          alert("Success!");
+        } else {
+          alert("failed to upload");
+        }
+      });
+  };
+
   render() {
-    console.log(this.state);
     const children = [];
+    const { imagePreviewUrl } = this.state;
+    let imagePreview = null;
+    if (imagePreviewUrl) {
+      imagePreview = <img src={imagePreviewUrl} />;
+    } else {
+      imagePreview = (
+        <div className="previewText">Please select an Image for Preview</div>
+      );
+    }
 
     for (let i = 0; i < this.state.numChildren; i += 1) {
       children.push(
@@ -88,11 +132,18 @@ export default class ImportQ_AddQuestion extends Component {
         >
           {children}
         </ParentComponent>
-        <button className="btn btn__createTest">import image</button>
-        <button className="btn btn__createTest" onClick={this.addQuestion}>
-          {" "}
-          Add Question{" "}
+
+        <label className="importImg">
+          <input type="file" onChange={e => this.handleImageChange(e)} />
+          <p>Select an image</p>
+        </label>
+        <div>{imagePreview}</div>
+
+        <button className="btn btn__createTest" onClick={this.uploadHandler}>
+          Upload Image
         </button>
+
+        <button className="btn btn__createTest"> Add Question </button>
       </div>
     );
   }
@@ -114,7 +165,7 @@ const ParentComponent = props => (
 
 function ChildComponent(props) {
   return (
-    <div>
+    <div className="container__questions">
       <input
         type="text"
         name={`answer${props.number}`}
@@ -122,11 +173,18 @@ function ChildComponent(props) {
         onChange={props.onChange}
       />
       <input
+        style={{ width: "2rem" }}
         type="radio"
         name={`correct_ans${props.number}`}
         checked={props.value.question.correct_ans[props.number]}
         onClick={props.onChange}
       />
+
+      {props.value.question.correct_ans[props.number] ? (
+        <span>Correct Answer</span>
+      ) : (
+        <span>Wrong Answer</span>
+      )}
     </div>
   );
 }

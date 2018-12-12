@@ -2,8 +2,21 @@ const Question = require("../models/Question");
 const Answer = require("../models/Answer");
 const Exam = require("../models/Exam");
 const User = require("../models/User");
+const multer  = require('multer')
 
-module.exports = app => {
+module.exports = (app) => {
+
+  // configuring Multer to use files directory for storing files
+  // this is important because later we'll need to access file path
+  const storage = multer.diskStorage({
+    destination: './client/public/images',
+    filename(req, file, cb) {
+      cb(null, `${file.originalname}`);
+    },
+  });
+
+  const upload = multer({ storage });
+
   // write api description
   app.post("/api/createtest", (req, res, next) => {
     var questionId_list = [];
@@ -497,4 +510,20 @@ module.exports = app => {
       res.status(400);
     }
   });
+
+  //upload image
+  app.post("/api/uploadimage", upload.single('file'),(req, res) => {
+    if (!req.file) {
+      console.log("No image received");
+      return res.send({
+        success: false
+      });
+
+    } else {
+      console.log('image received');
+      return res.send({
+        success: true
+      })
+    }
+  })
 };

@@ -38,7 +38,7 @@ const CreateTestForm = props => {
           }}
           onChange={event => props.handleChangeTimeLimit(event)}
         />
-        <label htmlFor="number"> Question Number </label>
+        <label htmlFor="number"> Number of Questions to Pull</label>
         <input
           value={props.fields.number}
           name="number"

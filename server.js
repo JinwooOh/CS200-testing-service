@@ -2,12 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const routes = require('./routes/routes');
-const MongoClient = require('mongodb');
+// const MongoClient = require('mongodb');
 
 const app = express();
 //https://mongoosejs.com/docs/populate.html
-
-
 
 mongoose.Promise = global.Promise; // Get Mongoose to use the global promise
 

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class QuestionEdit extends Component {
   render() {
@@ -12,7 +12,7 @@ export default class QuestionEdit extends Component {
               <h3>Question</h3>
             </div>
             <p>Question: </p>
-            <input
+            <textarea
               type="text"
               name="question_desc"
               value={this.props.fields.question.question}
@@ -46,7 +46,7 @@ export default class QuestionEdit extends Component {
             </button>
           </div>
         ) : (
-          ""
+          ''
         )}
       </div>
     );

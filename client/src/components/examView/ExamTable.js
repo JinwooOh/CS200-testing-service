@@ -29,7 +29,7 @@ export default class ExamTable extends Component {
           columns={columns}
           data={this.props.examList}
           // onFetchData={this.fetchData}
-          defaultPageSize={6}
+          defaultPageSize={10}
           SubComponent={row => {
             return (
               <div style={{ padding: '5px' }}>
