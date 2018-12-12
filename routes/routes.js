@@ -151,6 +151,39 @@ module.exports = app => {
     }
   });
 
+  app.post("/api/addQuestion", async (req, res) => {
+    console.log("**************");
+    console.log(req.body);
+    var answerId_list = [];
+    for (var j = 0; j < req.body.answers.length; j++) {
+      var new_answer = Answer({
+        updated: new Date(),
+        answer: req.body.answers[j]
+      });
+      answerId_list.push(new_answer._id);
+      console.log(new_answer._id);
+      new_answer.save(err => {
+        if (err) throw err;
+        console.log("answer created");
+      });
+    }
+    var correctAnsId_list = [];
+    for (var i = 0; i < req.body.correct_ans.length; i++) {
+      if (req.body.correct_ans[i] == true) {
+        correctAnsId_list.push(answerId_list[i]);
+      }
+    }
+    var new_question = Question({
+      answers: answerId_list,
+      question: req.body.desc,
+      updated: new Date(),
+      correctAnswer: correctAnsId_list
+    });
+    new_question.save(err => {
+      if (err) throw err;
+      console.log("question created");
+    });
+  });
   app.post("/api/importCSV", async (req, res) => {
     //console.log(req.body);
 
@@ -251,34 +284,42 @@ module.exports = app => {
    * @param req.body.question : string of the new question
    * @param req.body.correctAnswer[]: arrays of strings of the new Answer
    */
-  app.post("/api/editQuestionAnswer/:questionID", async(req, res) => {
+  app.post("/api/editQuestionAnswer/:questionID", async (req, res) => {
     try {
-       // find question given ID
-       let question = await Question.findById(req.params.questionID);
-       // access req.body.question to change question title
-       if (req.body.question != null) {
-         question.question = req.body.question; // set new question title
-         question.save(err => {
+      // find question given ID
+      let question = await Question.findById(req.params.questionID);
+      // access req.body.question to change question title
+      if (req.body.question != null) {
+        question.question = req.body.question; // set new question title
+        question.save(err => {
           if (err) throw err;
           console.log("Question title changed!");
         });
-       }
-       for (let i = 0; i < req.body.correctAnswer.length; i++) {
-          await Answer.findByIdAndUpdate(question.correctAnswer[i], {answer: req.body.correctAnswer[i]},function (err, data) {
+      }
+      for (let i = 0; i < req.body.correctAnswer.length; i++) {
+        await Answer.findByIdAndUpdate(
+          question.correctAnswer[i],
+          { answer: req.body.correctAnswer[i] },
+          function(err, data) {
             if (err) return console.error(err);
-          });
-       }
+          }
+        );
+      }
 
-       for (let i = 0; i < req.body.answers.length; i++) {
-           await Answer.findByIdAndUpdate(question.answers[i], {answer: req.body.answers[i]},function (err, data) {
-             if (err) return console.error(err);
-         });
-       }
+      for (let i = 0; i < req.body.answers.length; i++) {
+        await Answer.findByIdAndUpdate(
+          question.answers[i],
+          { answer: req.body.answers[i] },
+          function(err, data) {
+            if (err) return console.error(err);
+          }
+        );
+      }
     } catch (err) {
       if (err) throw err;
       res.status(400);
     }
-  })
+  });
 
   /** add a question to an exam given questionID and examID
    * If the questionID is already the exam ID, the question won't be added
@@ -346,22 +387,27 @@ module.exports = app => {
   });
 
   app.post("/api/saveExam", (req, res) => {
-
     console.log("update request");
     console.log(req.body[0].courseName);
     var exam_id = req.body[0].id;
     var questions_ids = [];
-    for (var i = 1; i < req.body.length; i++){
+    for (var i = 1; i < req.body.length; i++) {
       questions_ids.push(req.body[i]._id);
     }
 
-    Exam.findByIdAndUpdate(exam_id, {questions: questions_ids,
-      courseName:req.body[0].courseName,
-      courseNumber: parseInt(req.body[0].courseNumber),
-      timeLimit: parseInt(req.body[0].timeLimit)}, (err)=>{
-      if (err) throw err;
-      console.log("update success");
-    })
+    Exam.findByIdAndUpdate(
+      exam_id,
+      {
+        questions: questions_ids,
+        courseName: req.body[0].courseName,
+        courseNumber: parseInt(req.body[0].courseNumber),
+        timeLimit: parseInt(req.body[0].timeLimit)
+      },
+      err => {
+        if (err) throw err;
+        console.log("update success");
+      }
+    );
   });
 
   app.post("/api/removeQuestionFromExam", (req, res) => {
