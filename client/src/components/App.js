@@ -12,9 +12,16 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h3>Main Page</h3>
         <Nav />
         <p>{this.state.result}</p>
+        <div className="mainCover">
+          <h3 className="mainCover__title">CS 200 Testing Service</h3>
+          <img className="mainCover__img" src="images/frontImage.jpg" alt="front cover image" />
+          <p className="mainCover__desc">
+            The CS 200 Testing Service acts as a platform for professors to generate exams from a
+            database and a CSV file.
+          </p>
+        </div>
       </div>
     );
   }

@@ -175,6 +175,10 @@ input[type="file"] {
   .nav a:hover {
     color: #4d4d4d; }
 
-.radios {
-  width: 0.3rem;
-  background-color: red; }
+.mainCover {
+  text-align: center; }
+  .mainCover__title {
+    font-size: 4.2rem;
+    padding: 3rem; }
+  .mainCover__desc {
+    font-size: 2rem; }

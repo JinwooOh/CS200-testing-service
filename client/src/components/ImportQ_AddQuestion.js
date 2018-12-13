@@ -1,39 +1,41 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 export default class ImportQ_AddQuestion extends Component {
   constructor(props) {
     super(props);
     this.state = {
       numChildren: 0,
-      question: { desc: "", answers: [], correct_ans: [] },
+      question: { desc: '', answers: [], correct_ans: [] },
       file: {},
-      imagePreviewUrl: ""
+      imagePreviewUrl: '',
     };
     this.handleChange = this.handleChange.bind(this);
     this.addQuestion = this.addQuestion.bind(this);
   }
+
   addQuestion() {
-    fetch("/api/addQuestion", {
-      method: "POST",
+    fetch('/api/addQuestion', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state.question)
+      body: JSON.stringify(this.state.question),
     })
-      .then(alert("The question is uploaded and saved."))
-      .catch(error => console.error("fetch error at importCSV", error));
+      .then(alert('The question is uploaded and saved.'))
+      .catch(error => console.error('fetch error at importCSV', error));
   }
+
   handleChange(evt) {
-    if (evt.target.name.substring(0, 6) == "answer") {
+    if (evt.target.name.substring(0, 6) == 'answer') {
       var newQuestion = Object.assign({}, this.state.question);
       const index = parseInt(evt.target.name.substring(6));
       newQuestion.answers[index] = evt.target.value;
       this.setState({ question: newQuestion });
-    } else if (evt.target.name == "desc") {
+    } else if (evt.target.name == 'desc') {
       var newQuestion = Object.assign({}, this.state.question);
       newQuestion.desc = evt.target.value;
       this.setState({ question: newQuestion });
-    } else if (evt.target.name.substring(0, 11) == "correct_ans") {
+    } else if (evt.target.name.substring(0, 11) == 'correct_ans') {
       var newQuestion = Object.assign({}, this.state.question);
       const index = parseInt(evt.target.name.substring(11));
       newQuestion.correct_ans[index] = !this.state.question.correct_ans[index];
@@ -44,7 +46,7 @@ export default class ImportQ_AddQuestion extends Component {
   onAddChild = () => {
     if (this.state.numChildren < 8) {
       this.setState({
-        numChildren: this.state.numChildren + 1
+        numChildren: this.state.numChildren + 1,
       });
       this.state.question.correct_ans.push(false);
     }
@@ -53,7 +55,7 @@ export default class ImportQ_AddQuestion extends Component {
   onDeleteChild = () => {
     if (this.state.numChildren > 0) {
       this.setState({
-        numChildren: this.state.numChildren - 1
+        numChildren: this.state.numChildren - 1,
       });
       this.state.question.answers.pop();
       this.state.question.correct_ans.pop();
@@ -68,7 +70,7 @@ export default class ImportQ_AddQuestion extends Component {
     reader.onloadend = () => {
       this.setState({
         file,
-        imagePreviewUrl: reader.result
+        imagePreviewUrl: reader.result,
       });
     };
 
@@ -77,19 +79,19 @@ export default class ImportQ_AddQuestion extends Component {
 
   uploadHandler = () => {
     const data = new FormData();
-    data.append("file", this.state.file);
-    data.append("name", this.state.file.name);
-    data.append("description", "imageUpload");
-    fetch("/api/uploadimage", {
-      method: "POST",
-      body: data
+    data.append('file', this.state.file);
+    data.append('name', this.state.file.name);
+    data.append('description', 'imageUpload');
+    fetch('/api/uploadimage', {
+      method: 'POST',
+      body: data,
     })
       .then(res => res.json())
       .then(res => {
         if (res.success === true) {
-          alert("Success!");
+          alert('Success!');
         } else {
-          alert("failed to upload");
+          alert('failed to upload');
         }
       });
   };
@@ -101,19 +103,12 @@ export default class ImportQ_AddQuestion extends Component {
     if (imagePreviewUrl) {
       imagePreview = <img src={imagePreviewUrl} />;
     } else {
-      imagePreview = (
-        <div className="previewText">Please select an Image for Preview</div>
-      );
+      imagePreview = <div className="previewText">Please select an Image for Preview</div>;
     }
 
     for (let i = 0; i < this.state.numChildren; i += 1) {
       children.push(
-        <ChildComponent
-          key={i}
-          number={i}
-          value={this.state}
-          onChange={this.handleChange}
-        />
+        <ChildComponent key={i} number={i} value={this.state} onChange={this.handleChange} />
       );
     }
     return (
@@ -126,10 +121,7 @@ export default class ImportQ_AddQuestion extends Component {
           placeholder="Description"
           onChange={this.handleChange}
         />
-        <ParentComponent
-          addChild={this.onAddChild}
-          deleteChild={this.onDeleteChild}
-        >
+        <ParentComponent addChild={this.onAddChild} deleteChild={this.onDeleteChild}>
           {children}
         </ParentComponent>
 
@@ -143,7 +135,15 @@ export default class ImportQ_AddQuestion extends Component {
           Upload Image
         </button>
 
-        <button className="btn btn__createTest"> Add Question </button>
+        <button
+          onClick={() => {
+            this.addQuestion();
+          }}
+          className="btn btn__createTest"
+        >
+          {' '}
+          Add Question{' '}
+        </button>
       </div>
     );
   }
@@ -173,7 +173,7 @@ function ChildComponent(props) {
         onChange={props.onChange}
       />
       <input
-        style={{ width: "2rem" }}
+        style={{ width: '2rem' }}
         type="radio"
         name={`correct_ans${props.number}`}
         checked={props.value.question.correct_ans[props.number]}

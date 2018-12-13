@@ -1,4 +1,10 @@
-.radios {
-  width: 0.3rem;
-  background-color: red;
+.mainCover{
+  text-align: center;
+  &__title{
+    font-size: 4.2rem;
+    padding: 3rem;
+  }
+  &__desc{
+    font-size: 2rem;
+  }
 }
