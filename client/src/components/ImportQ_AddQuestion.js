@@ -89,7 +89,9 @@ export default class ImportQ_AddQuestion extends Component {
       .then(res => res.json())
       .then(res => {
         if (res.success === true) {
-          alert('Success!');
+          alert(
+            'Success! An image is uploaded to a local directory. In the next version, We plan to implement rendering an image in a question.'
+          );
         } else {
           alert('failed to upload');
         }
