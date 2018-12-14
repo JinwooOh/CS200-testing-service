@@ -21,7 +21,11 @@ export default class ImportQ_AddQuestion extends Component {
       },
       body: JSON.stringify(this.state.question),
     })
-      .then(alert('The question is uploaded and saved. Please refresh the page to add a new question or head to the Question List tab to see your question added to the database.'))
+      .then(
+        alert(
+          'The question is uploaded and saved. Please refresh the page to add a new question or head to the Question List tab to see your question added to the database.'
+        )
+      )
       .catch(error => console.error('fetch error at importCSV', error));
   }
 
@@ -127,15 +131,15 @@ export default class ImportQ_AddQuestion extends Component {
           {children}
         </ParentComponent>
 
-        <label className="importImg">
+        {/* <label className="importImg">
           <input type="file" onChange={e => this.handleImageChange(e)} />
           <p>Select an image</p>
         </label>
-        <div>{imagePreview}</div>
-
+        <div>{imagePreview}</div> */}
+        {/*
         <button className="btn btn__createTest" onClick={this.uploadHandler}>
           Upload Image
-        </button>
+        </button> */}
 
         <button
           onClick={() => {
