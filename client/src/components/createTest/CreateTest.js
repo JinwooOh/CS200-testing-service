@@ -98,7 +98,7 @@ export default class CreateTest extends Component {
         },
         body: JSON.stringify(this.state),
       })
-        .then(alert('The test is saved.'))
+        .then(alert('This exam is saved. Please refresh the page to create a new exam.'))
         .catch(error => console.error('fetch error at createTest', error)); // error
     }
   };
