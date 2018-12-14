@@ -35,12 +35,12 @@ describe('API Test', () => {
       questionList: [],
       valid: true
     }
-    Exam.count().then(count =>{
+    Exam.countDocuments().then(count =>{
       request(app)
       .post('/api/createtest')
       .send(req)
       .end(()=>{
-        Exam.count().then(newCount => {
+        Exam.countDocuments().then(newCount => {
           assert(count +1 === newCount);
           done();
         })

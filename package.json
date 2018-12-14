@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "chai": "^4.2.0",
     "cjs": "0.0.11",
     "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
@@ -28,5 +27,9 @@
     "react-scripts": "^2.1.1",
     "shell-quote": "^1.6.1",
     "supertest": "^3.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "chai-http": "^1.0.0"
   }
 }

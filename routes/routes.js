@@ -10,7 +10,7 @@ module.exports = app => {
     for (var i = 0; i < req.body.questionList.length; i++) {
       questionId_list.push(req.body.questionList[i]._id);
     }
-    console.log(questionId_list);
+    // console.log(questionId_list);
     // var new_test = Exam({
     //   timeLimit: req.body.timeLimit,
     //   courseName: req.body.name,
@@ -48,6 +48,7 @@ module.exports = app => {
   // get single question by its ID
   app.get("/api/pullQuestionById/:id", async(req, res)=>{
     const question = await Question.findById(req.params.id);
+
     for (let j = 0; j < question.answers.length; j++) {
       // question.answers[j] = "faf";
       let realAnswer = await Answer.findById(question.answers[j]).then(answer =>
@@ -65,7 +66,7 @@ module.exports = app => {
   // write api description
   app.post("/api/pullquestion", async (req, res) => {
     //write error handler
-    console.log(req.body);
+    // console.log(req.body);
     const numQuestion = parseInt(req.body.number);
     let questionList = await Question.find({}).limit(numQuestion);
   // extract objectID from answers array
@@ -85,7 +86,7 @@ module.exports = app => {
         questionList[i].correctAnswer[j] = realAnswer;
       }
     }
-    console.log(questionList);
+    // console.log(questionList);
     res.send(questionList);
   });
 
@@ -93,6 +94,13 @@ module.exports = app => {
     const examList = await Exam.find();
     res.send(examList);
   });
+
+  app.get("/api/pullAnswer", async (req, res)=>{
+    const numAnswer = parseInt(req.body.number);   
+    let answerList = await Answer.find({}).limit(numAnswer);
+    res.send(answerList);
+  });
+
 
   app.post("/api/importCSV", async (req, res) => {
     //console.log(req.body);
