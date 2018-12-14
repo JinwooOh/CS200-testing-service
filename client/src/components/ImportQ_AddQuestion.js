@@ -21,7 +21,7 @@ export default class ImportQ_AddQuestion extends Component {
       },
       body: JSON.stringify(this.state.question),
     })
-      .then(alert('The question is uploaded and saved.'))
+      .then(alert('The question is uploaded and saved. Please refresh the page to add a new question or head to the Question List tab to see your question added to the database.'))
       .catch(error => console.error('fetch error at importCSV', error));
   }
 
