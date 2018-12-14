@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import Files from 'react-files';
 
 let fileReader;
+let filename;
 export default class ImportQCSV extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +11,7 @@ export default class ImportQCSV extends Component {
       questions: [],
     };
     this.fileReader = new FileReader();
+    this.filename = "";
     this.fileReader.onload = event => {
       this.props.updateJson({ jsonFile: JSON.parse(event.target.result) }, () => {
         console.log(this.state.jsonFile);
@@ -18,6 +20,9 @@ export default class ImportQCSV extends Component {
   }
 
   handleFileRead = e => {
+    //console.log(e.target.result)
+    console.log(filename);
+    if(filename.split('.').pop() == 'csv') {
     const content = fileReader.result;
     // console.log(content);
     // console.log(content.split(/,/));
@@ -44,12 +49,18 @@ export default class ImportQCSV extends Component {
     })
       .then(alert('The file is uploaded and saved.'))
       .catch(error => console.error('fetch error at importCSV', error)); // error
+    }
+    else {
+      alert('ERROR. Please only select a file with a \'.csv\' extension')
+    }
     // update state with array of answers
     // … do something with the ‘content’ …
   };
 
   handleFileChosen = file => {
     fileReader = new FileReader();
+    filename = file.name;
+    //console.log(filename);
     fileReader.onloadend = this.handleFileRead;
     fileReader.readAsText(file);
   };
