@@ -64,22 +64,22 @@ export default class ExamList extends Component {
       newExam[0].courseName = this.state.newName;
     }
     if (this.state.newCourseNumber !== undefined && this.state.newCourseNumber !== '') {
-        if (this.state.newCourseNumber.match(/^[0-9]+$/) != null) { //check if string is a number
-            newExam[0].courseNumber = this.state.newCourseNumber;
-        }
-        else {
-            console.log('CourseNumber must be made of digits.');
-            alert("Invalid Course Number. Please enter digits only.");
-        }
+      if (this.state.newCourseNumber.match(/^[0-9]+$/) != null) {
+        // check if string is a number
+        newExam[0].courseNumber = this.state.newCourseNumber;
+      } else {
+        console.log('CourseNumber must be made of digits.');
+        alert('Invalid Course Number. Please enter digits only.');
+      }
     }
     if (this.state.newTimeLimit !== undefined && this.state.newTimeLimit !== '') {
-        if (this.state.newTimeLimit.match(/^[0-9]+$/) != null) { //check if string is a number
-            newExam[0].timeLimit = this.state.newTimeLimit;
-        }
-        else {
-            console.log('CourseNumber must be made of digits.');
-            alert("Invalid Course Number. Please enter digits only.");
-        }
+      if (this.state.newTimeLimit.match(/^[0-9]+$/) != null) {
+        // check if string is a number
+        newExam[0].timeLimit = this.state.newTimeLimit;
+      } else {
+        console.log('CourseNumber must be made of digits.');
+        alert('Invalid Course Number. Please enter digits only.');
+      }
     }
     // FIX: need to update questionList as well
 

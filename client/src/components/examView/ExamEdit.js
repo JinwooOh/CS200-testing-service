@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { CSVLink, CSVDownload } from 'react-csv';
 import ExamInfo from './ExamInfo';
 import SortableList from '../helper/Sortable';
 
@@ -24,14 +25,19 @@ export default class ExamEdit extends Component {
           removeQuestion={this.props.removeQuestion}
         />
         {examInfo !== '' ? (
-          <button
-            className="btn"
-            onClick={() => {
-              this.props.handleSave();
-            }}
-          >
-            Save
-          </button>
+          <div className="examDetail">
+            <button
+              className="btn"
+              onClick={() => {
+                this.props.handleSave();
+              }}
+            >
+              Save
+            </button>
+            <CSVLink className="btn" data={this.props.exam} filename="cs200Exam">
+              Export as a CSV file
+            </CSVLink>
+          </div>
         ) : (
           ''
         )}
